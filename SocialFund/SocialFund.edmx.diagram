@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="94b18ec105054183a7a2864d56b28512" Name="Diagram1">
+        <EntityTypeShape EntityType="SocialFundModel.Group" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialFundModel.Group_User" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialFundModel.Log" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialFundModel.User" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="SocialFundModel.FK_Group_User" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialFundModel.FK_GroupUser_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialFundModel.FK_Log_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialFundModel.FK_GroupUser_User" ManuallyRouted="false" />
+        <AssociationConnector Association="SocialFundModel.FK_Log_Group_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
