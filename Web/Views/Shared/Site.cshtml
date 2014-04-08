@@ -1,16 +1,15 @@
-﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <title>>@ViewBag.Title</title>
     <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/jquery-1.4.2.min.js") %>"></script>
     <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/jquery-ui-1.8.6.min.js") %>"></script>
     <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftAjax.js") %>"></script>
     <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftMvcAjax.js") %>"></script>
     <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftMvcValidation.js") %>"></script>
     <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/Common.js") %>"></script>
-    <link href="<%= Url.Content("~/Content/Site.css") %>" rel="stylesheet" type="text/css" />
-    <link href="<%= Url.Content("~/Content/jquery-ui-1.8.6.css") %>" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/jquery-ui-1.8.6.css")" rel="stylesheet" type="text/css" />
     <style type="text/css">
 
 #topShadowDiv
@@ -131,14 +130,11 @@
                     <div style="display:table-cell">
                         <p id="headerText">Social Fund</p>
                     </div>
-<%--                    <div id="loginControl" style="display:table-cell">
-                        <% Html.RenderPartial("LogOnUserControl"); %>
-                    </div> --%>
                 </div>
                 <div id="menuRow">
                     <ul id="menu">              
-                        <li><%= Html.ActionLink("HOME", "Index", "Home")%></li>
-                        <% if (Request.IsAuthenticated)
+                        <li>@Html.ActionLink("HOME", "Index", "Home")</li>
+@*                        <% if (Request.IsAuthenticated)
                             {%>
                             <li><%= Html.ActionLink("CLIENTS", "Index", "Client")%></li>
                             <li><%= Html.ActionLink("CONFERENCE SERVERS", "Index", "ConferenceServer")%></li>
@@ -146,11 +142,11 @@
                             <li><%= Html.ActionLink("SETTINGS", "Index", "Setting")%></li>
                             <li><%= Html.ActionLink("TEMPLATES", "Index", "Template")%></li>
                             <li><%= Html.ActionLink("UPDATES", "Index", "Update")%></li>
-                        <%} %>
+                        <%} %>*@
                     </ul>
                 </div>
                 <div id="contentPlaceHolderDiv">
-                    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                    @RenderBody()
                 </div>
                 <div id="separatorDiv"></div>
                 <div id="footerDiv">
