@@ -10,13 +10,15 @@ namespace SocialFund.Controllers
 {
     public class HomeController : Controller
     {
-        //
-        // GET: /Home/
+        #region Controller methods
 
         public ActionResult Index()
         {
-            return this.RedirectToAction("Index","Log",new {groupId = 1});
+            ViewData["Message"] = "Welcome to Social Fund!";
+
+            return View();
         }
 
+        #endregion
     }
 }
