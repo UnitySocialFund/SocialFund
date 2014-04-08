@@ -1,0 +1,20 @@
+﻿@model List<DataModel.Log>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>
+    @foreach (DataModel.Log log in Model)
+    {
+        @log.Date.ToString();
+
+        @log.Group_User.Group.Name.ToString();
+
+        @log.Group_User.User.Name.ToString();
+
+        @log.Coins.ToString();
+
+        @log.Comment.ToString();
+    }
+</h2>
