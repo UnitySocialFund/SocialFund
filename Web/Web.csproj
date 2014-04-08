@@ -149,7 +149,6 @@
     <Content Include="Images\rb.png" />
     <Content Include="Images\rt.png" />
     <Content Include="Images\t.png" />
-    <Content Include="Views\Home\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -170,7 +169,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Site.Master" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Site.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
