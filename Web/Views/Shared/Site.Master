@@ -1,0 +1,170 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/jquery-1.4.2.min.js") %>"></script>
+    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/jquery-ui-1.8.6.min.js") %>"></script>
+    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftAjax.js") %>"></script>
+    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftMvcAjax.js") %>"></script>
+    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftMvcValidation.js") %>"></script>
+    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/Common.js") %>"></script>
+    <link href="<%= Url.Content("~/Content/Site.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= Url.Content("~/Content/jquery-ui-1.8.6.css") %>" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+
+#topShadowDiv
+{
+    width:960px;
+    height:10px;
+    margin-left:auto; 
+    margin-right:auto;
+    display:table;
+}
+
+#leftTopShadow
+{
+    width:10px; 
+    height:10px; 
+    background-image: url('<%= Url.Content("~/Images/lt.png") %>');
+    display:table-cell;
+}
+
+#topShadow
+{
+    width:940px;
+    height:10px; 
+    background-image: url('<%= Url.Content("~/Images/t.png") %>');
+    display:table-cell;
+}
+
+#rightTopShadow
+{
+    width:10px; 
+    height:10px; 
+    background-image: url('<%= Url.Content("~/Images/rt.png") %>');
+    display:table-cell;
+}
+
+#centerShadowDiv
+{
+    width:960px;
+    margin-left:auto; 
+    margin-right:auto;
+    display:table;
+}
+
+#leftShadow
+{
+    width:5px; 
+    height:10px; 
+    background-image: url('<%= Url.Content("~/Images/l.png") %>');
+    display:table-cell;
+}
+
+#centerShadow
+{
+    background-color:White;
+    padding:0px;
+    display:table-cell;
+}
+
+#rightShadow
+{
+    width:5px; 
+    height:10px; 
+    background-image: url('<%= Url.Content("~/Images/r.png") %>');
+    display:table-cell;
+}
+
+#bottomShadowDiv
+{
+    width:960px;
+    height:10px;
+    margin-left:auto; 
+    margin-right:auto;
+    display:table;
+}
+
+#leftBottomShadow
+{
+    width:10px; 
+    height:10px; 
+    background-image: url('<%= Url.Content("~/Images/lb.png") %>');
+    display:table-cell;
+}
+
+#bottomShadow
+{
+    width:940px;
+    height:10px; 
+    background-image: url('<%= Url.Content("~/Images/b.png") %>');
+    display:table-cell;
+}
+
+#rightBottomShadow
+{
+    width:10px; 
+    height:10px; 
+    background-image: url('<%= Url.Content("~/Images/rb.png") %>');
+    display:table-cell;
+}
+        
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript" language="javascript">
+        setCookie("TimeZoneOffset", new Date().getTimezoneOffset(), 1);
+    </script>
+    <div id="topMarginDiv"></div>
+    <div id="topShadowDiv">
+        <div id="leftTopShadow"></div>
+        <div id="topShadow"></div>
+        <div id="rightTopShadow"></div>
+    </div>
+    <div id="centerShadowDiv">
+        <div id="leftShadow"></div>
+        <div id="centerShadow">
+            <div style="display:block">
+                <div style="width:100%;display:table">
+                    <div style="display:table-cell">
+                        <p id="headerText">Social Fund</p>
+                    </div>
+<%--                    <div id="loginControl" style="display:table-cell">
+                        <% Html.RenderPartial("LogOnUserControl"); %>
+                    </div> --%>
+                </div>
+                <div id="menuRow">
+                    <ul id="menu">              
+                        <li><%= Html.ActionLink("HOME", "Index", "Home")%></li>
+                        <% if (Request.IsAuthenticated)
+                            {%>
+                            <li><%= Html.ActionLink("CLIENTS", "Index", "Client")%></li>
+                            <li><%= Html.ActionLink("CONFERENCE SERVERS", "Index", "ConferenceServer")%></li>
+                            <li><%= Html.ActionLink("SUBSCRIPTIONS", "Index", "Subscription")%></li>
+                            <li><%= Html.ActionLink("SETTINGS", "Index", "Setting")%></li>
+                            <li><%= Html.ActionLink("TEMPLATES", "Index", "Template")%></li>
+                            <li><%= Html.ActionLink("UPDATES", "Index", "Update")%></li>
+                        <%} %>
+                    </ul>
+                </div>
+                <div id="contentPlaceHolderDiv">
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                </div>
+                <div id="separatorDiv"></div>
+                <div id="footerDiv">
+                    <p id="copyrightText">Copyright © Unity 2014</p>
+                </div>
+            </div>
+        </div>
+        <div id="rightShadow"></div>
+    </div>
+    <div id="bottomShadowDiv">
+        <div id="leftBottomShadow"></div>
+        <div id="bottomShadow"></div>
+        <div id="rightBottomShadow"></div>
+    </div>
+    <div id="bottomMarginDiv"></div>
+</body>
+</html>
