@@ -59,6 +59,8 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nchar" Nullable="false" MaxLength="255" />
+    <Property Name="Password" Type="nchar" Nullable="false" MaxLength="255" />
+    <Property Name="Email" Type="nchar" Nullable="true" MaxLength="255" />
   </EntityType>
   <Association Name="FK_Group_User">
     <End Role="User" Type="DataModel.SFModel.Store.User" Multiplicity="1" />
@@ -174,6 +176,8 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="true" />
           <NavigationProperty Name="Group" Relationship="DataModel.SFModel.FK_Group_User" FromRole="User" ToRole="Group" />
           <NavigationProperty Name="Group_User" Relationship="DataModel.SFModel.FK_GroupUser_User" FromRole="User" ToRole="Group_User" />
+          <Property Type="String" Name="Password" Nullable="false" FixedLength="true" MaxLength="255" Unicode="true" />
+          <Property Type="String" Name="Email" FixedLength="true" MaxLength="255" Unicode="true" Nullable="true" />
         </EntityType>
         <Association Name="FK_Group_User">
           <End Role="User" Type="DataModel.SFModel.User" Multiplicity="1" />
@@ -263,6 +267,8 @@
         <MappingFragment StoreEntitySet="User">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
