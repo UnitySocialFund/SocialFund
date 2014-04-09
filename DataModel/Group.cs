@@ -17,7 +17,6 @@ namespace DataModel
         public Group()
         {
             this.Group_User = new HashSet<Group_User>();
-            this.Log = new HashSet<Log>();
         }
     
         public int Id { get; set; }
@@ -26,6 +25,5 @@ namespace DataModel
     
         public virtual User User { get; set; }
         public virtual ICollection<Group_User> Group_User { get; set; }
-        public virtual ICollection<Log> Log { get; set; }
     }
 }

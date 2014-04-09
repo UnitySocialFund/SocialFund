@@ -20,7 +20,6 @@ namespace DataModel
         public string Comment { get; set; }
         public int Group_UserId { get; set; }
     
-        public virtual Group Group { get; set; }
         public virtual Group_User Group_User { get; set; }
     }
 }

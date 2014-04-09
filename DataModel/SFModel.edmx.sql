@@ -2,17 +2,12 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 04/07/2014 11:17:14
+-- Date Created: 04/09/2014 13:53:34
 -- Generated from EDMX file: D:\SocialFound\DataModel\SFModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-
-CREATE DATABASE SocialFund
-COLLATE Cyrillic_General_CI_AS;
-GO
-
 USE [SocialFund];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
@@ -30,9 +25,6 @@ IF OBJECT_ID(N'[dbo].[FK_GroupUser_Group]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_GroupUser_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Group_User] DROP CONSTRAINT [FK_GroupUser_User];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Log_Group]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Log] DROP CONSTRAINT [FK_Log_Group];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Log_Group_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Log] DROP CONSTRAINT [FK_Log_Group_User];
@@ -150,20 +142,6 @@ ADD CONSTRAINT [FK_GroupUser_Group]
 CREATE INDEX [IX_FK_GroupUser_Group]
 ON [dbo].[Group_User]
     ([GroupId]);
-GO
-
--- Creating foreign key on [Group_UserId] in table 'Log'
-ALTER TABLE [dbo].[Log]
-ADD CONSTRAINT [FK_Log_Group]
-    FOREIGN KEY ([Group_UserId])
-    REFERENCES [dbo].[Group]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_Log_Group'
-CREATE INDEX [IX_FK_Log_Group]
-ON [dbo].[Log]
-    ([Group_UserId]);
 GO
 
 -- Creating foreign key on [UserId] in table 'Group_User'
