@@ -114,64 +114,40 @@ namespace Common
         /// <param name="isAsync">Indicates whether sending to SMTP server is asynchronous operation</param>
         public void SendSmtp(string server, int port, bool isAsync)
         {
-            //var client = new SmtpClient(server);
             var client = new SmtpClient(server);
-            var boolValue = IsUseDefaultCredentials();
 
-            client.UseDefaultCredentials = boolValue;
-            client.EnableSsl = !boolValue;
             Port = port;
-            //client.Port = port;
-            client.Credentials = credential;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.Timeout = 5000;
+            client.Port = port;
 
             Debug.WriteLine("MailSender Host - Server: {0} ; Port: {1} ; IsAsync: {2}", server, port, isAsync);
-            Debug.WriteLine("MailSender Credential - AccountName: {0} ; AccountPassword: {1}", credential.UserName, credential.Password);
-            Debug.WriteLine("MailSender Message - From: {0} ; To: {1}; Subject: {2} ; Body: {3}", mailMessage.From, mailMessage.To, mailMessage.Subject, mailMessage.Body);
 
-            if (isAsync)
-            {
-                client.SendCompleted += MailDeliveryComplete;
-                client.SendAsync(mailMessage, client);
-                Debug.WriteLine("{0}. To: {1}, SMTP Server: {2}. Message was sent async!", ClassInfo.Append(".SendSmtp()"), mailMessage.To, server);
-            }
-            else
-            {
-                try
-                {
-                    client.Send(mailMessage);
-                    Debug.WriteLine("{0}. To: {1}, SMTP Server: {2}. Message was sent sync successfully!", ClassInfo.Append(".SendSmtp()"), mailMessage.To, server);
-                   
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("{0}. Mail wasn't sent. Error : {1}", ClassInfo.Append(".SendSmtp()"), ex.Message);
-                    throw;
-                }
-                finally
-                {
-                    client.Dispose();
-                }
-            }
+            SendSmtp(client, isAsync);
         }
 
         /// <summary>
-        /// Send mail message using specified SMTP server and Port
+        /// Send mail message using Server and Port from configuration file
         /// </summary>
-        /// <param name="server">Name of the host used for SMTP transactions</param>
-        /// <param name="port">Port to be used on host</param>
         /// <param name="isAsync">Indicates whether sending to SMTP server is asynchronous operation</param>
         public void SendSmtp(bool isAsync)
         {
             var client = new SmtpClient();
+
+            SendSmtp(client, isAsync);
+        }
+
+        /// <summary>
+        /// Send mail message using smtp client
+        /// </summary>
+        /// <param name="isAsync">Indicates whether sending to SMTP server is asynchronous operation</param>
+        public void SendSmtp(SmtpClient client, bool isAsync)
+        {
             var boolValue = IsUseDefaultCredentials();
 
             client.UseDefaultCredentials = boolValue;
             client.EnableSsl = !boolValue;
             client.Credentials = credential;
-            client.Timeout = 5000;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.Timeout = 5000;
 
             Debug.WriteLine("MailSender Credential - AccountName: {0} ; AccountPassword: {1}", credential.UserName, credential.Password);
             Debug.WriteLine("MailSender Message - From: {0} ; To: {1}; Subject: {2} ; Body: {3}", mailMessage.From, mailMessage.To, mailMessage.Subject, mailMessage.Body);
@@ -188,6 +164,7 @@ namespace Common
                 {
                     client.Send(mailMessage);
                     Debug.WriteLine("{0}. To: {1}. Message was sent sync successfully!", ClassInfo.Append(".SendSmtp()"), mailMessage.To);
+
                 }
                 catch (Exception ex)
                 {
