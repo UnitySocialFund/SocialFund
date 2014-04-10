@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="DataModel.SFModel.User" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="DataModel.SFModel.FK_Group_User" ManuallyRouted="false" />
         <AssociationConnector Association="DataModel.SFModel.FK_GroupUser_Group" ManuallyRouted="false" />
-        <AssociationConnector Association="DataModel.SFModel.FK_Log_Group" ManuallyRouted="false" />
         <AssociationConnector Association="DataModel.SFModel.FK_GroupUser_User" ManuallyRouted="false" />
         <AssociationConnector Association="DataModel.SFModel.FK_Log_Group_User" ManuallyRouted="false" />
       </Diagram>
