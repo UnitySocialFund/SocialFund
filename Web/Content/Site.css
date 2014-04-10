@@ -214,21 +214,26 @@ input[type="password"]
 }
 
 #divAuthContentLeft {
-    float: left; background-color: pink;
+    float: left; 
     width: 40%;
     border: 1px solid #CCC;
     margin-right:10px;
 }
 
-#ddivAuthContentRight {
-    float: left;
+#divAuthContentRight {
+    float: right;
     border: 1px solid #CCC;
     width: 55%;
     padding: 5px;
+    border: 1px solid #CCC;
 }
 
 a:link, visited, active, active {
     text-decoration: none;
     color: #004F88;
-    font-weight:bold;
+}
+
+img {
+    height: 200px;
+    width: 200px;
 }
