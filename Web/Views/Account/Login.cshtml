@@ -4,13 +4,8 @@
     ViewBag.Title = "Log in";
     Layout = "~/Views/Shared/Site.cshtml";
 }
-<div id="divAuthContentLeft">
-    <img src="~/Content/images/micro_login.jpg" />
-</div>
-
-<div id="divAuthContentRight">
-
-    <p id="headerText">Log in</p>
+<fieldset>
+    <legend>Log in</legend>
 
     @using (Html.BeginForm())
     {
@@ -41,4 +36,4 @@
         "Don't have an account?"
         @Html.ActionLink("Register now", "Register", null, null)
     </div>
-</div>
+</fieldset>
