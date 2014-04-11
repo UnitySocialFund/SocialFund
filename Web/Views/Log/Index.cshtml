@@ -1,21 +1,48 @@
-﻿@model List<DataModel.Log>
+﻿@model Web.Models.LogIndexViewModel
 
-@{
+@{  
+    Layout = "~/Views/Shared/Site.cshtml";
     ViewBag.Title = "Index";
 }
-
-<table border="1">
-    <tr>
-        <th>Operation</th>
-        <th>User</th>
-        <th>Date</th>
-    </tr>
-    @foreach(var log in Model)
-    {
+<div>
+    <h3 align ="center">
+       @Model.Group.Name
+    </h3>
+</div>
+@if (Model.IsGroupOwner)
+{
+    <div align ="left">
+        <ul id ="menu">
+        @Html.ActionLink("Add coins","AddCoins",  new {id = Model.Group.Id})
+        </ul>
+    </div> 
+}
+<div>
+    <table align="center" border ="0">
         <tr>
-            <th>@log.Coins</th>
-            <th>@log.Group_User.User.Name</th>
-            <th>@log.Date</th>
+            <th>Operation</th>
+            <th>User</th>
+            <th>Date</th>
+            <th>Comment</th>
         </tr>
-    }
-</table>
+        @foreach(var log in Model.Logs)
+        {
+            <tr>
+                @if(log.Coins > 0)
+                {
+                    <th><font color="green">@log.Coins</font></th>
+                }
+                else
+                {
+                    <th><font color="red">@log.Coins</font></th>
+                }
+                <th>@log.Group_User.User.Name</th>
+                <th>@log.Date</th>
+                <th>@log.Comment</th>
+            </tr>
+        }
+    </table>
+</div>
+<div>
+    <h2 align ="center">Tatal balance @Model.TatalBalnce</h2>
+</div>
