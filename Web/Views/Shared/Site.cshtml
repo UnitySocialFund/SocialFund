@@ -134,15 +134,12 @@
                 <div id="menuRow">
                     <ul id="menu">              
                         <li>@Html.ActionLink("HOME", "Index", "Home")</li>
-                        <li>@Html.ActionLink("CONTACTS", "Index", "Contacts")</li>
+                        
                      @if (Request.IsAuthenticated)
                      {
-                            <li>>@Html.ActionLink("CLIENTS", "Index", "Client")</li>
-                            <li>>@Html.ActionLink("CONFERENCE SERVERS", "Index", "ConferenceServer")></li>
-                            <li>>@Html.ActionLink("SUBSCRIPTIONS", "Index", "Subscription")></li>
-                            <li>>@Html.ActionLink("SETTINGS", "Index", "Setting")></li>
-                            <li>>@Html.ActionLink("TEMPLATES", "Index", "Template")></li>
-                            <li>>@Html.ActionLink("UPDATES", "Index", "Update")></li>
+                         <li>@Html.ActionLink("CONTACTS", "Index", "Contacts")</li>
+                         @*<li>@Html.ActionLink("LOGS", "Index", "Log", new { groupId = 1 })</li>*@
+                         <li>@Html.ActionLink("LOGS", "Index", "Log")</li>
                      } 
                     </ul>
                 </div>

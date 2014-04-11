@@ -16,14 +16,43 @@ namespace SocialFund.Controllers
 
         private readonly GroupService _groupService;
 
+        private void InitalizeFakeData()
+        {
+            var user = new User();
+            user.Name = "User1";
+            user.Email = "test@test.ru";
+            user.Password = "newPassword";
+            var group = new Group();
+            group.User = user;
+            group.Name = "Test group";
+            var groupUser = new Group_User();
+            groupUser.User = user;
+            groupUser.Group = group;
+            var log = new Log();
+            log.Date = DateTime.Now;
+            log.Group_User = groupUser;
+            log.Coins = 25;
+            log.Comment = "test log";
+            using (var db = new SocialFundEntities())
+            {
+                db.User.Add(user);
+                db.Group.Add(group);
+                db.Group_User.Add(groupUser);
+                db.Log.Add(log);
+                db.SaveChanges();
+            }
+        }
+
         public LogController()
         {
+            // InitalizeFakeData();
             _logService = new LogService();
             _groupService = new GroupService();
         }
 
-        public ActionResult Index(int groupId)
+        public ActionResult Index()
         {
+            int groupId = 1;
             var viewModel = new LogIndexViewModel();
             viewModel.Logs = _logService.GetGroupHistory(groupId);
             viewModel.Group = _groupService.GetGroup(groupId);
@@ -31,7 +60,6 @@ namespace SocialFund.Controllers
             viewModel.IsGroupOwner = true;
             return View(viewModel);
         }
-
 
         public ActionResult AddCoins(int id)
         {
@@ -47,7 +75,7 @@ namespace SocialFund.Controllers
                 return this.View(viewModel);
             }
 
-            _logService.AddLog(viewModel, id, 1);
+            _logService.AddLog(viewModel, id, 2);
             return this.RedirectToAction("Index", new {groupId = id });
         }
 
