@@ -14,11 +14,6 @@ namespace SocialFund.Controllers
 
         public ActionResult Index()
         {
-            if (true)
-            {
-                return this.RedirectToAction("Index", "Log", new { groupId = 1});
-            }
-
             ViewData["Message"] = "Welcome to Social Fund!";
 
             return View();

@@ -1,0 +1,32 @@
+﻿@model DataModel.Log
+
+@{
+    ViewBag.Title = "AddCoins";
+    Layout = "~/Views/Shared/Site.cshtml";
+}
+    
+    <div>
+        @using (Html.BeginForm("AddCoins", "Log", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true)
+        <table>
+            <td>
+                <th>Input nember of coins.</th>
+                <th>
+                    @Html.EditorFor(model => model.Coins, new { required="required" })
+                    @Html.ValidationMessageFor(model => model.Coins)
+                </th>
+            </td>
+            <td>
+                <th>Enter comment</th>
+                <th>
+                    @Html.EditorFor(model => model.Comment, new { required="required" })
+                    @Html.ValidationMessageFor(model => model.Comment)
+                </th>
+            </td>
+        </table>
+        <p>
+            <input type="submit" value="Add coins"/>
+        </p>
+        }
+    </div>
