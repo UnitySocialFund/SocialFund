@@ -13,7 +13,6 @@ namespace Web.Models
             Logs = new List<Log>();
             Group = new Group();
         }
-
         public decimal TatalBalnce { get; set; }
 
         public List<Log> Logs { get; set; }
