@@ -74,6 +74,7 @@ namespace SocialFund.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        [Authorize]
         public ActionResult UserInformation()
         {
             return View();
