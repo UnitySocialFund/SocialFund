@@ -113,18 +113,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\LogIndexViewModel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Account\LogOnModel.cs" />
+    <Compile Include="Models\Account\RegisterModel.cs" />    <Compile Include="Models\LogIndexViewModel.cs" />    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Contacts\FeedbackModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\images\micro_login.jpg" />
     <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\images\ui-bg_flat_55_fbec88_40x100.png" />
     <Content Include="Content\images\ui-bg_glass_75_d0e5f5_1x400.png" />
@@ -151,7 +155,9 @@
     <Content Include="Images\rb.png" />
     <Content Include="Images\rt.png" />
     <Content Include="Images\t.png" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -174,6 +180,10 @@
     <Content Include="Views\Shared\Site.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{bb820d0f-dc29-4070-a62b-98824854b9d9}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataModel\DataModel.csproj">
       <Project>{5fe980a8-0191-4077-a711-d6a26dec37ab}</Project>
       <Name>DataModel</Name>
@@ -187,7 +197,16 @@
     <Content Include="Views\Log\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Log\AddCoins.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Register.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\UserInformation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Contacts\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
