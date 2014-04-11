@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomMembershipProvider.cs" />
+    <Compile Include="Authentication\CustomMembershipProvider.cs" />
     <Compile Include="LogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

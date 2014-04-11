@@ -11,104 +11,90 @@
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/jquery-ui-1.8.6.css")" rel="stylesheet" type="text/css" />
     <style type="text/css">
+        #topShadowDiv {
+            width: 960px;
+            height: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            display: table;
+        }
 
-#topShadowDiv
-{
-    width:960px;
-    height:10px;
-    margin-left:auto; 
-    margin-right:auto;
-    display:table;
-}
+        #leftTopShadow {
+            width: 10px;
+            height: 10px;
+            background-image: url('<%= Url.Content("~/Images/lt.png") %>');
+            display: table-cell;
+        }
 
-#leftTopShadow
-{
-    width:10px; 
-    height:10px; 
-    background-image: url('<%= Url.Content("~/Images/lt.png") %>');
-    display:table-cell;
-}
+        #topShadow {
+            width: 940px;
+            height: 10px;
+            background-image: url('<%= Url.Content("~/Images/t.png") %>');
+            display: table-cell;
+        }
 
-#topShadow
-{
-    width:940px;
-    height:10px; 
-    background-image: url('<%= Url.Content("~/Images/t.png") %>');
-    display:table-cell;
-}
+        #rightTopShadow {
+            width: 10px;
+            height: 10px;
+            background-image: url('<%= Url.Content("~/Images/rt.png") %>');
+            display: table-cell;
+        }
 
-#rightTopShadow
-{
-    width:10px; 
-    height:10px; 
-    background-image: url('<%= Url.Content("~/Images/rt.png") %>');
-    display:table-cell;
-}
+        #centerShadowDiv {
+            width: 960px;
+            margin-left: auto;
+            margin-right: auto;
+            display: table;
+        }
 
-#centerShadowDiv
-{
-    width:960px;
-    margin-left:auto; 
-    margin-right:auto;
-    display:table;
-}
+        #leftShadow {
+            width: 5px;
+            height: 10px;
+            background-image: url('<%= Url.Content("~/Images/l.png") %>');
+            display: table-cell;
+        }
 
-#leftShadow
-{
-    width:5px; 
-    height:10px; 
-    background-image: url('<%= Url.Content("~/Images/l.png") %>');
-    display:table-cell;
-}
+        #centerShadow {
+            background-color: White;
+            padding: 0px;
+            display: table-cell;
+        }
 
-#centerShadow
-{
-    background-color:White;
-    padding:0px;
-    display:table-cell;
-}
+        #rightShadow {
+            width: 5px;
+            height: 10px;
+            background-image: url('<%= Url.Content("~/Images/r.png") %>');
+            display: table-cell;
+        }
 
-#rightShadow
-{
-    width:5px; 
-    height:10px; 
-    background-image: url('<%= Url.Content("~/Images/r.png") %>');
-    display:table-cell;
-}
+        #bottomShadowDiv {
+            width: 960px;
+            height: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            display: table;
+        }
 
-#bottomShadowDiv
-{
-    width:960px;
-    height:10px;
-    margin-left:auto; 
-    margin-right:auto;
-    display:table;
-}
+        #leftBottomShadow {
+            width: 10px;
+            height: 10px;
+            background-image: url('<%= Url.Content("~/Images/lb.png") %>');
+            display: table-cell;
+        }
 
-#leftBottomShadow
-{
-    width:10px; 
-    height:10px; 
-    background-image: url('<%= Url.Content("~/Images/lb.png") %>');
-    display:table-cell;
-}
+        #bottomShadow {
+            width: 940px;
+            height: 10px;
+            background-image: url('<%= Url.Content("~/Images/b.png") %>');
+            display: table-cell;
+        }
 
-#bottomShadow
-{
-    width:940px;
-    height:10px; 
-    background-image: url('<%= Url.Content("~/Images/b.png") %>');
-    display:table-cell;
-}
-
-#rightBottomShadow
-{
-    width:10px; 
-    height:10px; 
-    background-image: url('<%= Url.Content("~/Images/rb.png") %>');
-    display:table-cell;
-}
-        
+        #rightBottomShadow {
+            width: 10px;
+            height: 10px;
+            background-image: url('<%= Url.Content("~/Images/rb.png") %>');
+            display: table-cell;
+        }
     </style>
 </head>
 
@@ -130,20 +116,34 @@
                     <div style="display:table-cell">
                         <p id="headerText">Social Fund</p>
                     </div>
-                </div>
+
+                     @if (User.Identity.Name == string.Empty)
+                     {
+                        <div style="display:table-cell;float:right; padding-right:20px;">
+                            <a href="~/Account/Login" class="btn btn-default">Log In</a>
+                        </div>
+                     }
+                     else
+                     {
+                        <div style="display:table-cell; float:right; padding-right:20px;">
+                            <a style="padding-right:20px; font-weight:bold;" href="~/Account/UserInformation" class="btn btn-default"> @User.Identity.Name</a>
+                            <a href="~/Account/Login" class="btn btn-default">Log Out</a>
+                        </div>
+                     }
+                 </div>
                 <div id="menuRow">
                     <ul id="menu">              
                         <li>@Html.ActionLink("HOME", "Index", "Home")</li>
                         <li>@Html.ActionLink("CONTACTS", "Index", "Contacts")</li>
-@*                        <% if (Request.IsAuthenticated)
-                            {%>
-                            <li><%= Html.ActionLink("CLIENTS", "Index", "Client")%></li>
-                            <li><%= Html.ActionLink("CONFERENCE SERVERS", "Index", "ConferenceServer")%></li>
-                            <li><%= Html.ActionLink("SUBSCRIPTIONS", "Index", "Subscription")%></li>
-                            <li><%= Html.ActionLink("SETTINGS", "Index", "Setting")%></li>
-                            <li><%= Html.ActionLink("TEMPLATES", "Index", "Template")%></li>
-                            <li><%= Html.ActionLink("UPDATES", "Index", "Update")%></li>
-                        <%} %>*@
+                     @if (Request.IsAuthenticated)
+                     {
+                            <li>>@Html.ActionLink("CLIENTS", "Index", "Client")</li>
+                            <li>>@Html.ActionLink("CONFERENCE SERVERS", "Index", "ConferenceServer")></li>
+                            <li>>@Html.ActionLink("SUBSCRIPTIONS", "Index", "Subscription")></li>
+                            <li>>@Html.ActionLink("SETTINGS", "Index", "Setting")></li>
+                            <li>>@Html.ActionLink("TEMPLATES", "Index", "Template")></li>
+                            <li>>@Html.ActionLink("UPDATES", "Index", "Update")></li>
+                     } 
                     </ul>
                 </div>
                 <div id="contentPlaceHolderDiv">

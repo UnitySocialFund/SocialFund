@@ -4,43 +4,41 @@
     ViewBag.Title = "Log in";
     Layout = "~/Views/Shared/Site.cshtml";
 }
-    <div id="divAuthContentLeft">
-        <img src="~/Content/images/micro_login.jpg" width="100%" />
-    </div>
+<div id="divAuthContentLeft">
+    <img src="~/Content/images/micro_login.jpg" />
+</div>
 
-    <div  id="divAuthContentRight">
+<div id="divAuthContentRight">
 
-        <p id="headerText">Log in</p>
+    <p id="headerText">Log in</p>
 
-        @using (Html.BeginForm())
-        {
-            @Html.ValidationSummary(true)
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.UserName)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.UserName)
-                @Html.ValidationMessageFor(model => model.UserName)
-            </div>
- 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Password)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Password)
-                @Html.ValidationMessageFor(model => model.Password)
-            </div>
-        
-            <p>
-                <input type="submit" value="Log in" />
-            </p>
-        }
-
-        <div class="block">
-            "Don't have an account?"
-           
-         @Html.ActionLink("Register now", "Index", null, null)
-
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UserName)
         </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+ 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+        
+        <p>
+            <input type="submit" value="Log in" />
+        </p>
+    }
+
+    <div class="block">
+        "Don't have an account?"
+        @Html.ActionLink("Register now", "Register", null, null)
     </div>
+</div>
