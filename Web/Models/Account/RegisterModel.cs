@@ -10,7 +10,7 @@ namespace SocialFund.Models.Account
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "User Nam")]
+        [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required]
