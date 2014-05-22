@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SocialFund.Models.Contacts;
+using Common;
 
 namespace SocialFund.Controllers
 {
@@ -21,7 +22,11 @@ namespace SocialFund.Controllers
         [HttpPost]
         public ActionResult Index(FeedbackModel model)
         {
-            // Send info to mail
+            MailSender sender = new MailSender();
+            sender.SetCredential("unitysocialfund@mail.ru", "Install_new23");
+            sender.InitializeMailMessage(model.Email, "unitysocialfund@mail.ru", model.Text, "Feedback from " + model.Name);
+            sender.SendSmtp(false);
+
             return View(model);
         }
 

@@ -149,7 +149,10 @@ namespace Common
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.Timeout = 5000;
 
-            Debug.WriteLine("MailSender Credential - AccountName: {0} ; AccountPassword: {1}", credential.UserName, credential.Password);
+            if (credential != null)
+            {
+                Debug.WriteLine("MailSender Credential - AccountName: {0} ; AccountPassword: {1}", credential.UserName, credential.Password);
+            }
             Debug.WriteLine("MailSender Message - From: {0} ; To: {1}; Subject: {2} ; Body: {3}", mailMessage.From, mailMessage.To, mailMessage.Subject, mailMessage.Body);
 
             if (isAsync)
