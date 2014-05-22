@@ -1,0 +1,24 @@
+﻿@model DataModel.Group
+
+@{
+    ViewBag.Title = "CreateGroup";
+    Layout = "~/Views/Shared/Site.cshtml";
+}
+<fieldset>
+    <Legend>CreateGroup</Legend>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div> 
+            <p>
+                <input type="submit" value="Create Group" />
+            </p>
+    }
+</fieldset>

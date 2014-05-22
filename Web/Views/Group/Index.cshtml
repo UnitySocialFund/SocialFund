@@ -1,0 +1,20 @@
+﻿@model List<DataModel.Group>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Site.cshtml";
+}
+<div>
+    <p>@Html.ActionLink("Create group","CreateGroup")</p>
+<table align="center" border ="0">
+@foreach (var group in Model)
+{
+    <tr>
+        <th>
+            @Html.ActionLink(group.Name,"Index","Log",new {groupId = group.Id},null)
+        </th>
+    </tr> 
+}
+</table>
+
+</div>
