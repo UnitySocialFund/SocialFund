@@ -17,11 +17,11 @@ namespace DataModel
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Input coins.")]
+        [Required(ErrorMessage = "Please input coins")]
         public decimal Coins { get; set; }
         public System.DateTime Date { get; set; }
 
-        [Required(ErrorMessage = "Input coins.")]
+        [Required(ErrorMessage= "Please add comment.")]
         public string Comment { get; set; }
         public int Group_UserId { get; set; }
     

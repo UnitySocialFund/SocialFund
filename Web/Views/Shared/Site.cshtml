@@ -134,12 +134,10 @@
                 <div id="menuRow">
                     <ul id="menu">              
                         <li>@Html.ActionLink("HOME", "Index", "Home")</li>
-                        
                      @if (Request.IsAuthenticated)
                      {
+                         <li>@Html.ActionLink("GROUPS","Index","Group")</li>
                          <li>@Html.ActionLink("CONTACTS", "Index", "Contacts")</li>
-                         @*<li>@Html.ActionLink("LOGS", "Index", "Log", new { groupId = 1 })</li>*@
-                         <li>@Html.ActionLink("LOGS", "Index", "Log")</li>
                      } 
                     </ul>
                 </div>

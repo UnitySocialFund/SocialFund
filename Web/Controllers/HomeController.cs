@@ -14,6 +14,7 @@ namespace SocialFund.Controllers
 
         public ActionResult Index()
         {
+            
             ViewData["Message"] = "Welcome to Social Fund!";
 
             return View();

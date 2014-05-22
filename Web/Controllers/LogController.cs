@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataModel;
 using System.Web.Routing;
+using Web.Models.LogViewModels;
 
 namespace SocialFund.Controllers
 {
@@ -50,17 +51,23 @@ namespace SocialFund.Controllers
             _groupService = new GroupService();
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int groupId)
         {
-            int groupId = 1;
+            int currentUserId = _logService.GetUserId(User.Identity.Name);
             var viewModel = new LogIndexViewModel();
             viewModel.Logs = _logService.GetGroupHistory(groupId);
             viewModel.Group = _groupService.GetGroup(groupId);
             viewModel.TatalBalnce = _logService.GetCurrentBalance(groupId);
-            viewModel.IsGroupOwner = true;
+
+            if (viewModel.Group.OwnerId == currentUserId)
+            {
+                viewModel.IsGroupOwner = true;
+            }
+
             return View(viewModel);
         }
 
+        [HttpGet]
         public ActionResult AddCoins(int id)
         {
             var viewModel = new Log();
@@ -75,7 +82,7 @@ namespace SocialFund.Controllers
                 return this.View(viewModel);
             }
 
-            _logService.AddLog(viewModel, id, 2);
+            _logService.AddLog(viewModel, id, User.Identity.Name);
             return this.RedirectToAction("Index", new {groupId = id });
         }
 

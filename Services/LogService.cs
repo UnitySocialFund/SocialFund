@@ -73,16 +73,20 @@ namespace Services
             return logsHistory;
         }
 
-        public void AddLog(Log log, int groupId, int userId)
+        public void AddLog(Log log, int groupId, string userName)
         {
-            var groupUser = new Group_User();
-
             using (var db = new SocialFundEntities())
             {
-                var tmpGroupUser = db.Group_User.FirstOrDefault(gu => gu.GroupId == groupId && gu.UserId == userId);
-                if (tmpGroupUser != null)
+                var user = db.User.FirstOrDefault(u => u.Name == userName);
+                if (user == null)
                 {
-                    groupUser = tmpGroupUser;
+                    return;
+                }
+
+                var groupUser = db.Group_User.Where(gu => gu.GroupId == groupId && gu.UserId == user.Id).FirstOrDefault();
+                if (groupUser == null)
+                {
+                    return;
                 }
 
                 log.Date = DateTime.Now;
@@ -90,6 +94,22 @@ namespace Services
                 db.Log.Add(log);
                 db.SaveChanges();
             }
+        }
+
+        public int GetUserId(string userName)
+        {
+            var user = new User();
+
+            using (var db = new SocialFundEntities())
+            {
+                var tmpUser = db.User.FirstOrDefault(u => u.Name == userName);
+                if (tmpUser != null)
+                {
+                    user = tmpUser;
+                }
+            }
+
+            return user.Id;
         }
 
         private User GetUser(int userId)
