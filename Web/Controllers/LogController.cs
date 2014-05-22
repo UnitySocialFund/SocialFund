@@ -96,6 +96,8 @@ namespace SocialFund.Controllers
             decimal balance = _logService.GetCurrentBalance(groupId);
             if (balance + log.Coins < 0)
             {
+                string message = "Balance ca not be less then 0, total balance = " + balance.ToString();
+                this.ModelState.AddModelError(string.Empty, message);
                 return false;
             }
 
