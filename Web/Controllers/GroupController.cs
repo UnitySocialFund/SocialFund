@@ -55,20 +55,21 @@ namespace SocialFund.Controllers
             return this.RedirectToAction("Index");
         }
 
-        public ActionResult AddUserToGroup(int id)
+        public ActionResult ShowUsers(int id)
         {
             var viewModel = new AddUserToGroupViewModel();
 
-            viewModel.Users = _groupService.GetUserNotInGroup(id);
+            viewModel.OtherUsers = _groupService.GetUserNotInGroup(id);
+            viewModel.GroupUsers = _groupService.GetUsersForGroup(id);
             viewModel.Group = _groupService.GetGroup(id);
             
             return this.View(viewModel);
         }
 
-        public ActionResult AddUserToGroupPost(int groupId, int userId)
+        public ActionResult AddUserToGroup(int groupId, int userId)
         {
             _groupService.CreateGroupUser(groupId, userId);
-            return this.RedirectToAction("Index", "Log", new { groupId = groupId });
+            return this.RedirectToAction("ShowUsers", new { id = groupId });
         }
     }
 }

@@ -10,11 +10,14 @@ namespace SocialFund.Models.GroupViewModel
     {
         public AddUserToGroupViewModel()
         {
-            Users = new List<User>();
+            GroupUsers = new List<User>();
+            OtherUsers = new List<User>();
             Group = new Group();
         }
 
-        public List<User> Users { get; set; }
+        public List<User> GroupUsers { get; set; }
+
+        public List<User> OtherUsers { get; set; }
 
         public Group Group { get; set; }
     }

@@ -221,7 +221,7 @@
     <Content Include="Views\Group\CreateGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Group\AddUserToGroup.cshtml" />
+    <Content Include="Views\Group\ShowUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Log\AddCoins.cshtml">

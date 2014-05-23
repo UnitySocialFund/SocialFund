@@ -16,7 +16,7 @@
             @Html.ActionLink("Add coins","AddCoins",  new {id = Model.Group.Id})
         </ul>
         <ul id ="menu">
-            @Html.ActionLink("Add user to group","AddUserToGroup","Group",new {id = Model.Group.Id},null)
+            @Html.ActionLink("Users information","ShowUsers","Group",new {id = Model.Group.Id},null)
         </ul>
     </div> 
 }
