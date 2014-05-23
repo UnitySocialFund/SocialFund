@@ -124,6 +124,7 @@
     <Compile Include="Models\Account\LogOnModel.cs" />
     <Compile Include="Models\Account\RegisterModel.cs" />
     <Compile Include="Models\GroupViewModel\AddUserToGroupViewModel.cs" />
+    <Compile Include="Models\GroupViewModel\GroupIndexViewModel.cs" />
     <Compile Include="Models\LogViewModels\AddCoinsViewModel.cs" />
     <Compile Include="Models\LogViewModels\LogIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

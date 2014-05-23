@@ -13,17 +13,33 @@ namespace SocialFund.Controllers
     {
         private readonly GroupService _groupService;
 
+        private readonly LogService _logService;
+
         public GroupController()
         {
             _groupService = new GroupService();
+            _logService = new LogService();
         }
         //
         // GET: /Group/
 
         public ActionResult Index()
         {
+            var viewModel = new GroupIndexViewModel();
             var groups = _groupService.GetGroupForUser(User.Identity.Name);
-            return View(groups);
+            int curentUserId = _logService.GetUserId(User.Identity.Name);
+            foreach (var group in groups)
+            {
+                if (group.OwnerId == curentUserId)
+                {
+                    viewModel.MyGroups.Add(group);
+                }
+                else
+                {
+                    viewModel.InvitedGroup.Add(group);
+                }
+            }
+            return View(viewModel);
         }
 
         public ActionResult CreateGroup()

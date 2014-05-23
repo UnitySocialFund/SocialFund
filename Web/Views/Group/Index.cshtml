@@ -1,4 +1,4 @@
-﻿@model List<DataModel.Group>
+﻿@model SocialFund.Models.GroupViewModel.GroupIndexViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -6,15 +6,45 @@
 }
 <div>
     <p>@Html.ActionLink("Create group","CreateGroup")</p>
-<table align="center" border ="0">
-@foreach (var group in Model)
+@if (Model.MyGroups.Count > 0)
 {
-    <tr>
-        <th>
-            @Html.ActionLink(group.Name,"Index","Log",new {groupId = group.Id},null)
-        </th>
-    </tr> 
+    <table align ="center" width ="300">
+        <tr>
+            <th>
+                <div style="background-color:#ACFA58">
+                My groups
+                </div>
+            </th>
+        </tr>
+        @foreach (var group in Model.MyGroups)
+        {
+            <tr>
+                <th>
+                    @Html.ActionLink(group.Name,"Index","Log",new {groupId = group.Id},null)
+                </th>
+            </tr> 
+        }
+    </table>
 }
-</table>
+@if (Model.InvitedGroup.Count > 0)
+{
+    <table align ="center" width ="300">
+        <tr>
+            <th>
+                <div style="background-color:#ACFA58">
+                Invited groups
+                </div>
+            </th>
+        </tr>
+        @foreach (var group in Model.InvitedGroup)
+        {
+            <tr>
+                <th>
+                    @Html.ActionLink(group.Name,"Index","Log",new {groupId = group.Id},null)
+                </th>
+            </tr> 
+        }
+    </table>
+}
 
 </div>
