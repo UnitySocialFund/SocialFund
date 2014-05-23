@@ -1,4 +1,4 @@
-﻿@model DataModel.Log
+﻿@model SocialFund.Models.LogViewModels.AddCoinsViewModel
 
 @{
     ViewBag.Title = "AddCoins";
@@ -13,15 +13,33 @@
             <td>
                 <th>Input nember of coins.</th>
                 <th>
-                    @Html.EditorFor(model => model.Coins, new { required="required" })
-                    @Html.ValidationMessageFor(model => model.Coins)
+                    @Html.EditorFor(model => model.Log.Coins, new { required="required" })
+                    @Html.ValidationMessageFor(model => model.Log.Coins)
                 </th>
             </td>
             <td>
                 <th>Enter comment</th>
                 <th>
-                    @Html.EditorFor(model => model.Comment, new { required="required" })
-                    @Html.ValidationMessageFor(model => model.Comment)
+                    @Html.EditorFor(model => model.Log.Comment, new { required="required" })
+                    @Html.ValidationMessageFor(model => model.Log.Comment)
+                </th>
+            </td>
+            <td>
+                <th>Choose user</th>
+                <th>
+                    <select id="UserName" required name="UserName">
+                        @foreach (var user in Model.Users)
+                                {
+                                    if (user.Name == User.Identity.Name)
+                                    {
+                                       <option value="@user.Name" selected>@user.Name</option>
+                                    }
+                                    else
+                                    {
+                                       <option value="@user.Name">@user.Name</option>
+                                    }
+                                }
+                    </select>
                 </th>
             </td>
         </table>

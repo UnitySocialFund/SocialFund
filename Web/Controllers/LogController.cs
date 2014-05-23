@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using DataModel;
 using System.Web.Routing;
 using Web.Models.LogViewModels;
+using SocialFund.Models.LogViewModels;
 
 namespace SocialFund.Controllers
 {
@@ -70,23 +71,24 @@ namespace SocialFund.Controllers
         [HttpGet]
         public ActionResult AddCoins(int id)
         {
-            var viewModel = new Log();
+            var viewModel = new AddCoinsViewModel();
+            viewModel.Users = _groupService.GetUsersForGroup(id);
             return this.View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult AddCoins(int id, Log viewModel)
+        public ActionResult AddCoins(int id, AddCoinsViewModel viewModel)
         {
             if (this.ValidateCoins(id, viewModel) == false)
             {
                 return this.View(viewModel);
             }
 
-            _logService.AddLog(viewModel, id, User.Identity.Name);
+            _logService.AddLog(viewModel.Log, id, viewModel.UserName);
             return this.RedirectToAction("Index", new {groupId = id });
         }
 
-        private bool ValidateCoins(int groupId, Log log)
+        private bool ValidateCoins(int groupId, AddCoinsViewModel viewModel)
         {
             if (this.ModelState.IsValid == false)
             {
@@ -94,7 +96,7 @@ namespace SocialFund.Controllers
             }
 
             decimal balance = _logService.GetCurrentBalance(groupId);
-            if (balance + log.Coins < 0)
+            if (balance + viewModel.Log.Coins < 0)
             {
                 string message = "Balance ca not be less then 0, total balance = " + balance.ToString();
                 this.ModelState.AddModelError(string.Empty, message);

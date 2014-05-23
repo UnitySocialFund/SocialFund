@@ -5,17 +5,9 @@
     Layout = "~/Views/Shared/Site.cshtml";
 }
 
-<h2>AddUserToGroup</h2>
+<h1>Add user to group</h1>
 <div>
     <table cellpadding="0" cellspacing="0">
-        <tr>
-            <th>
-                <div style="width:300px;">User</div>
-            </th>
-            <th>
-                <div style="width:300px;">Action</div>
-            </th>
-        </tr>
         @foreach (var user in Model.Users)
         {
             <tr>
