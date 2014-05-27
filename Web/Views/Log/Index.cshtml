@@ -5,23 +5,12 @@
     ViewBag.Title = "Index";
 }
 <div>
-    <h3 align ="center">
+    <h2>
        @Model.Group.Name
-    </h3>
+    </h2>
 </div>
-@if (Model.IsGroupOwner)
-{
-    <div align ="left">
-        <ul id ="menu">
-            @Html.ActionLink("Add coins","AddCoins",  new {id = Model.Group.Id})
-        </ul>
-        <ul id ="menu">
-            @Html.ActionLink("Users information","ShowUsers","Group",new {id = Model.Group.Id},null)
-        </ul>
-    </div> 
-}
-<div>
-    <table align="center" border ="0">
+
+    <table align="left" border ="0">
         <tr>
             <th>Operation</th>
             <th>User</th>
@@ -33,19 +22,24 @@
             <tr>
                 @if(log.Coins > 0)
                 {
-                    <th><font color="green">@log.Coins</font></th>
+                    <td><font color="green">@log.Coins</font></td>
                 }
                 else
                 {
-                    <th><font color="red">@log.Coins</font></th>
+                    <td><font color="red">@log.Coins</font></td>
                 }
-                <th>@log.Group_User.User.Name</th>
-                <th>@log.Date</th>
-                <th>@log.Comment</th>
+                <td>@log.Group_User.User.Name</td>
+                <td>@log.Date</td>
+                <td>@log.Comment</td>
             </tr>
         }
     </table>
-</div>
-<div>
-    <h2 align ="center">Tatal balance @Model.TatalBalnce</h2>
-</div>
+    <br clear ="all">
+    <h2 align ="left">Tatal balance @Model.TatalBalnce</h2>
+    @if (Model.IsGroupOwner)
+    {
+        <br>
+        <input type="button" value="Add coins" onclick="window.location.href=('@Url.Action("AddCoins",new {id = Model.Group.Id})    ')"/>
+    }
+
+

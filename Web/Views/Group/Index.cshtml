@@ -4,47 +4,52 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/Site.cshtml";
 }
-<div>
-    <p>@Html.ActionLink("Create group","CreateGroup")</p>
+<body>
 @if (Model.MyGroups.Count > 0)
 {
-    <table align ="center" width ="300">
+    <h2>My groups</h2>
+    <table align ="left">
         <tr>
-            <th>
-                <div style="background-color:#ACFA58">
-                My groups
-                </div>
-            </th>
+            <th>Group name</th>
         </tr>
         @foreach (var group in Model.MyGroups)
         {
             <tr>
-                <th>
-                    @Html.ActionLink(group.Name,"Index","Log",new {groupId = group.Id},null)
-                </th>
+                <td>
+                    @Html.ActionLink(group.Name,"ShowUsers",new {id = group.Id},null)
+                </td>
+                <td>
+                    @Html.ActionLink("Log","Index","Log",new {groupId = group.Id},null)
+                </td>
             </tr> 
         }
     </table>
 }
 @if (Model.InvitedGroup.Count > 0)
 {
-    <table align ="center" width ="300">
+    <br clear="all">
+    <br>
+    <h2>Invited groups</h2>
+    <table align ="left">
         <tr>
-            <th>
-                <div style="background-color:#ACFA58">
-                Invited groups
-                </div>
-            </th>
+            <th>Group name</th>
         </tr>
         @foreach (var group in Model.InvitedGroup)
         {
             <tr>
-                <th>
-                    @Html.ActionLink(group.Name,"Index","Log",new {groupId = group.Id},null)
-                </th>
+                <td>
+                    @Html.ActionLink(group.Name, "ShowUsers",  new { id = group.Id }, null)
+                </td>
+                <td>
+                    @Html.ActionLink("Log", "Index", "Log", new { groupId = group.Id }, null)
+                </td>
             </tr> 
         }
     </table>
 }
+    <br clear="all">
+    <br>
+<input type="button" value="Create group" onclick="window.location.href=('@Url.Action("CreateGroup")    ')" />
+</body>
 
-</div>
+
