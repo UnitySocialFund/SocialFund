@@ -13,17 +13,33 @@ namespace SocialFund.Controllers
     {
         private readonly GroupService _groupService;
 
+        private readonly LogService _logService;
+
         public GroupController()
         {
             _groupService = new GroupService();
+            _logService = new LogService();
         }
         //
         // GET: /Group/
 
         public ActionResult Index()
         {
+            var viewModel = new GroupIndexViewModel();
             var groups = _groupService.GetGroupForUser(User.Identity.Name);
-            return View(groups);
+            int curentUserId = _logService.GetUserId(User.Identity.Name);
+            foreach (var group in groups)
+            {
+                if (group.OwnerId == curentUserId)
+                {
+                    viewModel.MyGroups.Add(group);
+                }
+                else
+                {
+                    viewModel.InvitedGroup.Add(group);
+                }
+            }
+            return View(viewModel);
         }
 
         public ActionResult CreateGroup()
@@ -39,20 +55,21 @@ namespace SocialFund.Controllers
             return this.RedirectToAction("Index");
         }
 
-        public ActionResult AddUserToGroup(int id)
+        public ActionResult ShowUsers(int id)
         {
             var viewModel = new AddUserToGroupViewModel();
 
-            viewModel.Users = _groupService.GetUserNotInGroup(id);
+            viewModel.OtherUsers = _groupService.GetUserNotInGroup(id);
+            viewModel.GroupUsers = _groupService.GetUsersForGroup(id);
             viewModel.Group = _groupService.GetGroup(id);
             
             return this.View(viewModel);
         }
 
-        public ActionResult AddUserToGroupPost(int groupId, int userId)
+        public ActionResult AddUserToGroup(int groupId, int userId)
         {
             _groupService.CreateGroupUser(groupId, userId);
-            return this.RedirectToAction("Index", "Log", new { groupId = groupId });
+            return this.RedirectToAction("ShowUsers", new { id = groupId });
         }
     }
 }

@@ -79,6 +79,21 @@ namespace Services
             return users;
         }
 
+        public List<User> GetUsersForGroup(int groupId)
+        {
+            var users = new List<User>();
+            using (var db = new SocialFundEntities())
+            {
+                var groupUsers = db.Group_User.Where(g => g.GroupId == groupId).ToList();
+                foreach (var groupUser in groupUsers)
+                {
+                    users.Add(groupUser.User);
+                }
+            }
+
+            return users;
+        }
+
         public void CreateGroup(Group group,string userName)
         {
             using (var db = new SocialFundEntities())

@@ -1,20 +1,56 @@
-﻿@model List<DataModel.Group>
+﻿@model SocialFund.Models.GroupViewModel.GroupIndexViewModel
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/Site.cshtml";
 }
-<div>
-    <p>@Html.ActionLink("Create group","CreateGroup")</p>
-<table align="center" border ="0">
-@foreach (var group in Model)
-{
-    <tr>
-        <th>
-            @Html.ActionLink(group.Name,"Index","Log",new {groupId = group.Id},null)
-        </th>
-    </tr> 
-}
-</table>
 
-</div>
+<body>
+@if (Model.MyGroups.Count > 0)
+{
+    <h2>My groups</h2>
+    <table align ="left">
+        <tr>
+            <th>Group name</th>
+        </tr>
+        @foreach (var group in Model.MyGroups)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(group.Name,"ShowUsers",new {id = group.Id},null)
+                </td>
+                <td>
+                    @Html.ActionLink("Log","Index","Log",new {groupId = group.Id},null)
+                </td>
+            </tr> 
+        }
+    </table>
+}
+@if (Model.InvitedGroup.Count > 0)
+{
+    <br clear="all">
+    <br>
+    <h2>Invited groups</h2>
+    <table align ="left">
+        <tr>
+            <th>Group name</th>
+        </tr>
+        @foreach (var group in Model.InvitedGroup)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(group.Name, "ShowUsers",  new { id = group.Id }, null)
+                </td>
+                <td>
+                    @Html.ActionLink("Log", "Index", "Log", new { groupId = group.Id }, null)
+                </td>
+            </tr> 
+        }
+    </table>
+}
+    <br clear="all">
+    <br>
+<input type="button" value="Create group" onclick="window.location.href=('@Url.Action("CreateGroup")    ')" />
+</body>
+
+
