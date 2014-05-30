@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -225,6 +226,9 @@
     <Content Include="Views\Log\AddCoins.cshtml">
       <SubType>Code</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\GroupsByUser.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
