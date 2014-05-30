@@ -238,9 +238,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <Content Include="Views\Shared\GroupsByUser.cshtml" />
-=======
     <Content Include="Views\Shared\_GridPager.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -248,7 +245,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Grid.mvc.readme" />
->>>>>>> 2a4f8790a418065a0686df04a530a36742a9a341
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
