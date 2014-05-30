@@ -8,7 +8,7 @@ using DataModel;
 namespace Services.Authentication
 {
     //Implements custom membership provider
-    public class CustomMembershipProvider : MembershipProvider
+    public class CustomMembershipProvider : MembershipProvider, IProcessingUser
     {
         public override bool ValidateUser(string username, string password)
         {
@@ -74,7 +74,7 @@ namespace Services.Authentication
                         User user = new User();
                         user.Name = username;
                         user.Password = Crypto.HashPassword(password);
-
+                        user.Email = email;
                         db.User.Add(user);
                         db.SaveChanges();
 
@@ -87,6 +87,45 @@ namespace Services.Authentication
             return null;
         }
 
+        public override void UpdateUser(MembershipUser user)
+        {
+            using (SocialFundEntities db = new SocialFundEntities())
+            {
+                var original = (from u in db.User
+                                where u.Name == user.UserName
+                                select u).FirstOrDefault();
+                if (original != null)
+                {
+                    original.Email = user.Email;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public User GetUserInformationByName(string username)
+        {
+            using (SocialFundEntities db = new SocialFundEntities())
+            {
+                try
+                {
+                    User user = (from u in db.User.Include("Group_User")
+                                 where u.Name == username
+                                 select u).FirstOrDefault();
+
+                    if (user != null)
+                    {
+                        user.Group = (from gr in user.Group_User select gr.Group).ToList();
+                        return user;
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            return null;
+        }
 
         public override string ApplicationName
         {
@@ -216,10 +255,6 @@ namespace Services.Authentication
             throw new NotImplementedException();
         }
 
-        public override void UpdateUser(MembershipUser user)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }
