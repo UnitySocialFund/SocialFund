@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Services.Authentication;
 using SocialFund.Models.Account;
+using DataModel;
+using Services;
 
 namespace SocialFund.Controllers
 {
@@ -43,6 +45,12 @@ namespace SocialFund.Controllers
             return View();
         }
 
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Account");
+        }
+
         public ActionResult Register()
         {
             return View();
@@ -68,16 +76,37 @@ namespace SocialFund.Controllers
             return View();
         }
 
-        public ActionResult Logout()
+        [HttpPost]
+        [Authorize]
+        public ActionResult UserInformation(RegisterModel model)
         {
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "Account");
+            MembershipUser membershipUser = ((CustomMembershipProvider)Membership.Provider).GetUser(User.Identity.Name, true);
+
+            if (membershipUser != null)
+            {
+                membershipUser.Email = model.Email;
+                ((CustomMembershipProvider)Membership.Provider).UpdateUser(membershipUser);
+                model.UserName = User.Identity.Name;
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error during updating");
+            }
+
+            return View(model);
         }
 
         [Authorize]
         public ActionResult UserInformation()
         {
-            return View();
+            var i = User.Identity.Name;
+            User user = ((IProcessingUser)Membership.Provider).GetUserInformationByName(User.Identity.Name);
+
+            RegisterModel model = new RegisterModel();
+            model.UserName = user.Name;
+            model.Email = user.Email;
+
+            return View(model);
         }
     }
 }
