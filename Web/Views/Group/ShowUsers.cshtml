@@ -1,0 +1,39 @@
+﻿@model SocialFund.Models.GroupViewModel.AddUserToGroupViewModel
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "AddUserToGroup";
+    Layout = "~/Views/Shared/Site.cshtml";
+}
+
+<html>
+<head>
+    <title>Index</title>
+</head>
+
+<body>
+@if (Model.GroupUsers.Count > 0)
+{
+<h2>Users in group</h2>
+<div>
+        @Html.Grid(Model.GroupUsers).Columns(columns => 
+                    {
+                        columns.Add(c => c.Name).Encoded(false).Sanitized(false).Titled("User name").Filterable(true);
+                    }).WithPaging(10)
+</div>
+}
+
+@if (Model.OtherUsers.Count > 0)
+{
+<h2>Users not in group</h2>
+<div>
+    
+        @Html.Grid(Model.OtherUsers).Columns(columns => 
+                    {
+                        columns.Add(c => c.Name).Encoded(false).Sanitized(false).Titled("User name").Filterable(true);
+                        columns.Add().Encoded(false).Sanitized(false).RenderValueAs(i => Html.ActionLink("Add to group", "AddUserToGroup", new { groupId = Model.Group.Id, userId = i.Id }));
+                    }).WithPaging(10)
+</div>
+}
+</body>
+</html>
