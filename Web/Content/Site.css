@@ -243,3 +243,10 @@ img {
     border: 1px solid #CCC;
     font-weight: bold;
 }
+
+.divErrorInformation {
+
+   text-decoration: none;
+    color: #004F88;
+    margin:10px;
+}
