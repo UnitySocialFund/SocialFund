@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace SocialFund.Controllers
 {
+    [Authorize]
     public class GroupController : Controller
     {
         private readonly GroupService _groupService;
@@ -62,7 +63,7 @@ namespace SocialFund.Controllers
             viewModel.OtherUsers = _groupService.GetUserNotInGroup(id);
             viewModel.GroupUsers = _groupService.GetUsersForGroup(id);
             viewModel.Group = _groupService.GetGroup(id);
-            
+
             return this.View(viewModel);
         }
 

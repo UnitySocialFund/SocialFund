@@ -12,6 +12,7 @@ using SocialFund.Models.LogViewModels;
 
 namespace SocialFund.Controllers
 {
+    [Authorize]
     public class LogController : Controller
     {
         private readonly LogService _logService;
