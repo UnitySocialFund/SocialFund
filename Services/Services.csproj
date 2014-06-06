@@ -54,7 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\CustomMembershipProvider.cs" />
-    <Compile Include="GroupService.cs" />    <Compile Include="LogService.cs" />
+    <Compile Include="Authentication\IProcessingUser.cs" />
+    <Compile Include="GroupService.cs" />
+    <Compile Include="LogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

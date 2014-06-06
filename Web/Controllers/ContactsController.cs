@@ -23,8 +23,7 @@ namespace SocialFund.Controllers
         public ActionResult Index(FeedbackModel model)
         {
             MailSender sender = new MailSender();
-            sender.SetCredential("unitysocialfund@mail.ru", "Install_new23");
-            sender.InitializeMailMessage(model.Email, "unitysocialfund@mail.ru", model.Text, "Feedback from " + model.Name);
+            sender.InitializeMailMessage(model.Email, "unitysocialfund@gmail.com", "Feedback from " + model.Name, model.Text);
             sender.SendSmtp(false);
 
             return View(model);

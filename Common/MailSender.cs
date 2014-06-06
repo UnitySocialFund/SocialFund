@@ -93,7 +93,17 @@ namespace Common
         /// <param name="body">Body of the e-mail  message</param>
         public void InitializeMailMessage(string from, string to, string subject, string body)
         {
-            mailMessage = new MailMessage(from, to, subject, @body);
+            mailMessage = new MailMessage(from, to, subject, CreateBody(from, body));
+        }
+
+        /// <summary>
+        /// Create email body
+        /// </summary>
+        /// <param name="from">Address of the sender of the e-mail message</param>
+        /// <param name="body">Body of the e-mail  message</param>
+        private string CreateBody(string from, string body)
+        {
+            return "\nEmail Address: " + from + "\nMessage: " + @body;
         }
 
         /// <summary>
@@ -141,12 +151,6 @@ namespace Common
         /// <param name="isAsync">Indicates whether sending to SMTP server is asynchronous operation</param>
         public void SendSmtp(SmtpClient client, bool isAsync)
         {
-            var boolValue = IsUseDefaultCredentials();
-
-            client.UseDefaultCredentials = boolValue;
-            client.EnableSsl = !boolValue;
-            client.Credentials = credential;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.Timeout = 5000;
 
             if (credential != null)

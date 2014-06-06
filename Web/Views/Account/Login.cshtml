@@ -7,6 +7,11 @@
 <fieldset>
     <legend>Log in</legend>
 
+    <div style="padding-bottom:10px;">
+        "Don't have an account?"
+        @Html.ActionLink("Register now", "Register", null, null)
+    </div>
+
     @using (Html.BeginForm())
     {
         @Html.ValidationSummary(true)
@@ -32,8 +37,5 @@
         </p>
     }
 
-    <div class="block">
-        "Don't have an account?"
-        @Html.ActionLink("Register now", "Register", null, null)
-    </div>
+    
 </fieldset>

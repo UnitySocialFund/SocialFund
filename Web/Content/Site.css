@@ -237,3 +237,16 @@ img {
     height: 200px;
     width: 200px;
 }
+
+.display-field {
+    width: 200px;
+    border: 1px solid #CCC;
+    font-weight: bold;
+}
+
+.divErrorInformation {
+
+   text-decoration: none;
+    color: #004F88;
+    margin:10px;
+}
