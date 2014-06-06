@@ -7,16 +7,16 @@ namespace Tests
     [TestClass]
     public class EmailSenderTest
     {
-        [TestMethod]
-        public void SendEmailWithAuthentication()
-        {
-            //Assert.Inconclusive();
+        //[TestMethod]
+        //public void SendEmailWithAuthentication()
+        //{
+        //    //Assert.Inconclusive();
 
-            MailSender sender = new MailSender();
-            sender.SetCredential("unitysocialfund@gmail.com", "Install_new23");
-            sender.InitializeMailMessage("test@mail.ru", "unitysocialfund@gmail.com", "With Authentication", "Test");
-            sender.SendSmtp("smtp.gmail.com", 587, false);
-        }
+        //    MailSender sender = new MailSender();
+        //    sender.SetCredential("unitysocialfund@gmail.com", "Install_new23");
+        //    sender.InitializeMailMessage("test@mail.ru", "unitysocialfund@gmail.com", "With Authentication", "Test");
+        //    sender.SendSmtp("smtp.gmail.com", 587, false);
+        //}
 
         [TestMethod] 
         public void SendEmailWithoutAuthentication()
@@ -34,8 +34,10 @@ namespace Tests
             //Assert.Inconclusive();
 
             MailSender sender = new MailSender();
-            sender.SetCredential("unitysocialfund@gmail.com", "Install_new23");
             sender.InitializeMailMessage("test@mail.ru", "unitysocialfund@gmail.com", "From Configuration", "Test");
+            sender.SendSmtp(false);
+
+            sender.InitializeMailMessage("test@mail.ru", "snake1982309@hotmail.com", "From Configuration", "Test");
             sender.SendSmtp(false);
         }
     }
