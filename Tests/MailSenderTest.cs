@@ -10,18 +10,18 @@ namespace Tests
         [TestMethod]
         public void SendEmailWithAuthentication()
         {
-            Assert.Inconclusive();
+            //Assert.Inconclusive();
 
             MailSender sender = new MailSender();
-            sender.SetCredential("snake@playasoftware.com", ",jdleq");
-            sender.InitializeMailMessage("test@mail.ru", "snake1982309@hotmail.com", "With Authentication", "Test");
+            sender.SetCredential("unitysocialfund@gmail.com", "Install_new23");
+            sender.InitializeMailMessage("test@mail.ru", "unitysocialfund@gmail.com", "With Authentication", "Test");
             sender.SendSmtp("smtp.gmail.com", 587, false);
         }
 
         [TestMethod] 
         public void SendEmailWithoutAuthentication()
         {
-           // Assert.Inconclusive();
+            Assert.Inconclusive();
 
             MailSender sender = new MailSender();
             sender.InitializeMailMessage("test@mail.ru", "lreed@ipswitch.com", "Without Authentication", "Test");
@@ -34,8 +34,8 @@ namespace Tests
             //Assert.Inconclusive();
 
             MailSender sender = new MailSender();
-            sender.SetCredential("unitysocialfund@mail.ru", "Install_new23");
-            sender.InitializeMailMessage("test@mail.ru", "snake1982309@hotmail.com", "From Configuration", "Test");
+            sender.SetCredential("unitysocialfund@gmail.com", "Install_new23");
+            sender.InitializeMailMessage("test@mail.ru", "unitysocialfund@gmail.com", "From Configuration", "Test");
             sender.SendSmtp(false);
         }
     }
