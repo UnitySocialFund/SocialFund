@@ -124,7 +124,6 @@ namespace SocialFund.Controllers
                 if (this.ValidateCoins(id, viewModel.Log.Coins) == false)
                 {
                     return this.View(viewModel);
-                    //return this.RedirectToAction("Index", new { groupId = id });
                 }
 
                 _logService.AddLog(viewModel.Log, id, viewModel.UserName);

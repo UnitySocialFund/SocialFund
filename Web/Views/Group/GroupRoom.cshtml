@@ -1,5 +1,5 @@
 ﻿@model SocialFund.Models.GroupViewModel.GroupDetailsViewModel
-@using System.Web.UI.HtmlControls
+@using System.Web.Services.Description
 @using PagedList.Mvc
 
 @{
@@ -13,31 +13,35 @@
             <ul>
                 @if (Model.currentUserIsOwner)
                 {
-                    <li>@Html.ActionLink("Group setup", "#", new {groupId = Model.Group.Id}, new {@class = "g-button"})</li>
-                    <li>@Html.ActionLink("Add member", "ShowUserForAddition", new {groupId = Model.Group.Id}, new {@class = "g-button"})</li>
+                    <li>@Html.ActionLink("Group setup", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
+                    <li>@Html.ActionLink("Add member", "ShowUserForAddition", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
                 }
-                <li>@Html.ActionLink("Log history", "Index", "Log", new {groupId = Model.Group.Id}, new { @class="g-button"} )</li>
-                <li>@Html.ActionLink("Group contacts", "#", new {groupId = Model.Group.Id}, new { @class="g-button"} )</li>
+                <li>@Html.ActionLink("Log history", "Index", "Log", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
+                <li>@Html.ActionLink("Group contacts", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
             </ul>
         </div>
     </div>
 
     <div id="g-pic">
-        <h1 style="color: white">
-           Captia
-        </h1>
+        <h1 style="color: white">Captia</h1>
     </div>
     <div id="g-content">
+        @if (!Model.currentUserIsOwner)
+        {
+            <div id="g-owner">
+                <h4 style="color: #FFF">Owner is @Model.Group.User.Name</h4>
+            </div>
+        }
         <h2 style="color: #FFF">@Model.Group.Name</h2>
-        <h3  style="color: #FFF">Count of members: @Model.GroupUsers.TotalItemCount</h3>
-        <h3  style="color: #FFF">Total balamce: @Model.TatalBalnce</h3>
+        <h3 style="color: #FFF">Count of members: @Model.GroupUsers.TotalItemCount</h3>
+        <h3 style="color: #FFF">Total balamce: @Model.TatalBalnce</h3>
         <div id="coinscontrol">
             <div class="g-coing-controls">
                 <ul>
-                    <li>@Html.ActionLink("Add coins", "AddCoins", "Log", new {id = Model.Group.Id}, new { @class="g-button g-button-white"} )</li>
+                    <li>@Html.ActionLink("Add coins", "AddCoins", "Log", new { id = Model.Group.Id }, new { @class = "g-button g-button-white" })</li>
                     @if (Model.currentUserIsOwner)
                     {
-                        <li>@Html.ActionLink("Take coins", "RemoveCoins", "Log", new {id = Model.Group.Id}, new {@class = "g-button g-button-white"})</li>
+                        <li>@Html.ActionLink("Take coins", "RemoveCoins", "Log", new { id = Model.Group.Id }, new { @class = "g-button g-button-white" })</li>
                     }
                 </ul>
             </div>
@@ -45,9 +49,9 @@
 
     </div>
     <div id="g-members">
-        <div class="g-list-member">
-        </div>
-        <div style="width: 270px; margin-right: 10px; float: left;">
+        @*        <div class="g-list-member">
+        </div>*@
+        <div id="myPager" style="width: 270px; margin-right: 10px; float: left;">
             @if (Model.GroupUsers.Count > 0)
             {
                 <h2>Users in group</h2>@*
@@ -84,12 +88,12 @@
                     </tbody>
                 </table>
                 <div>
-                    @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page, groupId = Model.Group.Id }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToLastPageFormat = ">>" })
+                    @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page = page, groupId = Model.Group.Id }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "myPager" }))
+                    @*@Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page, groupId = Model.Group.Id }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToLastPageFormat = ">>" })*@
                 </div>
             }
         </div>
     </div>
-
 
     <div id="g-log">
         <table align="left" border="0">
@@ -104,11 +108,11 @@
                 <tr>
                     @if (log.Coins > 0)
                     {
-                        <td><font color="green">@log.Coins</font></td>
+                        <td><font color=#004F88>@log.Coins</font></td>
                     }
                     else
                     {
-                        <td><font color="red">@log.Coins</font></td>
+                        <td><font color=#ff4500>@log.Coins</font></td>
                     }
                     <td>@log.Group_User.User.Name</td>
                     <td>@log.Date</td>
@@ -118,9 +122,6 @@
         </table>
         <br clear="all">
         <h2 align="left">Tatal balance @Model.TatalBalnce</h2>
-
     </div>
-
-
     <div id="g-footer">Some information</div>
 </div>

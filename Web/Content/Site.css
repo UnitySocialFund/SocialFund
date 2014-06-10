@@ -254,6 +254,11 @@ img {
     padding-right: 20px;
     padding-top: 20px;
 }
+#g-owner {
+    display: inline-block;
+    width: 100px;
+    float: right; 
+}
 
 #g-members {
     background: #FFF;
