@@ -6,40 +6,45 @@
 }
 <div>
     <h2>
-       @Model.Group.Name
+        @Model.Group.Name
     </h2>
 </div>
 
-    <table align="left" border ="0">
-        <tr>
-            <th>Operation</th>
-            <th>User</th>
-            <th>Date</th>
-            <th>Comment</th>
-        </tr>
-        @foreach(var log in Model.Logs)
-        {
-            <tr>
-                @if(log.Coins > 0)
-                {
-                    <td><font color="green">@log.Coins</font></td>
-                }
-                else
-                {
-                    <td><font color="red">@log.Coins</font></td>
-                }
-                <td>@log.Group_User.User.Name</td>
-                <td>@log.Date</td>
-                <td>@log.Comment</td>
-            </tr>
-        }
-    </table>
-    <br clear ="all">
-    <h2 align ="left">Tatal balance @Model.TatalBalnce</h2>
-    @if (Model.IsGroupOwner)
+<table align="left" border="0">
+    <tr>
+        <th>Operation</th>
+        <th>User</th>
+        <th>Date</th>
+        <th>Comment</th>
+    </tr>
+    @foreach (var log in Model.Logs)
     {
-        <br>
-        <input type="button" value="Add coins" onclick="window.location.href=('@Url.Action("AddCoins",new {id = Model.Group.Id})    ')"/>
+        <tr>
+            @if (log.Coins > 0)
+            {
+                <td><font color="green">@log.Coins</font></td>
+            }
+            else
+            {
+                <td><font color="red">@log.Coins</font></td>
+            }
+            <td>@log.Group_User.User.Name</td>
+            <td>@log.Date</td>
+            <td>@log.Comment</td>
+        </tr>
     }
+</table>
+<br clear="all">
+<h2 align="left">Tatal balance @Model.TatalBalnce</h2>
+<hr/>
+@Html.ActionLink("BACK", "GroupRoom", "Group", new { groupId = Model.Group.Id}, new { @class="g-button"})
+
+@if (Model.IsGroupOwner)
+{
+    <br>
+    <input type="button" value="Add coins" class="g-button" onclick="window.location.href=('@Url.Action("AddCoins", new { id = Model.Group.Id })    ')"/>
+    <input type="button" value="Remove coins" class="g-button" onclick="window.location.href=('@Url.Action("RemoveCoins", new { id = Model.Group.Id })    ')"/>
+}
+
 
 

@@ -80,16 +80,61 @@ namespace SocialFund.Controllers
         [HttpPost]
         public ActionResult AddCoins(int id, AddCoinsViewModel viewModel)
         {
-            if (this.ValidateCoins(id, viewModel) == false)
+            if (viewModel.Log.Coins <= 0)
             {
+                string message = "Can't be equal or less then 0";
+                this.ModelState.AddModelError(string.Empty, message);
                 return this.View(viewModel);
             }
+            else
+            {
+                if (this.ValidateCoins(id, viewModel.Log.Coins) == false)
+                {
+                    viewModel.Users = _groupService.GetUsersForGroup(id);
+                    return this.View(viewModel);
+                }
 
-            _logService.AddLog(viewModel.Log, id, viewModel.UserName);
-            return this.RedirectToAction("Index", new {groupId = id });
+                _logService.AddLog(viewModel.Log, id, viewModel.UserName);
+                return this.RedirectToAction("GroupRoom", "Group", new { groupId = id });
+            }
         }
 
-        private bool ValidateCoins(int groupId, AddCoinsViewModel viewModel)
+        [HttpGet]
+        public ActionResult RemoveCoins(int id)
+        {
+
+            var viewModel = new RemoveCoinsViewModel();
+            viewModel.UserId = _logService.GetUserId(User.Identity.Name);
+            viewModel.UserName = User.Identity.Name;
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveCoins(int id, RemoveCoinsViewModel viewModel)
+        {
+            if (viewModel.Log.Coins <= 0)
+            {
+                string message = "Can't be equal or less then 0";
+                this.ModelState.AddModelError(string.Empty, message);
+                return this.View(viewModel);
+            }
+            else
+            {
+                viewModel.Log.Coins = 0 - viewModel.Log.Coins;
+                if (this.ValidateCoins(id, viewModel.Log.Coins) == false)
+                {
+                    return this.View(viewModel);
+                    //return this.RedirectToAction("Index", new { groupId = id });
+                }
+
+                _logService.AddLog(viewModel.Log, id, viewModel.UserName);
+                return this.RedirectToAction("GroupRoom", "Group", new { groupId = id });
+            }
+        }
+
+
+
+        private bool ValidateCoins(int groupId, decimal viewModel)
         {
             if (this.ModelState.IsValid == false)
             {
@@ -97,9 +142,9 @@ namespace SocialFund.Controllers
             }
 
             decimal balance = _logService.GetCurrentBalance(groupId);
-            if (balance + viewModel.Log.Coins < 0)
+            if (balance + viewModel < 0)
             {
-                string message = "Balance ca not be less then 0, total balance = " + balance.ToString();
+                string message = "Balance can not be less then 0, total balance = " + balance.ToString();
                 this.ModelState.AddModelError(string.Empty, message);
                 return false;
             }

@@ -22,9 +22,21 @@ namespace SocialFund.Controllers
         [HttpPost]
         public ActionResult Index(FeedbackModel model)
         {
-            MailSender sender = new MailSender();
-            sender.InitializeMailMessage(model.Email, "unitysocialfund@gmail.com", "Feedback from " + model.Name, model.Text);
-            sender.SendSmtp(false);
+            if (this.ModelState.IsValid == true)
+            {
+                if (MailSender.ValidateEmail(model.Email))
+                {
+                    MailSender sender = new MailSender();
+                    sender.InitializeMailMessage(model.Email, "unitysocialfund@gmail.com", "Feedback from " + model.Name,
+                        model.Text);
+                    sender.SendSmtp(false);
+                }
+                else
+                {
+                    this.ModelState.AddModelError(string.Empty, "No valid E-Mail.");    
+                }
+                
+            }
 
             return View(model);
         }
