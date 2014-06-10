@@ -1,0 +1,126 @@
+﻿@model SocialFund.Models.GroupViewModel.GroupDetailsViewModel
+@using System.Web.UI.HtmlControls
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "GroupRoom";
+    Layout = "~/Views/Shared/Site.cshtml";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<div id="groupDiv">
+    <div id="g-header">
+        <div class="group-controls">
+            <ul>
+                @if (Model.currentUserIsOwner)
+                {
+                    <li>@Html.ActionLink("Group setup", "#", new {groupId = Model.Group.Id}, new {@class = "g-button"})</li>
+                    <li>@Html.ActionLink("Add member", "ShowUserForAddition", new {groupId = Model.Group.Id}, new {@class = "g-button"})</li>
+                }
+                <li>@Html.ActionLink("Log history", "Index", "Log", new {groupId = Model.Group.Id}, new { @class="g-button"} )</li>
+                <li>@Html.ActionLink("Group contacts", "#", new {groupId = Model.Group.Id}, new { @class="g-button"} )</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="g-pic">
+        <h1 style="color: white">
+           Captia
+        </h1>
+    </div>
+    <div id="g-content">
+        <h2 style="color: #FFF">@Model.Group.Name</h2>
+        <h3  style="color: #FFF">Count of members: @Model.GroupUsers.TotalItemCount</h3>
+        <h3  style="color: #FFF">Total balamce: @Model.TatalBalnce</h3>
+        <div id="coinscontrol">
+            <div class="g-coing-controls">
+                <ul>
+                    <li>@Html.ActionLink("Add coins", "AddCoins", "Log", new {id = Model.Group.Id}, new { @class="g-button g-button-white"} )</li>
+                    @if (Model.currentUserIsOwner)
+                    {
+                        <li>@Html.ActionLink("Take coins", "RemoveCoins", "Log", new {id = Model.Group.Id}, new {@class = "g-button g-button-white"})</li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div id="g-members">
+        <div class="g-list-member">
+        </div>
+        <div style="width: 270px; margin-right: 10px; float: left;">
+            @if (Model.GroupUsers.Count > 0)
+            {
+                <h2>Users in group</h2>@*
+
+                <ul>
+                    @foreach (var item in Model.GroupUsers)
+                    {
+                        <li class="g-memeber-item">@Html.ActionLink(item.Name, "#", new { groupId = Model.Group.Id, userId = item.Id })</li> 
+                    }
+                </ul>*@
+            
+                <table style="padding: 10px">
+                    <thead>
+                        <tr>
+                            <th>User name</th>
+                            @if (Model.currentUserIsOwner)
+                            {
+                                <th></th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.GroupUsers)
+                        {
+                            <tr>
+                                <td style="height: 10px">@Html.ActionLink(item.Name, "#", new { groupId = Model.Group.Id, userId = item.Id })</td>
+
+                                @if (Model.currentUserIsOwner)
+                                {
+                                    <td style="height: 10px">@Html.ActionLink("Delete", "RemoveUserFromGroup", new { groupId = Model.Group.Id, userId = item.Id })</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div>
+                    @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page, groupId = Model.Group.Id }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToLastPageFormat = ">>" })
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <div id="g-log">
+        <table align="left" border="0">
+            <tr>
+                <th>Operation</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Comment</th>
+            </tr>
+            @foreach (var log in Model.LastLogs)
+            {
+                <tr>
+                    @if (log.Coins > 0)
+                    {
+                        <td><font color="green">@log.Coins</font></td>
+                    }
+                    else
+                    {
+                        <td><font color="red">@log.Coins</font></td>
+                    }
+                    <td>@log.Group_User.User.Name</td>
+                    <td>@log.Date</td>
+                    <td>@log.Comment</td>
+                </tr>
+            }
+        </table>
+        <br clear="all">
+        <h2 align="left">Tatal balance @Model.TatalBalnce</h2>
+
+    </div>
+
+
+    <div id="g-footer">Some information</div>
+</div>
