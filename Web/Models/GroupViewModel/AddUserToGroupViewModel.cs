@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PagedList;
 
 namespace SocialFund.Models.GroupViewModel
 {
@@ -14,7 +15,6 @@ namespace SocialFund.Models.GroupViewModel
             OtherUsers = new List<User>();
             Group = new Group();
         }
-
         public List<User> GroupUsers { get; set; }
 
         public List<User> OtherUsers { get; set; }

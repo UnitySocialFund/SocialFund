@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 
 
 namespace Common
@@ -242,6 +244,12 @@ namespace Common
 
             Debug.WriteLine(debugMessage);
             smtpClient.Dispose();
+        }
+
+        public static bool ValidateEmail(string mail)
+        {
+            return Regex.IsMatch(mail, @"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
+
         }
 
         #endregion Methods

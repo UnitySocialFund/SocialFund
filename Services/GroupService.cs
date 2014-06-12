@@ -131,5 +131,19 @@ namespace Services
                 db.SaveChanges();
             }
         }
+
+        public bool DeleteUserFromGroup(int groupId, int userId)
+        {
+            bool isDeleted = false;
+
+            using (var db = new SocialFundEntities())
+            {
+                var reccord = db.Group_User.Where(x => x.GroupId == groupId && x.UserId == userId).SingleOrDefault();
+                db.Group_User.Remove(reccord);
+                db.SaveChanges();
+            }
+
+            return isDeleted;
+        }
     }
 }
