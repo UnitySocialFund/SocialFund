@@ -1,0 +1,51 @@
+﻿@model SocialFund.Models.GroupViewModel.UserForAdditionToGroup
+@using System.Web.UI.HtmlControls
+@using DataModel
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "AddUserToGroup";
+    Layout = "~/Views/Shared/Site.cshtml";
+}
+
+<html>
+<head>
+    <title>Index</title>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div style="width: 550px; overflow: hidden;">
+        <div style="width: 570px;">
+
+            <div style="width: 270px; margin-right: 20px; float: right;">
+                @if (Model.UsersPaged.Count > 0)
+                {
+                    <h2>Users not in group</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User name</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.UsersPaged)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@Html.ActionLink("Add to group", "AddUserToGroup", new { groupId = Model.GroupId, userId = item.Id, page = Model.UsersPaged.PageNumber })</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                                        <div>
+                        @Html.PagedListPager(Model.UsersPaged, page => Url.Action("ShowUserForAddition", new { page, groupId = Model.GroupId }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToLastPageFormat = ">>" })
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

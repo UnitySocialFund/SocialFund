@@ -1,0 +1,62 @@
+﻿@model SocialFund.Models.GroupViewModel.GroupDetailsViewModel
+@using System.Web.UI.HtmlControls
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "AddUserToGroup";
+    Layout = "~/Views/Shared/Site.cshtml";
+}
+
+<html>
+<head>
+    <title>Index</title>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div style="width: 550px; overflow: hidden;">
+        <div style="width: 570px;">
+            <div style="width: 270px; margin-right: 20px; float: left;">
+                @if (Model.GroupUsers.Count > 0)
+                {
+                    <h2>Users in group</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>User name</th>
+                                <th></th>
+                                @if (Model.currentUserIsOwner)
+                                {
+                                    <th></th>
+                                }
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.GroupUsers)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@Html.ActionLink("Info", "#", new { groupId = Model.Group.Id, userId = item.Id })</td>
+
+                                    @if (Model.currentUserIsOwner)
+                                    {
+                                        <td>@Html.ActionLink("Delete", "RemoveUserFromGroup", new {groupId = Model.Group.Id, userId = item.Id})</td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div>
+                        @Html.PagedListPager(Model.GroupUsers, page => Url.Action("ShowGroupDetails", new { page, groupId = Model.Group.Id }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToLastPageFormat = ">>" })
+                    </div>
+                }
+            </div>
+            @if (Model.currentUserIsOwner)
+            {
+                @Html.ActionLink("Add member to group", "ShowUserForAddition", new { groupId = Model.Group.Id })
+            }
+        </div>
+    </div>
+</body>
+</html>
