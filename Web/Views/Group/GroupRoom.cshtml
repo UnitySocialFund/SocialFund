@@ -7,13 +7,48 @@
     Layout = "~/Views/Shared/Site.cshtml";
 }
 <link href="~/Content/PagedList.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui-1.10.4.custom.js"></script>
+<link href="~/Content/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+<script>
+    $(document).ready((function () {
+        $("#ChangeGroupName").dialog({
+            autoOpen: false,
+            height: 110,
+            width: 350,
+            modal: true,
+            show: {
+                effect: "blind",
+                duration: 200
+            },
+            hide: {
+                effect: "blind",
+                duration: 200
+            }
+        });
+        $(".groupId")
+        .click(function () {
+            $("#groupId").attr("value", $(this).attr("id"));
+            $("#newNameOfGroup").attr("value", "");
+            $("#ChangeGroupName").dialog("open");
+        });
+    }));
+</script>
+
+<div id="ChangeGroupName" title="Введите новое название группы">
+    @using (Html.BeginForm("ChangeGroupName", "Group"))
+    {
+        <input type="hidden" id="groupId" name="id" value="" />
+        <input type="text" id="newNameOfGroup" maxlength="50" name="newName" style="width: 250px" />
+        <input type="submit" value="OK" />
+    }
+</div>
 <div id="groupDiv">
     <div id="g-header">
         <div class="group-controls">
             <ul>
                 @if (Model.currentUserIsOwner)
                 {
-                    <li>@Html.ActionLink("Group setup", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
+                    <li>@Html.ActionLink("Group settings", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
                     <li>@Html.ActionLink("Add member", "ShowUserForAddition", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
                 }
                 <li>@Html.ActionLink("Log history", "Index", "Log", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
@@ -30,13 +65,14 @@
         {
             <div id="g-owner">
                 <h4 style="color: #FFF">Owner is @Model.Group.User.Name</h4>
+
             </div>
         }
-        <h2 style="color: #FFF">@Model.Group.Name</h2>
+        <h2 style="color: #FFF"><a style="color: #FFF" href="#" class="groupId" id="@Model.Group.Id" data-type="division">@Model.Group.Name </a></h2>
         <h3 style="color: #FFF">Count of members: @Model.GroupUsers.TotalItemCount</h3>
         <h3 style="color: #FFF">Total balamce: @Model.TatalBalnce</h3>
         <div id="coinscontrol">
-            <div class="g-coing-controls">
+            <div class="g-coins-controls">
                 <ul>
                     <li>@Html.ActionLink("Add coins", "AddCoins", "Log", new { id = Model.Group.Id }, new { @class = "g-button g-button-white" })</li>
                     @if (Model.currentUserIsOwner)
@@ -49,20 +85,11 @@
 
     </div>
     <div id="g-members">
-        @*        <div class="g-list-member">
-        </div>*@
         <div id="myPager" style="width: 270px; margin-right: 10px; float: left;">
             @if (Model.GroupUsers.Count > 0)
             {
-                <h2>Users in group</h2>@*
-
-                <ul>
-                    @foreach (var item in Model.GroupUsers)
-                    {
-                        <li class="g-memeber-item">@Html.ActionLink(item.Name, "#", new { groupId = Model.Group.Id, userId = item.Id })</li> 
-                    }
-                </ul>*@
-            
+                <h2>Users in group</h2>
+                
                 <table style="padding: 10px">
                     <thead>
                         <tr>
@@ -88,15 +115,14 @@
                     </tbody>
                 </table>
                 <div>
-                    @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page = page, groupId = Model.Group.Id }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "myPager" }))
-                    @*@Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page, groupId = Model.Group.Id }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToLastPageFormat = ">>" })*@
+               |     @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page = page, groupId = Model.Group.Id }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "myPager" }))
                 </div>
             }
         </div>
     </div>
 
     <div id="g-log">
-        <table align="left" border="0">
+        <table class="g-coins-table" align="left" border="0">
             <tr>
                 <th>Operation</th>
                 <th>User</th>
@@ -116,7 +142,7 @@
                     }
                     <td>@log.Group_User.User.Name</td>
                     <td>@log.Date</td>
-                    <td>@log.Comment</td>
+                    <td class="g-coins-comment">@log.Comment</td>
                 </tr>
             }
         </table>

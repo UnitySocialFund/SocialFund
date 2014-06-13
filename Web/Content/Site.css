@@ -1,11 +1,16 @@
-﻿body {
+﻿html {
+    font-size: 100%;
+    overflow-y: scroll;
+}
+
+body {
     background-color: #898989;
     margin: 0px;
     padding: 0px;
     font-family: Calibri;
 }
 
-h1, h2 {
+dl, ul, ol, li, h1, h2, h3, h4, h5, h6 {
     margin: 0px;
 }
 
@@ -226,6 +231,13 @@ img {
     margin: 10px;
 }
 
+.loginform {
+    width: 350px;
+    position: absolute;
+    top: 180px;
+    left: 680px;
+}
+
 #groupDiv {
     display: inline-block;
     height: auto;
@@ -239,14 +251,14 @@ img {
 
 #g-pic {
     background: none repeat scroll 0% 0% #434343;
-    width: 470px;
+    width: 370px;
     height: 230px;
     float: left;
 }
 
 #g-content {
     background: none repeat scroll 0% 0% #333333;
-    width: 430px;
+    width: 530px;
     height: 210px;
     position: relative;
     float: left;
@@ -263,9 +275,13 @@ img {
 #g-members {
     background: #FFF;
     display: inline-block;
-    width: 470px;
+    width: 330px;
     float: left;
     height: inherit;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .g-memeber-item {
@@ -280,7 +296,7 @@ img {
 #g-log {
     background: #FFF;
     display: inline-block;
-    width: 470px;
+    width: 570px;
     float: left;
 }
 
@@ -311,10 +327,11 @@ ul.changed li {
     margin-left: 20px;
 }
 
+a .g-button {
+    color: #FFF;
+}
 .g-button {
     border-color: #CCCCCC #CCCCCC #AAAAAA;
-    border-image: none;
-    border-radius: 1px;
     border-style: solid;
     border-width: 1px;
     box-shadow: 0 1px rgba(255, 255, 255, 0.4) inset;
@@ -329,11 +346,9 @@ ul.changed li {
     position: relative;
     text-align: center;
     text-decoration: none;
-    text-shadow: 0 1px #FFFFFF;
+    text-shadow: 0 0.5px #FFFFFF;
     vertical-align: middle;
     white-space: nowrap;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
     margin-left: 0;
 }
 
@@ -350,17 +365,29 @@ ul.changed li {
     padding-right: 13px;
 }
 
-.g-coing-controls {
+.g-coins-controls {
     position: absolute;
     width: 440px;
     left: 20px;
     bottom: 20px;
 }
 
-.g-coing-controls ul li {
+.g-coins-controls ul li {
         list-style-type: none;
         font-size: 18px;
         padding-top: 1px;
         float: right;
         border-color: #CCCCCC #CCCCCC #AAAAAA;
 }
+
+.g-coins-table {
+    table-layout: fixed;
+    width:100%
+}
+.g-coins-table td {
+    table-layout: auto;
+}
+.g-coins-table td.g-coins-comment{
+    word-wrap:break-word;
+}
+

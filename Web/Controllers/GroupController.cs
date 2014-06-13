@@ -99,5 +99,20 @@ namespace SocialFund.Controllers
                 vm.currentUserIsOwner = true;
             return this.View(vm);
         }
+
+        /// <summary>
+        /// Change name of divisions or groups in current tournament.
+        /// </summary>
+        /// <param name="id">Division or group Id to change.</param>
+        /// <param name="newName">New name to change.</param>
+        /// <returns>View with details of chosen tournament.</returns>
+        public ActionResult ChangeGroupName(int id, string newName)
+        {
+            var group = _groupService.GetGroup(id);
+            group.Name = newName;
+            _groupService.EditGroupDetails(group);
+            return this.RedirectToAction("GroupRoom", new { groupId = id });
+
+        }
     }
 }

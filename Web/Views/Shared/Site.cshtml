@@ -2,14 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>>@ViewBag.Title</title>
-    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/jquery-1.4.2.min.js") %>"></script>
-    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/jquery-ui-1.8.6.min.js") %>"></script>
-    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftAjax.js") %>"></script>
+
+    @*--  JS  -->*@
+    <script type="text/javascript" src="~/Scripts/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
+    @*    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftAjax.js") %>"></script>
     <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftMvcAjax.js") %>"></script>
     <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftMvcValidation.js") %>"></script>
-    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/Common.js") %>"></script>
+    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/Common.js") %>"></script>*@
+
+    @*--  CSS  -->*@
+    <link type="text/css" href="~/Content/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+    <link type="text/css" href="~/Content/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/jquery-ui-1.8.6.css")" rel="stylesheet" type="text/css" />
+
     <style type="text/css">
         #topShadowDiv {
             width: 960px;
@@ -111,34 +119,34 @@
     <div id="centerShadowDiv">
         <div id="leftShadow"></div>
         <div id="centerShadow">
-            <div style="display:block">
-                <div style="width:100%;display:table">
-                    <div style="display:table-cell">
+            <div style="display: block">
+                <div style="width: 100%; display: table">
+                    <div style="display: table-cell">
                         <p id="headerText">Social Fund</p>
                     </div>
 
-                     @if (User.Identity.Name == string.Empty)
-                     {
-                        <div style="display:table-cell;float:right; padding-right:20px;">
+                    @if (User.Identity.Name == string.Empty)
+                    {
+                        <div style="display: table-cell; float: right; padding-right: 20px;">
                             <a href="~/Account/Login" class="btn btn-default">Log In</a>
                         </div>
-                     }
-                     else
-                     {
-                        <div style="display:table-cell; float:right; padding-right:20px;">
-                            <a style="padding-right:20px; font-weight:bold;" href="~/Account/UserInformation" class="btn btn-default"> @User.Identity.Name</a>
+                    }
+                    else
+                    {
+                        <div style="display: table-cell; float: right; padding-right: 20px;">
+                            <a style="padding-right: 20px; font-weight: bold;" href="~/Account/UserInformation" class="btn btn-default">@User.Identity.Name</a>
                             <a href="~/Account/Logout" class="btn btn-default">[Log Out]</a>
                         </div>
-                     }
-                 </div>
+                    }
+                </div>
                 <div id="menuRow">
-                    <ul id="menu">              
+                    <ul id="menu">
                         <li>@Html.ActionLink("HOME", "Index", "Home")</li>
-                     @if (Request.IsAuthenticated)
-                     {
-                         <li>@Html.ActionLink("GROUPS","Index","Group")</li>
-                         <li>@Html.ActionLink("CONTACTS", "Index", "Contacts")</li>
-                     } 
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("GROUPS", "Index", "Group")</li>
+                            <li>@Html.ActionLink("CONTACTS", "Index", "Contacts")</li>
+                        }
                     </ul>
                 </div>
                 <div id="contentPlaceHolderDiv">
