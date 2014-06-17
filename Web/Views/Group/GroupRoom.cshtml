@@ -48,16 +48,16 @@
             <ul>
                 @if (Model.currentUserIsOwner)
                 {
-                    <li>@Html.ActionLink("Group settings", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
+                    @*<li>@Html.ActionLink("Group settings", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>*@
                     <li>@Html.ActionLink("Add member", "ShowUserForAddition", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
                 }
                 <li>@Html.ActionLink("Log history", "Index", "Log", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
-                <li>@Html.ActionLink("Group contacts", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
+                @*<li>@Html.ActionLink("Group contacts", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>*@
             </ul>
         </div>
     </div>
 
-    <div id="g-pic">
+@*    <div id="g-pic">
         <h1 style="color: white">Captia</h1>
     </div>
     <div id="g-content">
@@ -83,7 +83,7 @@
             </div>
         </div>
 
-    </div>
+    </div>*@
     <div id="g-members">
         <div id="myPager" style="width: 270px; margin-right: 10px; float: left;">
             @if (Model.GroupUsers.Count > 0)
@@ -121,7 +121,7 @@
         </div>
     </div>
 
-    <div id="g-log">
+@*    <div id="g-log">
         <table class="g-coins-table" align="left" border="0">
             <tr>
                 <th>Operation</th>
@@ -149,5 +149,5 @@
         <br clear="all">
         <h2 align="left">Tatal balance @Model.TatalBalnce</h2>
     </div>
-    <div id="g-footer">Some information</div>
+    <div id="g-footer">Some information</div>*@
 </div>

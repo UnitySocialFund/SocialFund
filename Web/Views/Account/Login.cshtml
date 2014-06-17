@@ -5,10 +5,11 @@
     Layout = "~/Views/Shared/Site.cshtml";
 }
 <div class="loginform">
+    "Don't have an account?"
+        @Html.ActionLink("Register now", "Register", null, null)
+
     <fieldset>
         <div style="padding-bottom: 10px;">
-            "Don't have an account?"
-        @Html.ActionLink("Register now", "Register", null, null)
         </div>
 
         @using (Html.BeginForm())

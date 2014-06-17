@@ -4,7 +4,7 @@
     ViewBag.Title = "AddCoins";
     Layout = "~/Views/Shared/Site.cshtml";
 }
-    <div>
+    <div class="coinsdeal">
         @using (Html.BeginForm("RemoveCoins", "Log", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.ValidationSummary(true)
@@ -33,7 +33,7 @@
             </td>
         </table>
         <p>
-            <input type="submit" value="Take coins"/>
+            <input type="submit" value="Take coins" class="g-button"/>
         </p>
         }
     </div>

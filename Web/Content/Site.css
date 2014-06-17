@@ -232,10 +232,8 @@ img {
 }
 
 .loginform {
-    width: 350px;
     position: absolute;
-    top: 180px;
-    left: 680px;
+    padding: 20px;
 }
 
 #groupDiv {
@@ -389,5 +387,25 @@ a .g-button {
 }
 .g-coins-table td.g-coins-comment{
     word-wrap:break-word;
+}
+
+.loghistory {
+    padding: 10px;
+}
+
+.grouplist {
+    padding: 10px;
+}
+
+.feedback {
+    padding: 10px;
+}
+
+.userlist {
+    padding: 10px;
+}
+
+.coinsdeal {
+    padding: 10px;
 }
 

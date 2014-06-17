@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/Site.cshtml";
 }
     
-    <div>
+    <div class="coinsdeal">
         @using (Html.BeginForm("AddCoins", "Log", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.ValidationSummary(true)
@@ -44,7 +44,7 @@
             </td>
         </table>
         <p>
-            <input type="submit" value="Add coins"/>
+            <input type="submit" value="Add coins" class="g-button"/>
         </p>
         }
     </div>

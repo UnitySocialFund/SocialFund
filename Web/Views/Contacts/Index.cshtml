@@ -3,14 +3,14 @@
     Layout = "~/Views/Shared/Site.cshtml";
     ViewBag.Title = "Home Page";
 }
-
-  @using (Html.BeginForm()) 
-  {
+<div class="feedback">
+    @using (Html.BeginForm())
+    {
+        
         @Html.ValidationSummary(true, "Feedback wasn't sent. Please correct the errors and try again.")
         <div>
+            <h3>Feedback Information</h3>
             <fieldset>
-                <legend>Feedback Information</legend>
-                
                 <div class="editor-label">
                     @Html.LabelFor(m => m.Name)
                 </div>
@@ -18,7 +18,7 @@
                     @Html.TextBoxFor(m => m.Name)
                     @Html.ValidationMessageFor(m => m.Name)
                 </div>
-                
+
                 <div class="editor-label">
                     @Html.LabelFor(m => m.Email)
                 </div>
@@ -26,19 +26,20 @@
                     @Html.TextBoxFor(m => m.Email)
                     @Html.ValidationMessageFor(m => m.Email)
                 </div>
-                
+
                 <div class="editor-label">
                     @Html.LabelFor(m => m.Text)
                 </div>
                 <div class="editor-field">
-                    @Html.TextArea("Text", new { rows=8, cols=60 })
+                    @Html.TextArea("Text", new { rows = 8, cols = 60 })
                     @Html.ValidationMessageFor(m => m.Text)
                 </div>
-                
+
                 <p>
                     <input type="submit" value="Send" />
                 </p>
 
             </fieldset>
         </div>
-  }
+    }
+</div>
