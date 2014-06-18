@@ -104,7 +104,8 @@
                         @foreach (var item in Model.GroupUsers)
                         {
                             <tr>
-                                <td style="height: 10px">@Html.ActionLink(item.Name, "#", new { groupId = Model.Group.Id, userId = item.Id })</td>
+                                @*<td style="height: 10px">@Html.ActionLink(item.Name, "#", new { groupId = Model.Group.Id, userId = item.Id })</td>*@
+                                <td style="height: 10px">@item.Name</td>
 
                                 @if (Model.currentUserIsOwner)
                                 {

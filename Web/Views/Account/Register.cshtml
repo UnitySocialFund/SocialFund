@@ -4,58 +4,61 @@
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/Site.cshtml";
 }
-<fieldset>
-    <legend>Create an account</legend>
 
-    @using (Html.BeginForm())
-    {
-        @Html.ValidationSummary(true)
+<div class="regform">
+    <h3>Create an account</h3>
+    <fieldset style="display: inline-table">
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.UserName)
-            @Html.ValidationMessageFor(model => model.UserName)
-        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.UserName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.UserName)
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
  
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-        </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
  
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Password)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
  
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ConfirmPassword)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ConfirmPassword)
-            @Html.ValidationMessageFor(model => model.ConfirmPassword)
-        </div>
-        <div class="editor-label">
-            <label>
-                <img style="height: 40px; width: 150px" src="@Url.Action("Captcha", "Account")" alt="captcha" />
-            </label>
-        </div>
-        <div class="editor-field">
-            @Html.TextBox("Captcha", Model.Captcha)
-            @Html.ValidationMessage("Captcha")
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ConfirmPassword)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.ConfirmPassword)
+                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+            </div>
+            <div class="editor-label">
+                <label>
+                    <img style="height: 40px; width: 150px" src="@Url.Action("Captcha", "Account")" alt="captcha" />
+                </label>
+            </div>
+            <div class="editor-field">
+                @Html.TextBox("Captcha", Model.Captcha)
+                @Html.ValidationMessage("Captcha")
 
-        </div>
-        <p>
-            <input type="submit" value="Create Account" />
-        </p>
-    }
-</fieldset>
-
+            </div>
+            <p>
+                <hr/>
+                <input type="submit" value="Create Account" class="g-button" />
+            </p>
+        }
+    </fieldse>
+</div>
 
