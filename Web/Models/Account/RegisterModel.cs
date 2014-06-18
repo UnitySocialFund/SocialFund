@@ -28,5 +28,7 @@ namespace SocialFund.Models.Account
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string Captcha { get; set; }
     } 
 }

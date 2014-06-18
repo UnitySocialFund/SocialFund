@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +9,7 @@ using Services.Authentication;
 using SocialFund.Models.Account;
 using DataModel;
 using Services;
+using SocialFund.Tools;
 
 namespace SocialFund.Controllers
 {
@@ -53,12 +55,18 @@ namespace SocialFund.Controllers
 
         public ActionResult Register()
         {
-            return View();
+            RegisterModel regm = new RegisterModel();
+            return View(regm);
         }
 
         [HttpPost]
         public ActionResult Register(RegisterModel model, string returnUrl)
         {
+            if (model.Captcha != (string)Session[CaptchaImage.CaptchaValueKey])
+            {
+                ModelState.AddModelError("Captcha", "Text from the image in an incorrect");
+            }
+
             if (ModelState.IsValid)
             {
                 MembershipUser membershipUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(model.UserName, model.Password, model.Email);
@@ -73,7 +81,24 @@ namespace SocialFund.Controllers
                     ModelState.AddModelError("", "Error during registration");
                 }
             }
-            return View();
+            return View(model);
+        }
+
+        public ActionResult Captcha()
+        {
+            Session[CaptchaImage.CaptchaValueKey] = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
+            var ci = new CaptchaImage(Session[CaptchaImage.CaptchaValueKey].ToString(), 211, 50, "Arial");
+
+            // Change the response headers to output a JPEG image.
+            this.Response.Clear();
+            this.Response.ContentType = "image/jpeg";
+
+            // Write the image to the response stream in JPEG format.
+            ci.Image.Save(this.Response.OutputStream, ImageFormat.Jpeg);
+
+            // Dispose of the CAPTCHA image object.
+            ci.Dispose();
+            return null;
         }
 
         [HttpPost]

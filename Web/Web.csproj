@@ -142,6 +142,7 @@
     <Compile Include="Models\LogViewModels\RemoveCoinsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Contacts\FeedbackModel.cs" />
+    <Compile Include="Tools\CaptchaImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
