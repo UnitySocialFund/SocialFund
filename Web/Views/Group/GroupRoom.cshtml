@@ -1,5 +1,6 @@
 ﻿@model SocialFund.Models.GroupViewModel.GroupDetailsViewModel
 @using System.Web.Services.Description
+@using System.Web.UI.WebControls
 @using PagedList.Mvc
 
 @{
@@ -31,8 +32,37 @@
             $("#newNameOfGroup").attr("value", "");
             $("#ChangeGroupName").dialog("open");
         });
+
+
+        $("#MailForm").dialog({
+            autoOpen: false,
+            width: 480,
+            modal: true,
+            show: {
+                effect: "blind",
+                duration: 200
+            },
+            hide: {
+                effect: "blind",
+                duration: 200
+            }
+        });
+        $(".senderMail").click(function () {
+            $("#groupIdforMail").attr("value", $(this).attr("data-tt"));
+            $("#MailForm").dialog("open");
+        });
     }));
 </script>
+
+<div id="MailForm" title="Message for members">
+    @using (Html.BeginForm("SendMails", "Group"))
+    {
+        <input type="hidden" id="groupIdforMail" name="id" value="" />
+        <h5>Title</h5> <input type="text" name="title"/>
+        <h5>Message</h5> <textarea rows="10" cols="50" name="message"></textarea>
+        <input type="submit" value="Send" />
+    }
+</div>
 
 <div id="ChangeGroupName" title="Введите новое название группы">
     @using (Html.BeginForm("ChangeGroupName", "Group"))
@@ -41,7 +71,7 @@
         <input type="text" id="newNameOfGroup" maxlength="50" name="newName" style="width: 250px" />
         <input type="submit" value="OK" />
     }
-</div> 
+</div>
 <div id="groupDiv">
     <div id="g-header">
         <div class="group-controls">
@@ -49,6 +79,8 @@
                 @if (Model.currentUserIsOwner)
                 {
                     @*<li>@Html.ActionLink("Group settings", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>*@
+                    
+                    <li><a class="senderMail g-button" data-tt="@Model.Group.Id">Notify Members</a></li>
                     <li>@Html.ActionLink("Add member", "ShowUserForAddition", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
                 }
                 <li>@Html.ActionLink("Log history", "Index", "Log", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
@@ -57,7 +89,7 @@
         </div>
     </div>
 
-@*    <div id="g-pic">
+    @*    <div id="g-pic">
         <h1 style="color: white">Captia</h1>
     </div>
     <div id="g-content">
@@ -116,13 +148,13 @@
                     </tbody>
                 </table>
                 <div>
-               |     @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page = page, groupId = Model.Group.Id }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "myPager" }))
+                    |     @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page = page, groupId = Model.Group.Id }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "myPager" }))
                 </div>
             }
         </div>
     </div>
 
-@*    <div id="g-log">
+    @*    <div id="g-log">
         <table class="g-coins-table" align="left" border="0">
             <tr>
                 <th>Operation</th>

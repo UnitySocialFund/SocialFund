@@ -127,6 +127,7 @@ namespace SocialFund.Controllers
                 }
 
                 _logService.AddLog(viewModel.Log, id, viewModel.UserName);
+                //_groupService.Spam(id, "Spanded coins descrubing", viewModel.Log.Comment);   // пока закоментировал что бы не спамить )))
                 return this.RedirectToAction("GroupRoom", "Group", new { groupId = id });
             }
         }

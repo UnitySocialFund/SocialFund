@@ -1,4 +1,5 @@
-﻿using DataModel;
+﻿using Common;
+using DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -150,6 +151,20 @@ namespace Services
                 group.Name = gr.Name;
                 group.OwnerId = gr.OwnerId;
                 db.SaveChanges();
+            }
+        }
+
+        public void Spam(int groupId, string title, string message)
+        {
+            var users = GetUsersForGroup(groupId);
+            foreach (var user in users)
+            {
+                if (MailSender.ValidateEmail(user.Email))
+                {
+                    MailSender sender = new MailSender();
+                    sender.InitializeMailMessage("unitysocialfund@gmail.com", user.Email, "Feedback from Social Fund: " + title, message);
+                    sender.SendSmtp(false);
+                }
             }
         }
     }

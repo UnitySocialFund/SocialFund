@@ -114,5 +114,11 @@ namespace SocialFund.Controllers
             return this.RedirectToAction("GroupRoom", new { groupId = id });
 
         }
+
+        public ActionResult SendMails(string title, string message, int id = 1)
+        {
+            _groupService.Spam(id, title, message);
+            return this.RedirectToAction("GroupRoom", new {groupId = id});
+        }
     }
 }

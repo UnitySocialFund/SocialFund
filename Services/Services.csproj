@@ -60,6 +60,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{bb820d0f-dc29-4070-a62b-98824854b9d9}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataModel\DataModel.csproj">
       <Project>{5fe980a8-0191-4077-a711-d6a26dec37ab}</Project>
       <Name>DataModel</Name>
