@@ -11,7 +11,6 @@ namespace DataModel
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Group
     {
@@ -21,8 +20,6 @@ namespace DataModel
         }
     
         public int Id { get; set; }
-
-        [Required (ErrorMessage="Input group name.")]
         public string Name { get; set; }
         public int OwnerId { get; set; }
     

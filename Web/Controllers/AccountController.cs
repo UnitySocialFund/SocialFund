@@ -69,7 +69,7 @@ namespace SocialFund.Controllers
 
             if (ModelState.IsValid)
             {
-                MembershipUser membershipUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(model.UserName, model.Password, model.Email);
+                MembershipUser membershipUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(model.UserName, model.Password, model.Email, model.Phone, model.Address, model.IsNotif);
 
                 if (membershipUser != null)
                 {

@@ -82,7 +82,10 @@ CREATE TABLE [dbo].[User] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nchar(255)  NOT NULL,
     [Password] nchar(255)  NOT NULL,
-    [Email] nchar(255)  NULL
+    [Email] nchar(255)  NULL,
+	[Phone] nchar(15) NULL,
+	[Address] nchar(255) NULL,
+	[IsNotif] bit NOT NULL DEFAULT '0'
 );
 GO
 

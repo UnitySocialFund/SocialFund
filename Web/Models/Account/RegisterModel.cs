@@ -30,5 +30,18 @@ namespace SocialFund.Models.Account
         public string ConfirmPassword { get; set; }
 
         public string Captcha { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone")]
+        public string Phone { get; set; }
+
+        [Display(Name = "Notifications")]
+        public bool IsNotif { get; set; }
+
     } 
+
 }

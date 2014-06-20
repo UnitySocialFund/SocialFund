@@ -156,7 +156,7 @@ namespace Services
 
         public void Spam(int groupId, string title, string message)
         {
-            var users = GetUsersForGroup(groupId);
+            var users = GetUsersForGroup(groupId).Where(x => x.IsNotif == true).ToList(); 
             foreach (var user in users)
             {
                 if (MailSender.ValidateEmail(user.Email))

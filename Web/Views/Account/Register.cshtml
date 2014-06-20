@@ -44,6 +44,28 @@
                 @Html.EditorFor(model => model.ConfirmPassword)
                 @Html.ValidationMessageFor(model => model.ConfirmPassword)
             </div>
+            
+             <div class="editor-label">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Address)
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Phone)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Phone)
+                @Html.ValidationMessageFor(model => model.Phone)
+            </div>
+            <div class="editor-field">
+                @Html.CheckBoxFor(model => model.IsNotif)
+                @Html.LabelFor(model => model.IsNotif)
+                @Html.ValidationMessageFor(model => model.Phone)
+            </div>
+
+            
             <div class="editor-label">
                 <label>
                     <img style="height: 40px; width: 150px" src="@Url.Action("Captcha", "Account")" alt="captcha" />
