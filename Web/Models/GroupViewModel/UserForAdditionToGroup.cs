@@ -16,5 +16,6 @@ namespace SocialFund.Models.GroupViewModel
 
         public IPagedList<User> UsersPaged { get; set; } 
         public int GroupId { get; set; }
+        public string Query { get; set; }
     }
 }

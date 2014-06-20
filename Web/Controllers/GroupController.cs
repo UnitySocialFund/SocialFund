@@ -60,7 +60,6 @@ namespace SocialFund.Controllers
 
         public ActionResult ShowGroupDetails(int groupId, int page = 1)
         {
-
             var vm = new GroupDetailsViewModel();
             vm.Group = _groupService.GetGroup(groupId);
             vm.GroupUsers = _groupService.GetUsersForGroup(groupId).ToPagedList(page, 10);
@@ -69,10 +68,18 @@ namespace SocialFund.Controllers
             return this.View(vm);
         }
 
-        public ActionResult ShowUserForAddition(int groupId, int page = 1)
+        public ActionResult ShowUserForAddition(int groupId, string query, int page = 1)
         {
             var vm = new UserForAdditionToGroup(groupId);
-            vm.UsersPaged =  _groupService.GetUserNotInGroup(groupId).ToPagedList(page, 10);
+            vm.Query = query;
+            if (!String.IsNullOrEmpty(query))
+            {
+                vm.UsersPaged = _groupService.GetUserNotInGroup(groupId).Where(x => x.Name.Contains(query)).ToPagedList(page, 10);
+            }
+            else
+            {
+                vm.UsersPaged = _groupService.GetUserNotInGroup(groupId).ToPagedList(page, 10);
+            }
             return this.View(vm);
         }
 

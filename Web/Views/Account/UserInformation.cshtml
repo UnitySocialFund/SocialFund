@@ -4,39 +4,39 @@
     ViewBag.Title = "User Information";
     Layout = "~/Views/Shared/Site.cshtml";
 }
-@using (Html.BeginForm())
-{
-    <div>
-        <fieldset>
-            <legend>Account Information</legend>
+<div class="loginform">
 
+    @using (Html.BeginForm())
+    {
+        <div>
+            <h3>Account Information</h3>
+            <fieldset>
+                @Html.ValidationSummary(true)
 
-            @Html.ValidationSummary(true)
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.UserName)
+                </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.UserName)
-            </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.UserName)
+                </div>
 
-            <div class="display-field">
-                @Html.DisplayFor(model => model.UserName)
-            </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Email)
+                </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Email)
-            </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
 
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Email)
-                @Html.ValidationMessageFor(model => model.Email)
-            </div>
+                <div>
+                    <input type="submit" value="Update" />
+                </div>
 
-            <div>
-                <input type="submit" value="Update"
-            </div>
+            </fieldset>
 
-        </fieldset>
-
-    </div>
-}
-
+        </div>
+    }
+</div>
 

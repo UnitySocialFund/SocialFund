@@ -19,6 +19,8 @@ namespace SocialFund.Controllers
 
         private readonly GroupService _groupService;
 
+        private readonly UserService _userService;
+
         private void InitalizeFakeData()
         {
             var user = new User();
@@ -51,6 +53,7 @@ namespace SocialFund.Controllers
             // InitalizeFakeData();
             _logService = new LogService();
             _groupService = new GroupService();
+            _userService = new UserService();
         }
 
         public ActionResult Index(int groupId)
@@ -95,6 +98,7 @@ namespace SocialFund.Controllers
                 }
 
                 _logService.AddLog(viewModel.Log, id, viewModel.UserName);
+                //_groupService.Spam(id, "Adding coins descrubing", "From " + viewModel.UserName + " : " + viewModel.Log.Comment);   // пока закоментировал что бы не спамить )))
                 return this.RedirectToAction("GroupRoom", "Group", new { groupId = id });
             }
         }

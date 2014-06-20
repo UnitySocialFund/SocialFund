@@ -74,6 +74,7 @@ namespace SocialFund.Controllers
                 if (membershipUser != null)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, false);
+                    new UserService().SandMail(model.Email, "Registration", "Congratulations! Your registration has been successfully submitted.");
                     return RedirectToAction("Index", "Home");
                 }
                 else

@@ -18,7 +18,7 @@
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/jquery-ui-1.8.6.css")" rel="stylesheet" type="text/css" />
 
-    <style type="text/css"> 
+    <style type="text/css">
         #topShadowDiv {
             width: 960px;
             height: 10px;
@@ -128,7 +128,10 @@
                     @if (User.Identity.Name == string.Empty)
                     {
                         <div style="display: table-cell; float: right; padding-right: 20px;">
-                            <a href="~/Account/Login" class="btn btn-default">Log In</a>
+                            <a href="~/Account/Login" class="btn btn-default">[Log In]</a>
+                        </div>
+                        <div style="display: table-cell; float: right; padding-right: 20px;">
+                            <a href="~/Account/Register" class="btn btn-default">[Registration]</a>
                         </div>
                     }
                     else

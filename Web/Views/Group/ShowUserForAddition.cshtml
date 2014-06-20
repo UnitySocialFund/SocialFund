@@ -12,9 +12,23 @@
 
 
 <div class="userlist">
+    @using (Html.BeginForm("ShowUserForAddition", "Group", FormMethod.Get, new { groupId = Model.GroupId }))
+    {
+        <input type="hidden" value="@Model.GroupId" name="groupId"/>
+        <table>
+                <th>Input name.</th>
+                <th>
+                    <input type="text" name="query" value="@Model.Query"/>
+                </th>
+            <td>
+                <input type="submit" class="g-button" value="Find" />
+            </td>
+        </table>
+    }
     @if (Model.UsersPaged.Count > 0)
     {
         <h2>Users not in group</h2>
+        
         <table>
             <thead>
                 <tr>
@@ -33,7 +47,7 @@
             </tbody>
         </table>
         <div>
-            @Html.PagedListPager(Model.UsersPaged, page => Url.Action("ShowUserForAddition", new { page, groupId = Model.GroupId }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToLastPageFormat = ">>" })
+            @Html.PagedListPager(Model.UsersPaged, page => Url.Action("ShowUserForAddition", new { page, groupId = Model.GroupId, query = Model.Query }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToLastPageFormat = ">>" })
         </div>
 
     }
