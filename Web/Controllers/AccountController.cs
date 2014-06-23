@@ -15,6 +15,12 @@ namespace SocialFund.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly UserService _userService;
+
+        public AccountController()
+        {
+            _userService = new UserService();
+        }
 
         public ActionResult Login()
         {
@@ -104,35 +110,42 @@ namespace SocialFund.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult UserInformation(RegisterModel model)
+        public ActionResult UserInformation(User user)
         {
-            MembershipUser membershipUser = ((CustomMembershipProvider)Membership.Provider).GetUser(User.Identity.Name, true);
+            _userService.UpdateUser(user);
+            return RedirectToAction("Index", "Home");
+            //MembershipUser membershipUser = ((CustomMembershipProvider)Membership.Provider).GetUser(User.Identity.Name, true);
 
-            if (membershipUser != null)
-            {
-                membershipUser.Email = model.Email;
-                ((CustomMembershipProvider)Membership.Provider).UpdateUser(membershipUser);
-                model.UserName = User.Identity.Name;
-            }
-            else
-            {
-                ModelState.AddModelError("", "Error during updating");
-            }
+            //if (membershipUser != null)
+            //{
+            //    membershipUser.Email = model.Email;
+            //    ((CustomMembershipProvider)Membership.Provider).UpdateUser(membershipUser);
+            //    model.UserName = User.Identity.Name;
+            //}
+            //else
+            //{
+            //    ModelState.AddModelError("", "Error during updating");
+            //}
 
-            return View(model);
+            //return View(model);
+
+
         }
 
         [Authorize]
         public ActionResult UserInformation()
         {
-            var i = User.Identity.Name;
-            User user = ((IProcessingUser)Membership.Provider).GetUserInformationByName(User.Identity.Name);
 
-            RegisterModel model = new RegisterModel();
-            model.UserName = user.Name;
-            model.Email = user.Email;
+            return View(((IProcessingUser)Membership.Provider).GetUserInformationByName(User.Identity.Name));
 
-            return View(model);
+            //var i = User.Identity.Name;
+            //User user = ((IProcessingUser)Membership.Provider).GetUserInformationByName(User.Identity.Name);
+
+            //RegisterModel model = new RegisterModel();
+            //model.UserName = user.Name;
+            //model.Email = user.Email;
+
+            //return View(model);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,21 @@ namespace Services
                 MailSender sender = new MailSender();
                 sender.InitializeMailMessage("unitysocialfund@gmail.com", mail, "Feedback from Social Fund: " + title, message);
                 sender.SendSmtp(false);
+            }
+        }
+
+        public void UpdateUser(User user)
+        {
+            using (var db = new SocialFundEntities())
+            {
+                var oldUser = db.User.Single(x => x.Id == user.Id);
+                oldUser.Address = user.Address;
+                oldUser.Email = user.Email;
+                oldUser.Name = user.Name;
+                oldUser.Phone = user.Phone;
+                oldUser.IsNotif = user.IsNotif;
+                db.User.AddOrUpdate(oldUser);
+                db.SaveChanges();
             }
         }
     }

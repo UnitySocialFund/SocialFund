@@ -10,24 +10,10 @@
         {
             @Html.ValidationSummary(true)
         <table>
-            <td>
-                <th>Input nember of coins.</th>
-                <th>
-                    @Html.EditorFor(model => model.Log.Coins, new { required="required" })
-                    @Html.ValidationMessageFor(model => model.Log.Coins)
-                </th>
-            </td>
-            <td>
-                <th>Enter comment</th>
-                <th>
-                    @Html.EditorFor(model => model.Log.Comment, new { required="required" })
-                    @Html.ValidationMessageFor(model => model.Log.Comment)
-                </th>
-            </td>
-            <td>
+            <tr>
                 <th>Choose user</th>
                 <th>
-                    <select id="UserName" required name="UserName">
+                    <select id="UserName" required name="UserName" style="width: 200px;">
                         @foreach (var user in Model.Users)
                                 {
                                     if (user.Name == User.Identity.Name)
@@ -41,7 +27,22 @@
                                 }
                     </select>
                 </th>
-            </td>
+                <th>Input number of coins.</th>
+                <th>
+                    @Html.EditorFor(model => model.Log.Coins, new { required="required" })
+                    @Html.ValidationMessageFor(model => model.Log.Coins)
+                </th>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Enter comment</th>
+                <th>
+                    <style> textarea { resize: none;} </style>
+                    @Html.TextAreaFor(model => model.Log.Comment, 10, 76, new { @required="required"})
+                    @Html.ValidationMessageFor(model => model.Log.Comment)
+                </th>
+            </tr>
         </table>
         <p>
             <input type="submit" value="Add coins" class="g-button"/>

@@ -1,42 +1,62 @@
-﻿@model SocialFund.Models.Account.RegisterModel
+﻿@model DataModel.User
 
 @{
-    ViewBag.Title = "User Information";
+    ViewBag.Title = "UserInformation";
     Layout = "~/Views/Shared/Site.cshtml";
 }
-<div class="loginform">
 
-    @using (Html.BeginForm())
+<div class="userinfo">
+    
+    <h3> User information </h3>
+    @using (Html.BeginForm("UserInformation", "Account", FormMethod.Post))
     {
-        <div>
-            <h3>Account Information</h3>
-            <fieldset>
-                @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.UserName)
-                </div>
+        <fieldset>
 
-                <div class="display-field">
-                    @Html.DisplayFor(model => model.UserName)
-                </div>
+            @Html.HiddenFor(model => model.Id)
 
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Email)
-                </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
 
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Email)
-                    @Html.ValidationMessageFor(model => model.Email)
-                </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
 
-                <div>
-                    <input type="submit" value="Update" />
-                </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Phone)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Phone)
+                @Html.ValidationMessageFor(model => model.Phone)
+            </div>
 
-            </fieldset>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Address)
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
 
-        </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.IsNotif) <label>Receive notification of a change history</label>
+                @Html.ValidationMessageFor(model => model.IsNotif)
+            </div>
+
+            <p>
+                <input type="submit" value="Update" class="g-button" />
+            </p>
+        </fieldset>
     }
 </div>
-

@@ -139,7 +139,7 @@
                                 @*<td style="height: 10px">@Html.ActionLink(item.Name, "#", new { groupId = Model.Group.Id, userId = item.Id })</td>*@
                                 <td style="height: 10px">@item.Name</td>
 
-                                @if (Model.currentUserIsOwner)
+                                @if (Model.currentUserIsOwner && Model.Group.OwnerId != item.Id)
                                 {
                                     <td style="height: 10px">@Html.ActionLink("Delete", "RemoveUserFromGroup", new { groupId = Model.Group.Id, userId = item.Id })</td>
                                 }
@@ -148,7 +148,7 @@
                     </tbody>
                 </table>
                 <div>
-                    |     @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page = page, groupId = Model.Group.Id }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "myPager" }))
+                       @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page = page, groupId = Model.Group.Id }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "myPager" }))
                 </div>
             }
         </div>

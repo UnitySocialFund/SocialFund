@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace DataModel
 {
     using System;
@@ -17,6 +19,7 @@ namespace DataModel
         public int Id { get; set; }
         public decimal Coins { get; set; }
         public System.DateTime Date { get; set; }
+        [Required]
         public string Comment { get; set; }
         public int Group_UserId { get; set; }
     

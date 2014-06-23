@@ -100,7 +100,7 @@ namespace SocialFund.Controllers
                 _logService.AddLog(viewModel.Log, id, viewModel.UserName);
                 // надо бы пока закоментировать что бы не спамить )))
                 _groupService.Spam(id, "Adding coins descrubing", "From " + viewModel.UserName + " : " + viewModel.Log.Comment);   
-                return this.RedirectToAction("GroupRoom", "Group", new { groupId = id });
+                return this.RedirectToAction("Index", "Log", new { groupId = id });
             }
         }
 
@@ -134,7 +134,7 @@ namespace SocialFund.Controllers
                 _logService.AddLog(viewModel.Log, id, viewModel.UserName);
                 // надо бы пока закоментировать что бы не спамить )))
                 _groupService.Spam(id, "Spanded coins descrubing", viewModel.Log.Comment);
-                return this.RedirectToAction("GroupRoom", "Group", new { groupId = id });
+                return this.RedirectToAction("Index", "Log", new { groupId = id });
             }
         }
 
