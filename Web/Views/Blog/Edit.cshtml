@@ -1,0 +1,47 @@
+﻿@model SocialFund.Models.BlogViewModel.PostEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Site.cshtml";
+}
+
+<div class="group-content-wraper">
+    <h3>Edit event</h3>
+
+    @using (Html.BeginForm("Edit", "Blog", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <input type="hidden" name="BlogId" value="@Model.BlogId"/>
+        <input type="hidden" name="PostId" value="@Model.PostId"/>
+        <input type="hidden" name="Modified" value="@Model.Modified"/>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ShortContent)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.ShortContent, new { @style = "width: 100%; height: 80px; resize: none;" })
+            @Html.ValidationMessageFor(model => model.ShortContent)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Content)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Content, new { @style = "width: 100%; height: 300px; resize: vertical;" })
+            @Html.ValidationMessageFor(model => model.Content)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" class="g-button" />
+        </p>
+    }
+</div>

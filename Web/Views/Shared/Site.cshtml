@@ -7,10 +7,7 @@
     <script type="text/javascript" src="~/Scripts/jquery-ui-1.10.4.custom.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
-    @*    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftAjax.js") %>"></script>
-    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftMvcAjax.js") %>"></script>
-    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/MicrosoftMvcValidation.js") %>"></script>
-    <script type="text/javascript" language="javascript" src="<%= Url.Content("~/Scripts/Common.js") %>"></script>*@
+    <script type="text/javascript" src="~/Scripts/sfmain.js"></script>
 
     @*--  CSS  -->*@
     <link type="text/css" href="~/Content/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
@@ -25,6 +22,10 @@
             margin-left: auto;
             margin-right: auto;
             display: table;
+        }
+
+        .ui-menu {
+            width: 150px;
         }
 
         #leftTopShadow {
@@ -142,16 +143,20 @@
                         </div>
                     }
                 </div>
+                <nav>
                 <div id="menuRow">
                     <ul id="menu">
                         <li>@Html.ActionLink("HOME", "Index", "Home")</li>
                         @if (Request.IsAuthenticated)
                         {
-                            <li>@Html.ActionLink("GROUPS", "Index", "Group")</li>
+                            <li>@Html.ActionLink("GROUPS", "Index", "Group")
+                                @Html.Action("GroupList", "Home")
+                            </li>
                             <li>@Html.ActionLink("CONTACTS", "Index", "Contacts")</li>
                         }
                     </ul>
                 </div>
+                    </nav>
                 <div id="contentPlaceHolderDiv">
                     @RenderBody()
                 </div>

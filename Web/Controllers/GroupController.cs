@@ -1,11 +1,10 @@
-﻿using System.Web.Routing;
+﻿using System.Threading.Tasks;
 using DataModel;
+using DataModel.BlogModel;
 using Services;
 using SocialFund.Models.GroupViewModel;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PagedList;
 
@@ -17,11 +16,13 @@ namespace SocialFund.Controllers
         private readonly GroupService _groupService;
 
         private readonly LogService _logService;
+        private readonly BlogService _BlogService;
 
         public GroupController()
         {
             _groupService = new GroupService();
             _logService = new LogService();
+            _BlogService = new BlogService();
         }
         //
         // GET: /Group/
@@ -54,8 +55,8 @@ namespace SocialFund.Controllers
         [HttpPost]
         public ActionResult CreateGroup(Group viewModel)
         {
-            _groupService.CreateGroup(viewModel, User.Identity.Name);
-            return this.RedirectToAction("Index");
+            var groupId = _groupService.CreateGroup(viewModel, User.Identity.Name);
+            return this.RedirectToAction("GroupRoom", new { id = groupId});
         }
 
         public ActionResult ShowGroupDetails(int groupId, int page = 1)
@@ -92,18 +93,29 @@ namespace SocialFund.Controllers
         public ActionResult RemoveUserFromGroup(int groupId, int userId)
         {
             _groupService.DeleteUserFromGroup(groupId, userId);
-            return RedirectToAction("GroupRoom", new { groupId = groupId });
+            return RedirectToAction("GroupRoom", new { id = groupId });
         }
 
-        public ActionResult GroupRoom(int groupId, int page = 1)
+        public ActionResult GroupRoom(int id, int page = 1)
         {
-            var vm = new GroupDetailsViewModel();
-            vm.Group = _groupService.GetGroup(groupId);
-            vm.GroupUsers = _groupService.GetUsersForGroup(groupId).ToPagedList(page, 10);
-            vm.LastLogs = _logService.GetGroupHistory(groupId);
-            vm.TatalBalnce = _logService.GetCurrentBalance(groupId);
-            if (_logService.GetUserId(User.Identity.Name) == vm.Group.OwnerId)
-                vm.currentUserIsOwner = true;
+            var vm = new GroupDetailsViewModel()
+            {
+                Group = _groupService.GetGroup(id),
+                GroupUsers = _groupService.GetUsersForGroup(id).ToPagedList(page, 10),
+                LastLogs = _logService.GetGroupHistory(id),
+                TatalBalnce = _logService.GetCurrentBalance(id),
+            };
+
+            vm.Blog = _BlogService.GetBlog(vm.Group.BlogId);
+            vm.Blog.Posts = vm.Blog.Posts.Where(x => !x.IsDone).ToList();
+            var userId = _logService.GetUserId(User.Identity.Name);
+
+            Parallel.ForEach(vm.Blog.Posts, (i) => IsVoted(i, userId));
+            Parallel.ForEach(vm.Blog.Posts, (i) => CountOfNotTakeATest(i, vm.GroupUsers.Count));
+
+            vm.Blog.Posts = vm.Blog.Posts.OrderByDescending(x => x.ApprovedList.Count).ToList();
+            if (userId == vm.Group.OwnerId) vm.currentUserIsOwner = true;
+            vm.currentUserIsMember = _logService.IsUserMember(id, userId);
             return this.View(vm);
         }
 
@@ -118,14 +130,30 @@ namespace SocialFund.Controllers
             var group = _groupService.GetGroup(id);
             group.Name = newName;
             _groupService.EditGroupDetails(group);
-            return this.RedirectToAction("GroupRoom", new { groupId = id });
+            return this.RedirectToAction("GroupRoom", new { id });
 
         }
 
         public ActionResult SendMails(string title, string message, int id = 1)
         {
             _groupService.Spam(id, title, message);
-            return this.RedirectToAction("GroupRoom", new {groupId = id});
+            return this.RedirectToAction("GroupRoom", new { id});
+        }
+
+        private void CountOfNotTakeATest(Post post, int userCount)
+        {
+            post.NotTakeATest = userCount - post.NotApprovedList.Count - post.ApprovedList.Count;
+        }
+        private void IsVoted(Post post, int userId)
+        {
+            if (post.ApprovedList.Contains(userId) || post.NotApprovedList.Contains(userId))
+            {
+                post.IsVoted = true;
+            }
+            else
+            {
+                post.IsVoted = false;
+            }
         }
     }
 }

@@ -147,5 +147,23 @@ namespace SocialFund.Controllers
 
             //return View(model);
         }
+
+        [Authorize]
+        public ActionResult UserDetails(string id)
+        {
+            if (System.String.Compare(User.Identity.Name, id, System.StringComparison.CurrentCulture) == 0)
+            {
+                return RedirectToAction("UserInformation");    
+            }
+            var user = ((IProcessingUser) Membership.Provider).GetUserInformationByName(id);
+            var vm = new UserDetailsViewModel()
+            {
+                Name = user.Name,
+                Email = user.Email,
+                Address = user.Address,
+                Phone = user.Phone
+            };
+            return View(vm);
+        }
     }
 }

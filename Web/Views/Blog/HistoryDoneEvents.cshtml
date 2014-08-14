@@ -1,0 +1,43 @@
+﻿@model SocialFund.Models.BlogViewModel.DoneEventsViewModel
+@{
+    ViewBag.Title = "HistoryDoneEvents";
+    Layout = "~/Views/Shared/Site.cshtml";
+}
+
+<div class="group-content-wraper">
+    <h3>Done events</h3>
+    <div class="comment-hr hr">
+        <hr />
+    </div>
+    @foreach (var post in Model.Posts)
+    {
+        <div class="journal-entry-short">
+            <div class="journal-entry-short-entry">
+                <div class="journal-entry-short-head">
+                    <div class="journal-entry-short-caption">
+                        @Html.ActionLink(post.Title, "Post", "Blog", new { Model.BlogId, postId = post.Id }, new { @class = "tr-header" })
+                        @if (Model.CurrentUserIsOwner)
+                        {
+                            @Html.ActionLink("In progress", "FromDone", "Blog", new {blogId = Model.BlogId, postId = post.Id}, new {@class = "journal-entry-short-item-right g-button g-button-small"})
+                            @Html.ActionLink("Remove", "Remove", "Blog", new {blogId = Model.BlogId, postId = post.Id}, new {@class = "journal-entry-short-item-right g-button g-button-small"})
+                        }
+                    </div>
+                    <div class="journal-entry-short-lead">@post.ShortContent </div>
+                </div>
+                <div class="journal-entry-short-info">
+                    @Html.ActionLink(post.Author, "UserDetails", "Account", new { id = post.Author }, new { @class = "journal-entry-short-item" })
+                    <span class="journal-entry-short-item">Date: @post.Created.ToShortDateString()</span>
+                    @if (post.Modified != null)
+                    {
+                        <span class="journal-entry-short-item">Modified: @post.Modified</span>
+                    }
+                    <span class="journal-entry-short-item journal-entry-short-comments">@post.Comments.Count comments</span>
+                    <span class="journal-entry-short-item-right">Don't take the part - @post.NotTakeATest</span>
+                    <span class="journal-entry-short-item-right">Disapprove - @post.NotApprovedList.Count  </span>
+                    <span class="journal-entry-short-item-right">Approve - @post.ApprovedList.Count  </span>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>

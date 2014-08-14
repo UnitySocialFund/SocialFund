@@ -112,6 +112,19 @@ namespace Services
             return user.Id;
         }
 
+        public bool IsUserMember(int groupId, int userId)
+        {
+            using (var db = new SocialFundEntities())
+            {
+                var tmp = db.Group_User.FirstOrDefault(u => u.GroupId == groupId && u.UserId == userId);
+                if (tmp == null)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
         private User GetUser(int userId)
         {
             var user = new User();

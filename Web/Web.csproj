@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -133,9 +134,16 @@
     </Compile>
     <Compile Include="Models\Account\LogOnModel.cs" />
     <Compile Include="Models\Account\RegisterModel.cs" />
+    <Compile Include="Models\Account\UserDetailsViewModel.cs" />
+    <Compile Include="Models\BlogViewModel\CommentCreateViewModel.cs" />
+    <Compile Include="Models\BlogViewModel\DoneEventsViewModel.cs" />
+    <Compile Include="Models\BlogViewModel\PostEditViewModel.cs" />
+    <Compile Include="Models\BlogViewModel\PostCreateViewModel.cs" />
+    <Compile Include="Models\BlogViewModel\PostDetailsViewModel.cs" />
     <Compile Include="Models\GroupViewModel\AddUserToGroupViewModel.cs" />
     <Compile Include="Models\GroupViewModel\GroupIndexViewModel.cs" />
     <Compile Include="Models\GroupViewModel\GroupDetailsViewModel.cs" />
+    <Compile Include="Models\GroupViewModel\GroupListViewModel.cs" />
     <Compile Include="Models\GroupViewModel\UserForAdditionToGroup.cs" />
     <Compile Include="Models\LogViewModels\AddCoinsViewModel.cs" />
     <Compile Include="Models\LogViewModels\LogIndexViewModel.cs" />
@@ -179,13 +187,19 @@
     <Content Include="Images\rb.png" />
     <Content Include="Images\rt.png" />
     <Content Include="Images\t.png" />
+    <Content Include="Scripts\sfmain.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />
     <Content Include="Scripts\gridmvc.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
+    <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -196,6 +210,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Blog\Edit.cshtml" />
+    <Content Include="Views\Shared\GroupList.cshtml" />
+    <Content Include="Views\Blog\HistoryDoneEvents.cshtml" />
+    <Content Include="Views\Account\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -271,6 +289,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\UserInformation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Blog\Add.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Blog\Post.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

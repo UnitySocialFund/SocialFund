@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 04/09/2014 14:38:29
--- Generated from EDMX file: D:\Projects\Unity\SocialFund\DataModel\SFModel.edmx
+-- Date Created: 08/04/2014 14:07:39
+-- Generated from EDMX file: D:\0011 - Outside of work\SocialFund\SocialFund\DataModel\SFModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -55,7 +55,8 @@ GO
 CREATE TABLE [dbo].[Group] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nchar(255)  NOT NULL,
-    [OwnerId] int  NOT NULL
+    [OwnerId] int  NOT NULL,
+    [BlogId] uniqueidentifier  NOT NULL
 );
 GO
 
@@ -83,9 +84,9 @@ CREATE TABLE [dbo].[User] (
     [Name] nchar(255)  NOT NULL,
     [Password] nchar(255)  NOT NULL,
     [Email] nchar(255)  NULL,
-	[Phone] nchar(15) NULL,
-	[Address] nchar(255) NULL,
-	[IsNotif] bit NOT NULL DEFAULT '0'
+    [Phone] nchar(15)  NULL,
+    [Address] nchar(255)  NULL,
+    [IsNotif] bit  NOT NULL
 );
 GO
 

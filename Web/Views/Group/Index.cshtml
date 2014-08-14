@@ -18,7 +18,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.ActionLink(group.Name, "GroupRoom", new { groupId = group.Id }, null)
+                            @Html.ActionLink(group.Name, "GroupRoom", new { group.Id }, null)
                         </td>
                         <td>
                             @Html.ActionLink("Log", "Index", "Log", new { groupId = group.Id }, null)
@@ -40,7 +40,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.ActionLink(group.Name, "GroupRoom", new { groupId = group.Id }, null)
+                            @Html.ActionLink(group.Name, "GroupRoom", new { group.Id }, null)
                         </td>
                         <td>
                             @Html.ActionLink("Log", "Index", "Log", new { groupId = group.Id }, null)

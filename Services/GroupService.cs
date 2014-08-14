@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataModel.BlogModel;
 
 namespace Services
 {
@@ -95,17 +96,20 @@ namespace Services
             return users;
         }
 
-        public void CreateGroup(Group group,string userName)
+        public int CreateGroup(Group group,string userName)
         {
             using (var db = new SocialFundEntities())
             {
                 var user = db.User.FirstOrDefault(u => u.Name == userName);
                 if (user == null)
                 {
-                    return;
+                    return 0;
                 }
 
+                var blog = new Blog();
+
                 group.User = user;
+                group.BlogId = blog.Id;
                 db.Group.Add(group);
 
                 var groupUser = new Group_User();
@@ -114,6 +118,10 @@ namespace Services
                 db.Group_User.Add(groupUser);
 
                 db.SaveChanges();
+                blog.Title = group.Name;
+                blog.GroupId = group.Id;
+                new BlogService().CreateBlog(blog);
+                return group.Id;
             }
         }
 

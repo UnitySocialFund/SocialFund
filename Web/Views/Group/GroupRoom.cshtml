@@ -9,6 +9,7 @@
 }
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-ui-1.10.4.custom.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <link href="~/Content/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
 <script>
     $(document).ready((function () {
@@ -58,7 +59,7 @@
     @using (Html.BeginForm("SendMails", "Group"))
     {
         <input type="hidden" id="groupIdforMail" name="id" value="" />
-        <h5>Title</h5> <input type="text" name="title"/>
+        <h5>Title</h5> <input type="text" name="title" />
         <h5>Message</h5> <textarea rows="10" cols="50" name="message"></textarea>
         <input type="submit" value="Send" />
     }
@@ -72,115 +73,178 @@
         <input type="submit" value="OK" />
     }
 </div>
-<div id="groupDiv">
-    <div id="g-header">
-        <div class="group-controls">
+<div id="g-header">
+    <div class="group-controls">
+        <ul>
+            @if (Model.currentUserIsOwner)
+            {
+@*<li>@Html.ActionLink("Group settings", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>*@
+                    
+                <li><a class="senderMail g-button" data-tt="@Model.Group.Id">Notify Members</a></li>
+                <li>@Html.ActionLink("Add member", "ShowUserForAddition", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
+            }
+            <li>@Html.ActionLink("Log history", "Index", "Log", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
+            @*<li>@Html.ActionLink("Group contacts", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>*@
+            @if (Model.currentUserIsMember)
+            {
+                <li>@Html.ActionLink("New event", "Add", "Blog", new { Model.Blog.Id }, new { @class = "g-button" })</li>
+                <li>@Html.ActionLink("Done events", "HistoryDoneEvents", "Blog", new { Model.Blog.Id }, new { @class = "g-button" })</li>
+            }
+
+        </ul>
+    </div>
+</div>
+@*<div id="g-pic">
+    <h1 style="color: white">Captia</h1>
+</div>
+<div id="g-content">
+    @if (!Model.currentUserIsOwner)
+    {
+        <div id="g-owner">
+            <h4 style="color: #FFF">Owner is @Model.Group.User.Name</h4>
+
+        </div>
+    }
+    <h2 style="color: #FFF"><a style="color: #FFF" href="#" class="groupId" id="@Model.Group.Id" data-type="division">@Model.Group.Name </a></h2>
+    <h3 style="color: #FFF">Count of members: @Model.GroupUsers.TotalItemCount</h3>
+    <h3 style="color: #FFF">Total balamce: @Model.TatalBalnce</h3>
+    <div id="coinscontrol">
+        <div class="g-coins-controls">
             <ul>
+                <li>@Html.ActionLink("Add coins", "AddCoins", "Log", new { id = Model.Group.Id }, new { @class = "g-button g-button-white" })</li>
                 @if (Model.currentUserIsOwner)
                 {
-                    @*<li>@Html.ActionLink("Group settings", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>*@
-                    
-                    <li><a class="senderMail g-button" data-tt="@Model.Group.Id">Notify Members</a></li>
-                    <li>@Html.ActionLink("Add member", "ShowUserForAddition", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
+                    <li>@Html.ActionLink("Take coins", "RemoveCoins", "Log", new { id = Model.Group.Id }, new { @class = "g-button g-button-white" })</li>
                 }
-                <li>@Html.ActionLink("Log history", "Index", "Log", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
-                @*<li>@Html.ActionLink("Group contacts", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>*@
             </ul>
         </div>
     </div>
 
-    @*    <div id="g-pic">
-        <h1 style="color: white">Captia</h1>
-    </div>
-    <div id="g-content">
-        @if (!Model.currentUserIsOwner)
+</div>*@
+<div class="group-content-wraper">
+    <div id="myPager">
+        @if (Model.GroupUsers.Count > 0)
         {
-            <div id="g-owner">
-                <h4 style="color: #FFF">Owner is @Model.Group.User.Name</h4>
-
-            </div>
-        }
-        <h2 style="color: #FFF"><a style="color: #FFF" href="#" class="groupId" id="@Model.Group.Id" data-type="division">@Model.Group.Name </a></h2>
-        <h3 style="color: #FFF">Count of members: @Model.GroupUsers.TotalItemCount</h3>
-        <h3 style="color: #FFF">Total balamce: @Model.TatalBalnce</h3>
-        <div id="coinscontrol">
-            <div class="g-coins-controls">
-                <ul>
-                    <li>@Html.ActionLink("Add coins", "AddCoins", "Log", new { id = Model.Group.Id }, new { @class = "g-button g-button-white" })</li>
-                    @if (Model.currentUserIsOwner)
-                    {
-                        <li>@Html.ActionLink("Take coins", "RemoveCoins", "Log", new { id = Model.Group.Id }, new { @class = "g-button g-button-white" })</li>
-                    }
-                </ul>
-            </div>
-        </div>
-
-    </div>*@
-    <div id="g-members">
-        <div id="myPager" style="width: 270px; margin-right: 10px; float: left;">
-            @if (Model.GroupUsers.Count > 0)
-            {
-                <h2>Users in group</h2>
+            <h2>Users in group</h2>
                 
-                <table style="padding: 10px">
-                    <thead>
+            <table style="padding: 10px">
+                <thead>
+                    <tr>
+                        <th>User name</th>
+                        @if (Model.currentUserIsOwner)
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.GroupUsers)
+                    {
                         <tr>
-                            <th>User name</th>
-                            @if (Model.currentUserIsOwner)
+                            @*<td style="height: 10px">@Html.ActionLink(item.Name, "#", new { groupId = Model.Group.Id, userId = item.Id })</td>*@
+                            <td style="height: 10px">@item.Name</td>
+
+                            @if (Model.currentUserIsOwner && Model.Group.OwnerId != item.Id)
                             {
-                                <th></th>
+                                <td style="height: 10px">@Html.ActionLink("Delete", "RemoveUserFromGroup", new { groupId = Model.Group.Id, userId = item.Id })</td>
                             }
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.GroupUsers)
+                    }
+                </tbody>
+            </table>
+            <div>
+                @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page = page, groupId = Model.Group.Id }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "myPager" }))
+            </div>
+        }
+    </div>
+@if (Model.Blog.Posts.Count > 0)
+{
+    <div class="comment-hr hr">
+        <hr />
+    </div>
+    <h3>Events of @Model.Blog.Title</h3>
+    <br />
+    foreach (var post in Model.Blog.Posts)
+    {
+        <div class="journal-entry-short">
+            <div class="journal-entry-short-entry">
+                <div class="journal-entry-short-head">
+                    <div class="journal-entry-short-caption">
+                        @Html.ActionLink(post.Title, "Post", "Blog", new {blogId = Model.Blog.Id, postId = post.Id}, null)
+                        @if (Model.currentUserIsOwner)
                         {
-                            <tr>
-                                @*<td style="height: 10px">@Html.ActionLink(item.Name, "#", new { groupId = Model.Group.Id, userId = item.Id })</td>*@
-                                <td style="height: 10px">@item.Name</td>
-
-                                @if (Model.currentUserIsOwner && Model.Group.OwnerId != item.Id)
-                                {
-                                    <td style="height: 10px">@Html.ActionLink("Delete", "RemoveUserFromGroup", new { groupId = Model.Group.Id, userId = item.Id })</td>
-                                }
-                            </tr>
+                            @Html.ActionLink("Done", "InDone", "Blog", new {blogId = Model.Blog.Id, postId = post.Id}, new {@class = "journal-entry-short-item-right g-button g-button-small"})
+                            @Html.ActionLink("Remove", "Remove", "Blog", new {blogId = Model.Blog.Id, postId = post.Id}, new {@class = "journal-entry-short-item-right g-button g-button-small"})
                         }
-                    </tbody>
-                </table>
-                <div>
-                       @Html.PagedListPager(Model.GroupUsers, page => Url.Action("GroupRoom", new { page = page, groupId = Model.Group.Id }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "myPager" }))
+                        @if (post.Author == User.Identity.Name)
+                        {
+                            @Html.ActionLink("Edit", "Edit", "Blog", new {blogId = Model.Blog.Id, postId = post.Id}, new {@class = "journal-entry-short-item-right g-button g-button-small"})
+                        }
+                    </div>
+                    <div class="journal-entry-short-lead">@post.ShortContent </div>
                 </div>
-            }
-        </div>
-    </div>
+                <div class="journal-entry-short-info">
+                    <div class="journal-entry-short-item">
+                        @Html.ActionLink(post.Author, "UserDetails", "Account", new {id = post.Author}, new {@class = "journal-entry-short-item"})
+                        <span class="journal-entry-short-item">Date: @post.Created.ToShortDateString()</span>
+                        @if (post.Modified != null)
+                        {
+                            <span class="journal-entry-short-item">Modified: @post.Modified</span>
+                        }
+                        <span class="journal-entry-short-item journal-entry-short-comments">@post.Comments.Count comments</span>
 
-    @*    <div id="g-log">
-        <table class="g-coins-table" align="left" border="0">
-            <tr>
-                <th>Operation</th>
-                <th>User</th>
-                <th>Date</th>
-                <th>Comment</th>
-            </tr>
-            @foreach (var log in Model.LastLogs)
-            {
-                <tr>
-                    @if (log.Coins > 0)
-                    {
-                        <td><font color=#004F88>@log.Coins</font></td>
-                    }
-                    else
-                    {
-                        <td><font color=#ff4500>@log.Coins</font></td>
-                    }
-                    <td>@log.Group_User.User.Name</td>
-                    <td>@log.Date</td>
-                    <td class="g-coins-comment">@log.Comment</td>
-                </tr>
-            }
-        </table>
-        <br clear="all">
-        <h2 align="left">Tatal balance @Model.TatalBalnce</h2>
+                    </div>
+                    <div class="journal-entry-short-item-right">
+                        @if (!post.IsVoted)
+                        {
+
+                            <span class="journal-entry-short-item-right">Don't take the part - @post.NotTakeATest</span>
+                            @Html.ActionLink("I don't support", "Approve", "Blog", new {isAprove = false, blogId = Model.Blog.Id, postId = post.Id}, new {@class = "journal-entry-short-item-right"})
+                            @Html.ActionLink("I endorse", "Approve", "Blog", new {isAprove = true, blogId = Model.Blog.Id, postId = post.Id}, new {@class = "journal-entry-short-item-right"})
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Change own decision", "ChangeMind", "Blog", new {blogId = Model.Blog.Id, postId = post.Id}, new {@class = "journal-entry-short-item-right"})
+                            <span class="journal-entry-short-item-right">Don't take the part "@post.NotTakeATest</span>
+                            <span class="journal-entry-short-item-right">Disapprove  "@post.NotApprovedList.Count  </span>
+                            <span class="journal-entry-short-item-right">Approve  "@post.ApprovedList.Count  </span>
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+}
+    @*<div class="comment-hr hr">
+        <hr />
     </div>
-    <div id="g-footer">Some information</div>*@
+    <table class="g-coins-table" align="left" border="0">
+        <tr>
+            <th>Operation</th>
+            <th>User</th>
+            <th>Date</th>
+            <th>Comment</th>
+        </tr>
+        @foreach (var log in Model.LastLogs)
+        {
+            <tr>
+                @if (log.Coins > 0)
+                {
+                    <td><font color="#004F88">@log.Coins</font></td>
+                }
+                else
+                {
+                    <td><font color="#ff4500">@log.Coins</font></td>
+                }
+                <td>@log.Group_User.User.Name</td>
+                <td>@log.Date</td>
+                <td class="g-coins-comment">@log.Comment</td>
+            </tr>
+        }
+    </table>
+    <br clear="all">
+    <h2 align="left">Tatal balance @Model.TatalBalnce</h2>*@
 </div>
+

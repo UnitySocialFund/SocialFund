@@ -1,0 +1,110 @@
+﻿@model SocialFund.Models.BlogViewModel.PostDetailsViewModel
+
+@{
+    ViewBag.Title = "Post";
+    Layout = "~/Views/Shared/Site.cshtml";
+}
+<div class="group-content-wraper">
+        <div class="journal-entry-short-entry">
+            <div class="journal-entry-short-head">
+                <div class="journal-entry-short-caption">
+                    @if (Model.CurrentUserIsOwner && !Model.Post.IsDone)
+                    {
+                        @Html.ActionLink("Done", "InDone", "Blog", new { blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right g-button g-button-small" })
+                        @Html.ActionLink("Remove", "Remove", "Blog", new { blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right g-button g-button-small" })
+                    }
+                    @if (!Model.Post.IsDone && Model.Post.Author == User.Identity.Name)
+                    {
+                        @Html.ActionLink("Edit", "Edit", "Blog", new { blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right g-button g-button-small" })
+                    }
+                    @if (Model.Post.IsDone)
+                    {
+                        @Html.ActionLink("Remove", "Remove", "Blog", new { blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right g-button g-button-small" })
+                    }
+                    <h2>@Model.Post.Title</h2>
+                </div>
+                <div class="journal-entry-short-info">
+                    <div class="journal-entry-short-item">
+                        @Html.ActionLink(Model.Post.Author, "UserDetails", "Account", new { id = Model.Post.Author }, new { @class = "journal-entry-short-item" })
+                        <span class="journal-entry-short-item">Date: @Model.Post.Created.ToShortDateString()</span>
+                        @if (Model.Post.Modified != null)
+                        {
+                            <span class="journal-entry-short-item">Modified: @Model.Post.Modified</span>
+                        }
+                        <span class="journal-entry-short-item journal-entry-short-comments">@Model.Post.Comments.Count comments</span>
+                    </div>
+                    <div class="journal-entry-short-item-right">
+                        @if (!Model.Post.IsVoted && !Model.Post.IsDone)
+                        {
+                            <span class="journal-entry-short-item-right">Don't take the part - @Model.Post.NotTakeATest</span>
+                            @Html.ActionLink("I don't support", "Approve", "Blog", new { isAprove = false, blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right" })
+                            @Html.ActionLink("I endorse", "Approve", "Blog", new { isAprove = true, blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right" })
+
+                        }
+                        else
+                        {
+                            if (!Model.Post.IsDone)
+                            {
+                            @Html.ActionLink("Change own decision", "ChangeMind", "Blog", new { blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right" })
+                            }
+                            <span class="journal-entry-short-item-right">Don't take the part  "@Model.Post.NotTakeATest</span>
+                            <span class="journal-entry-short-item-right">Disapprove  "@Model.Post.NotApprovedList.Count  </span>
+                            <span class="journal-entry-short-item-right">Approve  "@Model.Post.ApprovedList.Count  </span>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div>
+        <p>
+            @Model.Post.ShortContent
+        </p>
+        <p>
+            @Model.Post.Content
+        </p>
+    </div>
+
+    <br />
+
+    <div class="comment-hr hr">
+        <hr>
+    </div>
+    @foreach (var comm in Model.Post.Comments)
+    {
+        <div class="journal-entry-short-info">
+            <div class="comment-userinfo">
+                <h2>@comm.Author</h2>
+            </div>
+            <div class="comment-body">
+                <div class="comment-text">
+                    <p>
+                        <span class="comment-text">@comm.Content</span>
+                    </p>
+                </div>
+            </div>
+            <div class="comment-footer">
+                <button class="g-button g-button-small" onclick="" data-action="comments.reply" data-parent="288230376174819405">Reply</button>
+                <span class="journal-entry-short-item-right">Date: @comm.Created.ToShortDateString()</span>
+            </div>
+        </div>
+        <div class="comment-hr hr">
+            <hr>
+        </div>
+    }
+    @using (Html.BeginForm("AddComment", "Blog", FormMethod.Post))
+    {
+        <input type="hidden" value="@Model.BlogId" name="BlogId">
+        <input type="hidden" value="@Model.Post.Id" name="PostId">
+        <div>
+            @Html.TextArea("Content", new { @style = "width: 100%; height: 80px; resize: none;" })
+        </div>
+        <div>
+            <div>
+                <br />
+                <input type="submit" value="Pour" class="g-button" />
+            </div>
+        </div>
+    }
+</div>

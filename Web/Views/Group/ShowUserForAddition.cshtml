@@ -11,7 +11,7 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
 
-<div class="userlist">
+<div class="group-content-wraper">
     @using (Html.BeginForm("ShowUserForAddition", "Group", FormMethod.Get, new { groupId = Model.GroupId }))
     {
         <input type="hidden" value="@Model.GroupId" name="groupId"/>

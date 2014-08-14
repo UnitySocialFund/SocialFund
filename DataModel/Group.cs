@@ -22,6 +22,7 @@ namespace DataModel
         public int Id { get; set; }
         public string Name { get; set; }
         public int OwnerId { get; set; }
+        public System.Guid BlogId { get; set; }
     
         public virtual User User { get; set; }
         public virtual ICollection<Group_User> Group_User { get; set; }

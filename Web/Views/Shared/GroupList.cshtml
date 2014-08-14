@@ -1,0 +1,29 @@
+﻿@model SocialFund.Models.GroupViewModel.GroupListViewModel
+
+@{
+    Layout = null;
+}
+<div id="groupList">
+    <ul>
+        @if (Model.MyGroups.Count != 0)
+        {
+            <li>"My groups</li>
+            foreach (var group in Model.MyGroups)
+            {
+            <li>@Html.ActionLink(group.Name, "GroupRoom", "Group", new { id = group.Id }, null)</li>
+            }
+        }
+
+        @if (Model.InvitedGroups.Count != 0)
+        {
+            <li>"Invited groups</li>
+            foreach (var group in Model.InvitedGroups)
+            {
+            <li>@Html.ActionLink(group.Name, "GroupRoom", "Group", new { id = group.Id }, null)</li>
+            }
+        }
+        <li></li>
+        <li>@Html.ActionLink("+ Create new group", "CreateGroup", "Group")</li>
+
+    </ul>
+</div>

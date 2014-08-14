@@ -4,23 +4,23 @@
     ViewBag.Title = "CreateGroup";
     Layout = "~/Views/Shared/Site.cshtml";
 }
-<div class="regform">
-    <h3> Group creation</h3>
-    <fieldset style="display: inline">
-        @using (Html.BeginForm())
-        {
-            @Html.ValidationSummary(true)
+<div class="group-content-wraper">
+    <div>
+        <h3>Group creation</h3>
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true)
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Name)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
-            </div> 
-            <p>
-                <input type="submit" class="g-button" value="Create Group" />
-            </p>
-        }
-    </fieldset> 
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Name)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div> 
+                <p>
+                    <input type="submit" class="g-button" value="Create Group" />
+                </p>
+            }
+    </div>
 </div>
