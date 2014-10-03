@@ -18,7 +18,15 @@
                     @Html.EditorFor(model => model.Name)
                     @Html.ValidationMessageFor(model => model.Name)
                 </div> 
-                <p>
+                
+                <div class="editor-label">
+                    @Html.CheckBox("isBlogCreate") - Create group blog
+                </div>
+                <div class="editor-field">
+                    
+                </div> 
+
+                                <p>
                     <input type="submit" class="g-button" value="Create Group" />
                 </p>
             }

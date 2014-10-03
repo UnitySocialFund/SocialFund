@@ -85,10 +85,14 @@
             }
             <li>@Html.ActionLink("Log history", "Index", "Log", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
             @*<li>@Html.ActionLink("Group contacts", "#", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>*@
-            @if (Model.currentUserIsMember)
+            @if (Model.currentUserIsMember && Model.Blog != null)
             {
                 <li>@Html.ActionLink("New event", "Add", "Blog", new { Model.Blog.Id }, new { @class = "g-button" })</li>
                 <li>@Html.ActionLink("Done events", "HistoryDoneEvents", "Blog", new { Model.Blog.Id }, new { @class = "g-button" })</li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("Create blog", "Create", "Blog", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
             }
 
         </ul>
@@ -157,7 +161,7 @@
             </div>
         }
     </div>
-@if (Model.Blog.Posts.Count > 0)
+@if (Model.Blog != null && Model.Blog.Posts.Count > 0)
 {
     <div class="comment-hr hr">
         <hr />

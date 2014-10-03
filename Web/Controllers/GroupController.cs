@@ -29,7 +29,7 @@ namespace SocialFund.Controllers
             var viewModel = new GroupIndexViewModel();
             var groups = _groupService.GetGroupForUser(User.Identity.Name);
             int curentUserId = _logService.GetUserId(User.Identity.Name);
-            
+
             foreach (var group in groups)
             {
                 if (group.OwnerId == curentUserId)
@@ -53,11 +53,17 @@ namespace SocialFund.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateGroup(Group viewModel)
+        public ActionResult CreateGroup(Group viewModel, bool isBlogCreate)
         {
             var groupId = _groupService.CreateGroup(viewModel, User.Identity.Name);
 
-            return this.RedirectToAction("GroupRoom", new { id = groupId});
+            if (isBlogCreate)
+            {
+                var group = _groupService.GetGroup(groupId);
+                _BlogService.CreateBlog(new Blog() { Title = group.Name, GroupId = groupId }, groupId);
+            }
+
+            return this.RedirectToAction("GroupRoom", new { id = groupId });
         }
 
         public ActionResult ShowGroupDetails(int groupId, int page = 1)
@@ -79,7 +85,7 @@ namespace SocialFund.Controllers
         {
             var vm = new UserForAdditionToGroup(groupId);
             vm.Query = query;
-            
+
             if (!String.IsNullOrEmpty(query))
             {
                 vm.UsersPaged = _groupService.GetUserNotInGroup(groupId).Where(x => x.Name.Contains(query)).ToPagedList(page, 10);
@@ -116,20 +122,24 @@ namespace SocialFund.Controllers
                 TatalBalnce = _logService.GetCurrentBalance(id),
             };
 
-            vm.Blog = _BlogService.GetBlog(vm.Group.BlogId);
-            vm.Blog.Posts = vm.Blog.Posts.Where(x => !x.IsDone).ToList();
             var userId = _logService.GetUserId(User.Identity.Name);
 
-            Parallel.ForEach(vm.Blog.Posts, (i) => IsVoted(i, userId));
-            Parallel.ForEach(vm.Blog.Posts, (i) => CountOfNotTakeATest(i, vm.GroupUsers.Count));
+            vm.Blog = _BlogService.GetBlog(vm.Group.BlogId);
+            if (vm.Blog != null)
+            {
+                vm.Blog.Posts = vm.Blog.Posts.Where(x => !x.IsDone).ToList();
 
-            vm.Blog.Posts = vm.Blog.Posts.OrderByDescending(x => x.ApprovedList.Count).ToList();
+                Parallel.ForEach(vm.Blog.Posts, (i) => IsVoted(i, userId));
+                Parallel.ForEach(vm.Blog.Posts, (i) => CountOfNotTakeATest(i, vm.GroupUsers.Count));
+
+                vm.Blog.Posts = vm.Blog.Posts.OrderByDescending(x => x.ApprovedList.Count).ToList();
+            }
 
             if (userId == vm.Group.OwnerId)
             {
                 vm.currentUserIsOwner = true;
             }
-            
+
             vm.currentUserIsMember = _logService.IsUserMember(id, userId);
 
             return this.View(vm);
@@ -149,14 +159,14 @@ namespace SocialFund.Controllers
         {
             _groupService.Spam(id, title, message);
 
-            return this.RedirectToAction("GroupRoom", new { id});
+            return this.RedirectToAction("GroupRoom", new { id });
         }
 
         private void CountOfNotTakeATest(Post post, int userCount)
         {
             post.NotTakeATest = userCount - post.NotApprovedList.Count - post.ApprovedList.Count;
         }
-        
+
         private void IsVoted(Post post, int userId)
         {
             if (post.ApprovedList.Contains(userId) || post.NotApprovedList.Contains(userId))

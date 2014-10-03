@@ -26,6 +26,15 @@ namespace SocialFund.Controllers
             return View();
         }
 
+        public ActionResult Create(int groupId)
+        {
+            var group = _groupService.GetGroup(groupId);
+            
+            _blogService.CreateBlog(new Blog() { Title = group.Name, GroupId = groupId }, groupId);
+
+            return RedirectToAction("GroupRoom", "Group", new { id = groupId });
+        }
+
         public ActionResult Post(Guid blogId, Guid postId)
         {
             var blog = _blogService.GetBlog(blogId);

@@ -16,12 +16,17 @@ namespace Services
         public BlogService()
         {
             _db = new BlogRepository();
-            collection = _db.GetCollection();    
+            collection = _db.GetCollection();
         }
 
-        public Guid CreateBlog(Blog blog)
+        public Guid CreateBlog(Blog blog, int? groupId)
         {
             collection.Save(blog);
+            if (groupId != null)
+            {
+                new GroupService().SetBlog(blog.Id, (int)groupId);
+            }
+
             return blog.Id;
         }
 

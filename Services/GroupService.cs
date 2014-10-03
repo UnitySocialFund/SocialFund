@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using System;
+using Common;
 using DataModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,10 +104,7 @@ namespace Services
                     return 0;
                 }
 
-                var blog = new Blog();
-
                 group.User = user;
-                group.BlogId = blog.Id;
                 db.Group.Add(group);
 
                 var groupUser = new Group_User();
@@ -115,9 +113,6 @@ namespace Services
                 db.Group_User.Add(groupUser);
 
                 db.SaveChanges();
-                blog.Title = group.Name;
-                blog.GroupId = group.Id;
-                new BlogService().CreateBlog(blog);
                 return group.Id;
             }
         }
@@ -155,6 +150,21 @@ namespace Services
                 var group = db.Group.Single(x => x.Id == gr.Id);
                 group.Name = gr.Name;
                 group.OwnerId = gr.OwnerId;
+                db.SaveChanges();
+            }
+        }
+
+        public void SetBlog(Guid blogId, int groupId)
+        {
+            using (var db = new SocialFundEntities())
+            {
+                var group = db.Group.FirstOrDefault(x => x.Id == groupId);
+                if (group == null)
+                {
+                    return;
+                }
+
+                group.BlogId = blogId;
                 db.SaveChanges();
             }
         }
