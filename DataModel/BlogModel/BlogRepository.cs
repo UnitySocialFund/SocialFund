@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using MongoDB.Driver;
 
 namespace DataModel.BlogModel
@@ -7,13 +8,14 @@ namespace DataModel.BlogModel
     {
         private const string DATABASE_NAME = "SFBlogs";
         private const string COLLECTION_NAME = "SFBlogs";
+
         private static MongoClient client;
         private static MongoServer server;
         private static MongoDatabase database;
 
         public BlogRepository()
         {
-            client = new MongoClient("mongodb://localhost");
+            client = new MongoClient(ConfigurationManager.ConnectionStrings["SocialFundMongoBlog"].ToString());
             server = client.GetServer();
             database = server.GetDatabase(DATABASE_NAME);
         }
