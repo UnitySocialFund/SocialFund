@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MongoDB.Driver;
 
 namespace DataModel.BlogModel
@@ -15,7 +11,6 @@ namespace DataModel.BlogModel
         private static MongoServer server;
         private static MongoDatabase database;
 
-
         public BlogRepository()
         {
             client = new MongoClient("mongodb://localhost");
@@ -27,7 +22,6 @@ namespace DataModel.BlogModel
         {
             return database.GetCollection<Blog>(COLLECTION_NAME);
         }
-
 
         public void Dispose()
         {

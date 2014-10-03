@@ -12,11 +12,13 @@ namespace SocialFund.Controllers
     {
         private readonly GroupService _groupService;
         private readonly LogService _logService;
+        private readonly BlogService _blogService;
 
         public BlogController()
         {
             _groupService = new GroupService();
             _logService = new LogService();
+            _blogService = new BlogService();
         }
 
         public ActionResult Index()
@@ -26,14 +28,15 @@ namespace SocialFund.Controllers
 
         public ActionResult Post(Guid blogId, Guid postId)
         {
-            var blog = new BlogService().GetBlog(blogId);
+            var blog = _blogService.GetBlog(blogId);
             var userId = _logService.GetUserId(User.Identity.Name);
             var groupOwnerId = _groupService.GetGroup(blog.GroupId).OwnerId;
-            PostDetailsViewModel vm = new PostDetailsViewModel()
+            
+            var vm = new PostDetailsViewModel()
             {
                 GroupId = blog.GroupId,
                 BlogId = blog.Id,
-                Post = new BlogService().GetPost(blog.Id, postId),
+                Post = _blogService.GetPost(blog.Id, postId),
                 CurrentUserIsOwner = userId == groupOwnerId
             };
 
@@ -50,7 +53,9 @@ namespace SocialFund.Controllers
         public ActionResult Add(Guid id)
         {
             var vm = new PostCreateViewModel();
+
             vm.GroupId = Convert.ToInt32(Request.UrlReferrer.Segments[Request.UrlReferrer.Segments.Length - 1]);
+
             return View(vm);
         }
 
@@ -70,17 +75,19 @@ namespace SocialFund.Controllers
                     NotApprovedList = new Collection<int>(),
                     NotTakeATest = _groupService.GetUsersForGroup(model.GroupId).Count
                 };
-                new BlogService().AddPost(id, post);
+                _blogService.AddPost(id, post);
 
                 return RedirectToAction("GroupRoom", "Group", new { id = model.GroupId });
             }
+
             return View(model);
         }
 
         [Authorize]
         public ActionResult Edit(Guid blogId, Guid postId)
         {
-            var post = new BlogService().GetPost(blogId, postId);
+            var post = _blogService.GetPost(blogId, postId);
+            
             var vm = new PostEditViewModel()
             {
                 BlogId = blogId,
@@ -90,6 +97,7 @@ namespace SocialFund.Controllers
                 Content = post.Content,
                 Modified = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
             };
+
             return View(vm);
         }
 
@@ -99,7 +107,6 @@ namespace SocialFund.Controllers
         {
             if (ModelState.IsValid)
             {
-                var _blogService = new BlogService();
                 var post = _blogService.GetPost(model.BlogId, model.PostId);
 
                 post.Title = model.Title;
@@ -108,7 +115,9 @@ namespace SocialFund.Controllers
                 post.Modified = model.Modified;
 
                 _blogService.UpdatePost(model.BlogId, post);
+
                 var groupId = _blogService.GetBlog(model.BlogId).GroupId;
+                
                 return RedirectToAction("GroupRoom", "Group", new { id = groupId});
             }
 
@@ -118,21 +127,24 @@ namespace SocialFund.Controllers
         [Authorize]
         public ActionResult Remove(Guid blogId, Guid postId)
         {
-            new BlogService().RemovePost(blogId, postId);
+            _blogService.RemovePost(blogId, postId);
+
             return Redirect(Request.UrlReferrer.ToString());
         }
 
         [Authorize]
         public ActionResult InDone(Guid blogId, Guid postId)
         {
-            new BlogService().InDonePost(blogId, postId);
+            _blogService.InDonePost(blogId, postId);
+
             return Redirect(Request.UrlReferrer.ToString());
         }
 
         [Authorize]
         public ActionResult FromDone(Guid blogId, Guid postId)
         {
-            new BlogService().FromDonePost(blogId, postId);
+            _blogService.FromDonePost(blogId, postId);
+
             return Redirect(Request.UrlReferrer.ToString());
         }
 
@@ -147,8 +159,10 @@ namespace SocialFund.Controllers
                     Author = User.Identity.Name,
                     Content = model.Content
                 };
-                new BlogService().AddComment(model.BlogId, model.PostId, comment);
+
+                _blogService.AddComment(model.BlogId, model.PostId, comment);
             }
+
             return RedirectToAction("Post", "Blog", new { blogId = model.BlogId, postId = model.PostId });
         }
 
@@ -163,15 +177,17 @@ namespace SocialFund.Controllers
                     Author = User.Identity.Name,
                     Content = model.Content
                 };
-                new BlogService().AddComment(model.BlogId, model.PostId, comment);
+
+                _blogService.AddComment(model.BlogId, model.PostId, comment);
             }
+
             return RedirectToAction("Post", "Blog", new { blogId = model.BlogId, postId = model.PostId });
         }
 
         public ActionResult Approve(Guid blogId, Guid postId, bool isAprove)
         {
-            var _bs = new BlogService();
-            var post = _bs.GetPost(blogId, postId);
+            var post = _blogService.GetPost(blogId, postId);
+            
             if (post.NotTakeATest != 0)
             {
                 if (isAprove)
@@ -184,7 +200,7 @@ namespace SocialFund.Controllers
                 }
                 post.NotTakeATest--;
 
-                _bs.UpdatePost(blogId, post);
+                _blogService.UpdatePost(blogId, post);
             }
 
             return Redirect(Request.UrlReferrer.ToString());
@@ -192,9 +208,9 @@ namespace SocialFund.Controllers
 
         public ActionResult ChangeMind(Guid blogId, Guid postId)
         {
-            var _bs = new BlogService();
             var userId = _logService.GetUserId(User.Identity.Name);
-            var post = _bs.GetPost(blogId, postId);
+            var post = _blogService.GetPost(blogId, postId);
+            
             if (post.ApprovedList.Contains(userId))
             {
                 post.NotTakeATest++;
@@ -207,22 +223,24 @@ namespace SocialFund.Controllers
                 post.NotApprovedList.Remove(userId);
             }
 
-            _bs.UpdatePost(blogId, post);
+            _blogService.UpdatePost(blogId, post);
 
             return Redirect(Request.UrlReferrer.ToString());
         }
 
         public ActionResult HistoryDoneEvents(Guid id)
         {
-            var blog = new BlogService().GetBlog(id);
+            var blog = _blogService.GetBlog(id);
             var userId = _logService.GetUserId(User.Identity.Name);
             var groupOwnerId = _groupService.GetGroup(blog.GroupId).OwnerId;
+            
             var vm = new DoneEventsViewModel()
             {
                 Posts = blog.Posts.Where(x => x.IsDone).ToList(),
                 CurrentUserIsOwner = userId == groupOwnerId,
                 BlogId = id
             };
+            
             return this.View(vm);
         }
     }

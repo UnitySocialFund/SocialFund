@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataModel.BlogModel
 {
@@ -13,6 +9,7 @@ namespace DataModel.BlogModel
         {
             RiplyComments = new List<Comment>();
         }
+
         [StringLength(50)]
         [Required]
         public string Author { get; set; }

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace DataModel.BlogModel
 {
@@ -13,10 +7,11 @@ namespace DataModel.BlogModel
     {
         public Post()
         {
-            this.Comments = new List<Comment>();
+            Comments = new List<Comment>();
             ApprovedList = new List<int>();
             NotApprovedList = new List<int>();
         }
+
         [StringLength(150)]
         [Required(ErrorMessage = "*")]
         public string Title { get; set; }
@@ -37,7 +32,9 @@ namespace DataModel.BlogModel
         public bool IsDone { get; set; }
 
         public ICollection<int> ApprovedList { get; set; }
+
         public ICollection<int> NotApprovedList { get; set; }
+
         public bool IsVoted { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
