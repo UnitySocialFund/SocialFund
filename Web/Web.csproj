@@ -270,9 +270,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Grid.mvc.readme" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\_GridPager.cshtml" />
   </ItemGroup>
   <ItemGroup>
