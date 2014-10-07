@@ -297,14 +297,20 @@ img {
     float: left;
 }
 
-#g-content {
-    background: none repeat scroll 0% 0% #333333;
-    width: 530px;
-    height: 210px;
+.g-content {
+    background: none repeat scroll 0% 0% #F9F9F9;
+    width: 240px;
+    height: 130px;
     position: relative;
-    float: left;
+    float: right;
     padding-left: 20px;
     padding-right: 20px;
+    padding-top: 20px;
+}
+
+.members-list {
+    float: left;
+    padding-left: 20px;
     padding-top: 20px;
 }
 
@@ -342,11 +348,9 @@ img {
 
 .group-controls {
     width: 940px;
-    display: inline-block;
 }
-
     .group-controls ul li {
-        list-style-type: none;
+        display: inline;
         font-size: 18px;
         padding-top: 1px;
         float: right;
@@ -421,20 +425,18 @@ a.g-button {
 }
 
 .g-coins-controls {
-    position: absolute;
-    width: 440px;
-    left: 20px;
-    bottom: 20px;
+    margin-bottom: 0;
+    margin-left: -39px;
+    margin-right: 0;
+    margin-top: 0;
+    width: 276px;
 }
-
-    .g-coins-controls ul li {
-        list-style-type: none;
-        font-size: 18px;
-        padding-top: 1px;
-        float: right;
-        border-color: #CCCCCC #CCCCCC #AAAAAA;
+    .g-coins-controls ul {
+        display: inline;
     }
-
+    .g-coins-controls ul li {
+        display: inline;
+    }
 .g-coins-table {
     table-layout: fixed;
     width: 100%;
@@ -680,4 +682,26 @@ hr {
 .comment-footer {
     position: relative;
 }
+
+.icon{
+  width:17px;
+  height:17px;
+  cursor:pointer;
+  fill: #aaa; 
+}
+.icon-remove:hover{
+    fill: #e11111;
+}
+.icon-done:hover{
+    fill: #11a111;
+}
+.icon-edit:hover{
+    fill: #1111a1;
+}
+.icon-inprogress:hover{
+    fill: #11a111;
+}
+
+
+
 
