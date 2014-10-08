@@ -530,6 +530,7 @@ a.g-button {
     margin-top: 0;
     position: relative;
     top: -5px;
+    word-wrap: break-word;
 }
 
 .journal-entry-short-lead {
@@ -586,6 +587,11 @@ div.journal-entry-short-item-right {
 
 .journal-entry-short-comments {
     color: #808080;
+}
+
+.journal-entry-description {
+    display: block;
+    word-wrap: break-word;
 }
 
 hr {

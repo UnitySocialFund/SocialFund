@@ -39,7 +39,7 @@
                             </a>
                         }
                     </div>
-                    <div class="journal-entry-short-lead">@post.ShortContent </div>
+                    <div class="journal-entry-short-lead">@post.Description </div>
                 </div>
                 <div class="journal-entry-short-info">
                     @Html.ActionLink(post.Author, "UserDetails", "Account", new { id = post.Author }, new { @class = "journal-entry-short-item" })

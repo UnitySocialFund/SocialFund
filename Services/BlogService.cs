@@ -57,8 +57,7 @@ namespace Services
                 Id = Guid.NewGuid(),
                 Title = post.Title,
                 Author = post.Author,
-                ShortContent = post.ShortContent,
-                Content = post.Content,
+                Description = post.Description,
                 Created = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0),
                 Comments = new Collection<Comment>(),
                 NotTakeATest = post.NotTakeATest,
@@ -89,7 +88,7 @@ namespace Services
         {
             var query = Query<Blog>.EQ(e => e.Id, blogId);
             var blog = collection.FindOne(query);
-            return blog.Posts.Where(x => x.Id == postId).Single();
+            return blog.Posts.Single(x => x.Id == postId);
         }
 
         public void InDonePost(Guid blogId, Guid postId)
@@ -136,8 +135,7 @@ namespace Services
                 return;
             }
             tmpPost.Title = post.Title;
-            tmpPost.ShortContent = post.ShortContent;
-            tmpPost.Content = post.Content;
+            tmpPost.Description = post.Description;
             tmpPost.Author = post.Author;
 
             tmpPost.NotTakeATest = post.NotTakeATest;

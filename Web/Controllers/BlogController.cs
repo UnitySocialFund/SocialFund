@@ -84,8 +84,7 @@ namespace SocialFund.Controllers
                     var post = new Post()
                     {
                         Title = model.Title,
-                        ShortContent = model.ShortContent,
-                        Content = model.Content,
+                        Description = model.Description,
                         Author = User.Identity.Name,
                         ApprovedList = new Collection<int>(),
                         NotApprovedList = new Collection<int>(),
@@ -114,8 +113,7 @@ namespace SocialFund.Controllers
                 BlogId = blogId,
                 PostId = postId,
                 Title = post.Title,
-                ShortContent = post.ShortContent,
-                Content = post.Content,
+                Description = post.Description,
                 Modified = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
             };
 
@@ -131,8 +129,7 @@ namespace SocialFund.Controllers
                 var post = _blogService.GetPost(model.BlogId, model.PostId);
 
                 post.Title = model.Title;
-                post.ShortContent = model.ShortContent;
-                post.Content = model.Content;
+                post.Description = model.Description;
                 post.Modified = model.Modified;
 
                 _blogService.UpdatePost(model.BlogId, post);

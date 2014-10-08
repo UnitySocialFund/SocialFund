@@ -21,9 +21,7 @@ namespace DataModel.BlogModel
 
         [StringLength(1500)]
         [Required(ErrorMessage = "*")]
-        public string ShortContent { get; set; }
-
-        public string Content { get; set; }
+        public string Description { get; set; }
 
         public int NotTakeATest { get; set; }
 

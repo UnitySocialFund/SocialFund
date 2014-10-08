@@ -14,13 +14,9 @@ namespace SocialFund.Models.BlogViewModel
         [Required(ErrorMessage = "Must be filled out")]
         public string Title { get; set; }
 
-        [StringLength(1500)]
-        [Required(ErrorMessage = "Must be filled out")]
-        public string ShortContent { get; set; }
-
         [StringLength(2500)]
         [Required(ErrorMessage = "Must be filled out")]
-        public string Content { get; set; }
+        public string Description { get; set; }
 
         public DateTime Modified { get; set; }
 
