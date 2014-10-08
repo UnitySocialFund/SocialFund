@@ -7,7 +7,7 @@ namespace DataModel.BlogModel
     {
         public Comment()
         {
-            RiplyComments = new List<Comment>();
+            Comments = new List<Comment>();
         }
 
         [StringLength(50)]
@@ -18,6 +18,6 @@ namespace DataModel.BlogModel
         [Required]
         public string Content { get; set; }
 
-        public List<Comment> RiplyComments { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

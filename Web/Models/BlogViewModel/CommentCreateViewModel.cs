@@ -12,7 +12,8 @@ namespace SocialFund.Models.BlogViewModel
         [Required(ErrorMessage = "*")]
         public string Content { get; set; }
 
-        public Guid PostId { get; set; }
         public Guid BlogId { get; set; }
+        public Guid PostId { get; set; }
+        public Guid CommentId { get; set; }
     }
 }

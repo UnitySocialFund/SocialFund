@@ -8,6 +8,7 @@ using SocialFund.Models.BlogViewModel;
 
 namespace SocialFund.Controllers
 {
+    [Authorize]
     public class BlogController : Controller
     {
         private readonly UserService _userService;
@@ -60,7 +61,6 @@ namespace SocialFund.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public ActionResult Add(Guid id)
         {
             var vm = new PostCreateViewModel();
@@ -71,7 +71,6 @@ namespace SocialFund.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public ActionResult Add(PostCreateViewModel model, Guid id)
         {
             if (ModelState.IsValid)
@@ -121,7 +120,6 @@ namespace SocialFund.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public ActionResult Edit(PostEditViewModel model)
         {
             if (ModelState.IsValid)
@@ -142,7 +140,6 @@ namespace SocialFund.Controllers
             return View(model);
         }
 
-        [Authorize]
         public ActionResult Remove(Guid blogId, Guid postId)
         {
             _blogService.RemovePost(blogId, postId);
@@ -150,7 +147,6 @@ namespace SocialFund.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        [Authorize]
         public ActionResult InDone(Guid blogId, Guid postId)
         {
             _blogService.InDonePost(blogId, postId);
@@ -158,7 +154,6 @@ namespace SocialFund.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        [Authorize]
         public ActionResult FromDone(Guid blogId, Guid postId)
         {
             _blogService.FromDonePost(blogId, postId);
@@ -167,7 +162,6 @@ namespace SocialFund.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public ActionResult AddComment(CommentCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -185,7 +179,23 @@ namespace SocialFund.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        public ActionResult AddReplyComment(CommentCreateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var comment = new Comment()
+                {
+                    Author = User.Identity.Name,
+                    Content = model.Content
+                };
+
+                _blogService.AddReplyComment(model.BlogId, model.PostId, model.CommentId, comment);
+            }
+
+            return RedirectToAction("Post", "Blog", new { blogId = model.BlogId, postId = model.PostId });
+        }
+
+        [HttpPost]
         public ActionResult AddRiplyComment(CommentCreateViewModel model)
         {
             if (ModelState.IsValid)
