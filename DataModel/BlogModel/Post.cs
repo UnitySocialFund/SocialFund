@@ -29,6 +29,8 @@ namespace DataModel.BlogModel
 
         public bool IsDone { get; set; }
 
+        public int CommentCount { get; set; }
+
         public ICollection<int> ApprovedList { get; set; }
 
         public ICollection<int> NotApprovedList { get; set; }

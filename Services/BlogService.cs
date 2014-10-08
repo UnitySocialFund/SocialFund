@@ -69,18 +69,30 @@ namespace Services
 
         public void AddComment(Guid blogId, Guid postId, Comment comm)
         {
-            var query = Query<Blog>.EQ(e => e.Id, blogId);
-            var blog = collection.FindOne(query);
-            if (blog == null)
-            {
-                return;
-            }
+            var blog = collection.FindOne(Query<Blog>.EQ(e => e.Id, blogId));
+            if (blog == null) return;
+            
             var post = blog.Posts.SingleOrDefault(x => x.Id == postId);
-            if (post == null)
-            {
-                return;
-            }
+            if (post == null) return;
+            
+            post.CommentCount++;
             post.Comments.Add(comm);
+            collection.Save<Blog>(blog);
+        }
+
+        public void AddReplyComment(Guid blogId, Guid postId, Guid commentId, Comment comment)
+        {
+            var blog = collection.FindOne(Query<Blog>.EQ(e => e.Id, blogId));
+            if (blog == null) return;
+            
+            var post = blog.Posts.SingleOrDefault(x => x.Id == postId);
+            if (post == null) return;
+                
+            var commentFor = post.Comments.SingleOrDefault(x => x.Id == commentId);
+            if (commentFor == null) return;
+                
+            post.CommentCount++;
+            commentFor.Comments.Add(comment);
             collection.Save<Blog>(blog);
         }
 
@@ -159,27 +171,12 @@ namespace Services
                 blog.Posts.Remove(post);
                 collection.Save<Blog>(blog);
             }
-            
+
         }
 
         public void ClearDB()
         {
             collection.RemoveAll();
-        }
-
-        public void AddReplyComment(Guid blogId, Guid postId, Guid commentId, Comment comment)
-        {
-            var blog = collection.FindOne(Query<Blog>.EQ(e => e.Id, blogId));
-            var post = blog.Posts.SingleOrDefault(x => x.Id == postId);
-            if (post != null)
-            {
-                var commentFor = post.Comments.SingleOrDefault(x => x.Id == commentId);
-                if (commentFor != null)
-                {
-                    commentFor.Comments.Add(comment);
-                    collection.Save<Blog>(blog);
-                }
-            }
         }
     }
 }

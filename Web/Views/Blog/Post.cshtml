@@ -69,7 +69,7 @@
                     {
                         <span class="journal-entry-short-item">Modified: @Model.Post.Modified</span>
                     }
-                    <span class="journal-entry-short-item journal-entry-short-comments">@Model.Post.Comments.Count comments</span>
+                    <span class="journal-entry-short-item journal-entry-short-comments">@Model.Post.CommentCount comments</span>
                 </div>
                 <div class="journal-entry-short-item-right">
                     @if (!Model.Post.IsVoted && !Model.Post.IsDone)
@@ -152,18 +152,23 @@
                     }
                 }
     }
-    @using (Html.BeginForm("AddComment", "Blog", FormMethod.Post))
-    {
-        <input type="hidden" value="@Model.BlogId" name="BlogId">
-        <input type="hidden" value="@Model.Post.Id" name="PostId">
-        <div>
-            @Html.TextArea("Content", new { @style = "width: 100%; height: 80px; resize: none;" })
+    <div>
+        <div class="comment-hr hr">
+            <hr>
         </div>
-        <div>
+        @using (Html.BeginForm("AddComment", "Blog", FormMethod.Post))
+        {
+            <input type="hidden" value="@Model.BlogId" name="BlogId">
+            <input type="hidden" value="@Model.Post.Id" name="PostId">
             <div>
-                <br />
-                <input type="submit" value="Pour" class="g-button" />
+                @Html.TextArea("Content", new { @style = "width: 100%; height: 80px; resize: none;" })
             </div>
-        </div>
-    }
+            <div>
+                <div>
+                    <br />
+                    <input type="submit" value="Pour" class="g-button" />
+                </div>
+            </div>
+        }
+    </div>
 </div>
