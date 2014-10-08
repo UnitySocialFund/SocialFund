@@ -10,8 +10,20 @@ namespace SocialFund.Models.Account
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "User Name")]
-        public string UserName { get; set; }
+        [Display(Name = "User Nick")]
+        public string UserNick { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Middle Name")]
+        public string MiddleName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]

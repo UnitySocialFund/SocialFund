@@ -16,9 +16,32 @@
         <fieldset>
 
             @Html.HiddenFor(model => model.Id)
+            
+            <div class="editor-label">
+                @Html.LabelFor(model => model.FirstName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MiddleName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.MiddleName)
+                @Html.ValidationMessageFor(model => model.MiddleName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.LastName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
 
             <div class="editor-label">
-                @Html.LabelFor(model => model.Name)
+                Nick name
+                <!-- @Html.LabelFor(model => model.Name) -->
             </div>
             <div class="editor-field">
                 @Html.EditorFor(model => model.Name)

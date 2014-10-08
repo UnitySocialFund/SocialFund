@@ -10,6 +10,7 @@ namespace SocialFund.Controllers
 {
     public class BlogController : Controller
     {
+        private readonly UserService _userService;
         private readonly GroupService _groupService;
         private readonly LogService _logService;
         private readonly BlogService _blogService;
@@ -17,6 +18,7 @@ namespace SocialFund.Controllers
         public BlogController()
         {
             _groupService = new GroupService();
+            _userService = new UserService();
             _logService = new LogService();
             _blogService = new BlogService();
         }
@@ -74,19 +76,29 @@ namespace SocialFund.Controllers
         {
             if (ModelState.IsValid)
             {
-                var post = new Post()
-                {
-                    Title = model.Title,
-                    ShortContent = model.ShortContent,
-                    Content = model.Content,
-                    Author = User.Identity.Name,
-                    ApprovedList = new Collection<int>(),
-                    NotApprovedList = new Collection<int>(),
-                    NotTakeATest = _groupService.GetUsersForGroup(model.GroupId).Count
-                };
-                _blogService.AddPost(id, post);
+                var blog = _blogService.GetBlog(id);
+                var user = _userService.GetUser(User.Identity.Name);
 
-                return RedirectToAction("GroupRoom", "Group", new { id = model.GroupId });
+                if (_groupService.IsMember(blog.GroupId, user.Id))
+                {
+                    var post = new Post()
+                    {
+                        Title = model.Title,
+                        ShortContent = model.ShortContent,
+                        Content = model.Content,
+                        Author = User.Identity.Name,
+                        ApprovedList = new Collection<int>(),
+                        NotApprovedList = new Collection<int>(),
+                        NotTakeATest = _groupService.GetUsersForGroup(model.GroupId).Count
+                    };
+                    _blogService.AddPost(id, post);
+
+                    return RedirectToAction("GroupRoom", "Group", new { id = model.GroupId });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home", new { message = "You do not have enought permissions." });
+                }
             }
 
             return View(model);

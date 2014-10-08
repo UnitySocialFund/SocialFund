@@ -29,7 +29,7 @@
                 {
                     <td><font color="red">@log.Coins</font></td>
                 }
-                <td>@log.Group_User.User.Name</td>
+                <td>@Html.ActionLink(log.Group_User.User.LastName + " " + log.Group_User.User.FirstName + " " + log.Group_User.User.MiddleName + "  ", "UserDetails", "Account", new { id = log.Group_User.User.Name }, null)</td>
                 <td>@log.Date</td>
                 <td style="word-break: break-all">@log.Comment</td>
             </tr>

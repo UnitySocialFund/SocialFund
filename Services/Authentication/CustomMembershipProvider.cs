@@ -61,9 +61,15 @@ namespace Services.Authentication
             return null;
         }
 
-        public MembershipUser CreateUser(string username, string password, string email, string phone, string address, bool isNotif)
+        public MembershipUser CreateUser(string userNick, 
+                                         string fName, string mName, string lName,
+                                         string password, 
+                                         string email, 
+                                         string phone, 
+                                         string address, 
+                                         bool isNotif)
         {
-            MembershipUser membershipUser = GetUser(username, false);
+            MembershipUser membershipUser = GetUser(userNick, false);
 
             if (membershipUser == null)
             {
@@ -71,17 +77,23 @@ namespace Services.Authentication
                 {
                     using (SocialFundEntities db = new SocialFundEntities())
                     {
-                        User user = new User();
-                        user.Name = username;
-                        user.Password = Crypto.HashPassword(password);
-                        user.Email = email;
-                        user.Address = address;
-                        user.Phone = phone;
-                        user.IsNotif = isNotif;
+                        var user = new User()
+                        {
+                            Name = userNick,
+                            FirstName = fName,
+                            MiddleName = mName,
+                            LastName = lName,
+                            Password = Crypto.HashPassword(password),
+                            Email = email,
+                            Address = address,
+                            Phone = phone,
+                            IsNotif = isNotif
+                        };
+
                         db.User.Add(user);
                         db.SaveChanges();
 
-                        membershipUser = GetUser(username, false);
+                        membershipUser = GetUser(userNick, false);
                         return membershipUser;
                     }
                 }

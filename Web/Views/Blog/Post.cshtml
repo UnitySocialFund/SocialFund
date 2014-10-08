@@ -75,7 +75,7 @@
     {
         <div class="journal-entry-short-info">
             <div class="comment-userinfo">
-                <h2>@comm.Author</h2>
+                <h2>@Html.ActionLink(comm.Author, "UserDetails", "Account", new { id = comm.Author }, null)</h2>
             </div>
             <div class="comment-body">
                 <div class="comment-text">

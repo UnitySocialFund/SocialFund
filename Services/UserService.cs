@@ -7,6 +7,27 @@ namespace Services
 {
     public class UserService
     {
+        public User GetUser(int id)
+        {
+            User user = null;
+            using (var db = new SocialFundEntities())
+            {
+                user = db.User.SingleOrDefault(x => x.Id == id);
+            }
+            return user;
+
+        }
+
+        public User GetUser(string nick)
+        {
+            User user = null;
+            using (var db = new SocialFundEntities())
+            {
+                user = db.User.SingleOrDefault(x => x.Name == nick);
+            }
+            return user;
+        }
+
         public void SandMail(string mail, string title, string message)
         {
             if (MailSender.ValidateEmail(mail))

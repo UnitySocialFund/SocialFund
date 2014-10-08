@@ -88,7 +88,7 @@ namespace SocialFund.Controllers
 
             if (!String.IsNullOrEmpty(query))
             {
-                vm.UsersPaged = _groupService.GetUserNotInGroup(groupId).Where(x => x.Name.Contains(query)).ToPagedList(page, 10);
+                vm.UsersPaged = _groupService.GetUserNotInGroup(groupId).Where(x => x.FirstName.Contains(query) || x.MiddleName.Contains(query) || x.LastName.Contains(query)).ToPagedList(page, 10);
             }
             else
             {
@@ -124,7 +124,10 @@ namespace SocialFund.Controllers
 
             var userId = _logService.GetUserId(User.Identity.Name);
 
-            vm.Blog = _BlogService.GetBlog(vm.Group.BlogId);
+            if (vm.Group.BlogId != null)
+            {
+                vm.Blog = _BlogService.GetBlog((Guid)vm.Group.BlogId);    
+            }
             if (vm.Blog != null)
             {
                 vm.Blog.Posts = vm.Blog.Posts.Where(x => !x.IsDone).ToList();

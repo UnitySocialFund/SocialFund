@@ -1,6 +1,7 @@
 ﻿using Services;
 using System.Web.Mvc;
 using SocialFund.Models.GroupViewModel;
+using System;
 
 namespace SocialFund.Controllers
 {
@@ -8,10 +9,13 @@ namespace SocialFund.Controllers
     {
         #region Controller methods
 
-        public ActionResult Index()
+        public ActionResult Index(string message)
         {
-            
-            ViewData["Message"] = "Welcome to Social Fund!";
+            ViewData["Message"] = "Welcome to Social Fund!";    
+            if (!String.IsNullOrEmpty(message))
+            {
+                ViewData["Message"] = message;
+            }
 
             return View();
         }

@@ -14,11 +14,33 @@
             @Html.ValidationSummary(true)
 
             <div class="editor-label">
-                @Html.LabelFor(model => model.UserName)
+                @Html.LabelFor(model => model.FirstName)
             </div>
             <div class="editor-field">
-                @Html.EditorFor(model => model.UserName)
-                @Html.ValidationMessageFor(model => model.UserName)
+                @Html.EditorFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MiddleName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.MiddleName)
+                @Html.ValidationMessageFor(model => model.MiddleName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.LastName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.UserNick)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.UserNick)
+                @Html.ValidationMessageFor(model => model.UserNick)
             </div>
  
             <div class="editor-label">

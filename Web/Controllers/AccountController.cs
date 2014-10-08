@@ -75,11 +75,19 @@ namespace SocialFund.Controllers
 
             if (ModelState.IsValid)
             {
-                MembershipUser membershipUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(model.UserName, model.Password, model.Email, model.Phone, model.Address, model.IsNotif);
+                MembershipUser membershipUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(model.UserNick, 
+                                                                                                           model.FirstName,
+                                                                                                           model.MiddleName,
+                                                                                                           model.LastName,
+                                                                                                           model.Password, 
+                                                                                                           model.Email, 
+                                                                                                           model.Phone, 
+                                                                                                           model.Address, 
+                                                                                                           model.IsNotif);
 
                 if (membershipUser != null)
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false);
+                    FormsAuthentication.SetAuthCookie(model.UserNick, false);
                     new UserService().SandMail(model.Email, "Registration", "Congratulations! Your registration has been successfully submitted.");
                     return RedirectToAction("Index", "Home");
                 }
@@ -159,6 +167,9 @@ namespace SocialFund.Controllers
             var vm = new UserDetailsViewModel()
             {
                 Name = user.Name,
+                FirstName = user.FirstName,
+                MiddleName = user.MiddleName,
+                LastName = user.LastName,
                 Email = user.Email,
                 Address = user.Address,
                 Phone = user.Phone

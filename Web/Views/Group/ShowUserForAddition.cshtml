@@ -40,7 +40,7 @@
                 @foreach (var item in Model.UsersPaged)
                 {
                     <tr>
-                        <td>@item.Name</td>
+                        <td>@Html.ActionLink(item.LastName + " " + item.FirstName + " " + item.MiddleName + "  ", "UserDetails", "Account", new { id = item.Name }, null)</td>
                         <td>@Html.ActionLink("Add to group", "AddUserToGroup", new { groupId = Model.GroupId, userId = item.Id, page = Model.UsersPaged.PageNumber })</td>
                     </tr>
                 }

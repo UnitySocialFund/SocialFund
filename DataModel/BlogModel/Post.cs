@@ -16,7 +16,7 @@ namespace DataModel.BlogModel
         [Required(ErrorMessage = "*")]
         public string Title { get; set; }
 
-        [StringLength(100)]
+        [StringLength(150)]
         public string Author { get; set; }
 
         [StringLength(1500)]

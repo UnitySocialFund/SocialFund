@@ -47,7 +47,7 @@ namespace Services
 
                 foreach (var group in groups)
                 {
-                    foreach(var groupUser in group.Group_User)
+                    foreach (var groupUser in group.Group_User)
                     {
                         if (groupUser.UserId == user.Id)
                         {
@@ -94,7 +94,7 @@ namespace Services
             return users;
         }
 
-        public int CreateGroup(Group group,string userName)
+        public int CreateGroup(Group group, string userName)
         {
             using (var db = new SocialFundEntities())
             {
@@ -121,15 +121,19 @@ namespace Services
         {
             using (var db = new SocialFundEntities())
             {
-                var groupUser = new Group_User();
-                
-                groupUser.Group = db.Group.FirstOrDefault(g => g.Id == groupId);
-                groupUser.User = db.User.FirstOrDefault(u => u.Id == userId);
-                groupUser.GroupId = groupId;
-                groupUser.UserId = userId;
+                var contains = db.Group_User.FirstOrDefault(x => x.GroupId == groupId && x.UserId == userId);
+                if (contains == null)
+                {
+                    var groupUser = new Group_User();
 
-                db.Group_User.Add(groupUser);
-                db.SaveChanges();
+                    groupUser.Group = db.Group.FirstOrDefault(g => g.Id == groupId);
+                    groupUser.User = db.User.FirstOrDefault(u => u.Id == userId);
+                    groupUser.GroupId = groupId;
+                    groupUser.UserId = userId;
+
+                    db.Group_User.Add(groupUser);
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -171,7 +175,7 @@ namespace Services
 
         public void Spam(int groupId, string title, string message)
         {
-            var users = GetUsersForGroup(groupId).Where(x => x.IsNotif == true).ToList(); 
+            var users = GetUsersForGroup(groupId).Where(x => x.IsNotif == true).ToList();
             foreach (var user in users)
             {
                 if (MailSender.ValidateEmail(user.Email))
@@ -179,6 +183,23 @@ namespace Services
                     MailSender sender = new MailSender();
                     sender.InitializeMailMessage("unitysocialfund@gmail.com", user.Email, "Feedback from Social Fund: " + title, message);
                     sender.SendSmtp(false);
+                }
+            }
+        }
+
+        public bool IsMember(int groupId, int userId)
+        {
+            using (var db = new SocialFundEntities())
+            {
+                var user = db.Group_User.SingleOrDefault(x => x.GroupId == groupId && x.UserId == userId);
+
+                if (user == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
                 }
             }
         }

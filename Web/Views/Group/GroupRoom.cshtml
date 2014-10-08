@@ -94,7 +94,7 @@
                 <li>@Html.ActionLink("New event", "Add", "Blog", new { Model.Blog.Id }, new { @class = "g-button" })</li>
                 <li>@Html.ActionLink("Done events", "HistoryDoneEvents", "Blog", new { Model.Blog.Id }, new { @class = "g-button" })</li>
             }
-            else
+            else if (Model.currentUserIsOwner)
             {
                 <li>@Html.ActionLink("Create blog", "Create", "Blog", new { groupId = Model.Group.Id }, new { @class = "g-button" })</li>
             }
@@ -108,7 +108,7 @@
 <div id="myPager" class="members-list">
     @if (Model.GroupUsers.Count > 0)
     {
-        <h2>Users in group @Model.Group.Name (Count of members - @Model.GroupUsers.Count )</h2>
+        <h2>Users in group "@Model.Group.Name" (Count of members - @Model.GroupUsers.Count )</h2>
                 
         <table style="padding: 10px">
             <thead>
@@ -128,7 +128,7 @@
                 {
                     <tr>
                         @*<td style="height: 10px">@Html.ActionLink(item.Name, "#", new { groupId = Model.Group.Id, userId = item.Id })</td>*@
-                        <td style="height: 10px">@item.Name</td>
+                        <td style="height: 10px">@Html.ActionLink(item.LastName + " " + item.FirstName + " " + item.MiddleName + "  ", "UserDetails", "Account", new { id = item.Name }, null)</td>
                         <td style="height: 10px">@item.Phone</td>
                         <td style="height: 10px">@item.Email</td>
                         <td style="height: 10px">@item.Address</td>
@@ -201,7 +201,7 @@
                                 </svg>
                             </a>
                         }
-                        @if (post.Author == User.Identity.Name)
+                        @if (String.Compare(post.Author, User.Identity.Name, StringComparison.CurrentCulture) == 0)
                         {
                             <a href="@Url.Action("Edit", "Blog", new { blogId = Model.Blog.Id, postId = post.Id })" title="Edit" class="a-set-icon">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="journal-entry-short-item-right icon-edit icon">
@@ -247,7 +247,19 @@
         </div>
         }
     }
-@*<div class="comment-hr hr">
+@*    <div class="comment-hr hr">
+        <hr />
+    </div>
+    <div>
+        <h6>Members list</h6>
+
+        @foreach (var user in Model.GroupUsers)
+        {
+            @Html.ActionLink(user.LastName + " " + user.FirstName + " " + user.MiddleName, "UserDetails", "Account", new { id = user.Name }, new { @style = "font-size: 10px;" })
+            <span style="font-size: 9px;">|</span>
+        }
+    </div>*@
+    @*<div class="comment-hr hr">
         <hr />
     </div>
     <table class="g-coins-table" align="left" border="0">

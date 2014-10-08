@@ -50,13 +50,21 @@ GO
 -- --------------------------------------------------
 -- Creating all tables
 -- --------------------------------------------------
+SET QUOTED_IDENTIFIER OFF;
+GO
+CREATE DATABASE SocialFund
+GO
+USE [SocialFund];
+GO
+IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
+GO
 
 -- Creating table 'Group'
 CREATE TABLE [dbo].[Group] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nchar(255)  NOT NULL,
     [OwnerId] int  NOT NULL,
-    [BlogId] uniqueidentifier  NOT NULL
+    [BlogId] uniqueidentifier  NULL
 );
 GO
 
@@ -82,6 +90,9 @@ GO
 CREATE TABLE [dbo].[User] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nchar(255)  NOT NULL,
+	[FirstName] nchar(255)  NOT NULL,
+	[MiddleName] nchar(255)  NOT NULL,
+	[LastName] nchar(255)  NOT NULL,
     [Password] nchar(255)  NOT NULL,
     [Email] nchar(255)  NULL,
     [Phone] nchar(15)  NULL,
@@ -178,6 +189,110 @@ ON [dbo].[Log]
     ([Group_UserId]);
 GO
 
+
+-- --------------------------------------------------
+-- Insetring demo data
+-- --------------------------------------------------
+
+
+INSERT INTO [SocialFund].[dbo].[User]
+           ([Name]
+           ,[FirstName]
+           ,[MiddleName]
+           ,[LastName]
+           ,[Password]
+           ,[Email]
+           ,[Phone]
+           ,[Address]
+           ,[IsNotif])
+     VALUES
+		   ('admin','Admin','Admin','Admin','ANNrWBKCKSkKavUP1FEHpq702Bqir8kBEDj4Q58/gJdOn/TA05VXcUU8oy1PHDafPg==','admin@gmail2.com','9630215487','admin address',0),
+           ('user1','Егор','Александрович','Мещеряков','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user1@gmail1.com','9630215487','address',0),
+           ('user2','Иван','Иваныч','Иванов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user2@gmail1.com','9630215487','address',0),
+           ('user3','Петр','Петров','Петрович','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user3@gmail1.com','9630215487','address',0),
+           ('user4','Евгений','Евгениевич','Евгеньев','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user4@gmail1.com','9630215487','address',0),
+           ('user5','Илья','Александрович','Запупкин','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user5@gmail1.com','9630215487','address',0),
+           ('user6','Хмырь','Хмыревич','Хмырьов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user6@gmail1.com','9630215487','address',0),
+           ('user7','Андрей','Андреевич','Андреев','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user7@gmail1.com','9630215487','address',0),
+           ('user8','Бугор','Медузович','Пузов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user8@gmail1.com','9630215487','address',0),
+           ('user9','Анастасия','Попондосович','Поподалова','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user9@gmail1.com','9630215487','address',0),
+		   
+		   ('user10','Иван','Иваныч','Иванов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user10@gmail1.com','9630215487','address',0),
+           ('user11','Петр','Петров','Петрович','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user11@gmail1.com','9630215487','address',0),
+           ('user12','Евгений','Евгениевич','Евгеньев','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user12@gmail1.com','9630215487','address',0),
+           ('user13','Илья','Александрович','Запупкин','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user13@gmail1.com','9630215487','address',0),
+           ('user14','Хмырь','Хмыревич','Хмырьов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user14@gmail1.com','9630215487','address',0),
+           ('user15','Андрей','Андреевич','Андреев','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user15@gmail1.com','9630215487','address',0),
+           ('user16','Бугор','Медузович','Пузов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user16@gmail1.com','9630215487','address',0),
+           ('user17','Анастасия','Попондосович','Поподалова','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user17@gmail1.com','9630215487','address',0),
+		   ('user18','Иван','Иваныч','Иванов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user18@gmail1.com','9630215487','address',0),
+           ('user19','Петр','Петров','Петрович','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user19@gmail1.com','9630215487','address',0),
+
+           ('user20','Евгений','Евгениевич','Евгеньев','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user20@gmail1.com','9630215487','address',0),
+           ('user21','Илья','Александрович','Запупкин','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user21@gmail1.com','9630215487','address',0),
+           ('user22','Хмырь','Хмыревич','Хмырьов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user22@gmail1.com','9630215487','address',0),
+           ('user23','Андрей','Андреевич','Андреев','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user23@gmail1.com','9630215487','address',0),
+           ('user24','Бугор','Медузович','Пузов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user24@gmail1.com','9630215487','address',0),
+           ('user25','Анастасия','Попондосович','Поподалова','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user25@gmail1.com','9630215487','address',0),
+           ('user26','Бугор','Медузович','Пузов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user26@gmail1.com','9630215487','address',0),
+           ('user27','Анастасия','Попондосович','Поподалова','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user27@gmail1.com','9630215487','address',0),
+		   ('user28','Иван','Иваныч','Иванов','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user28@gmail1.com','9630215487','address',0),
+           ('user29','Петр','Петров','Петрович','AHe3Auu5vW8vaDjzAedNii/LWRrqgNuvrHVJjE+HBTqE0v0j2dX2gQb6APOV8xPqgA==','user29@gmail1.com','9630215487','address',0)
+GO
+
+INSERT INTO [SocialFund].[dbo].[Group]
+           ([Name]
+           ,[OwnerId]
+           ,[BlogId])
+     VALUES
+		   ('AdminGroup',1,null),
+           ('Василек',2,null),
+           ('Ромашка',5,null),
+           ('Автомат',8,null),
+           ('Gans''n''Roses',10,null)
+GO
+
+INSERT INTO [SocialFund].[dbo].[Group_User]
+           ([GroupId]
+           ,[UserId])
+     VALUES
+		   (1,1),
+		   (1,11),
+		   (1,12),
+		   (1,13),
+		   (1,14),
+		   (1,15),
+		   (1,16),
+		   (1,17),
+		   (1,18),
+		   (1,19),
+
+           (2,2),
+           (2,3),
+           (2,4),
+           (3,5),
+           (3,6),
+           (3,7),
+           (4,8),
+           (4,9),
+		   (5,10)
+GO
+
+INSERT INTO [SocialFund].[dbo].[Log]
+           ([Coins]
+           ,[Date]
+           ,[Comment]
+           ,[Group_UserId])
+     VALUES
+           (32,'10/7/2014 6:21:42 PM','Comment',1),
+           (48,'10/7/2014 6:21:42 PM','Comment',1),
+           (300,'10/7/2014 6:21:42 PM','Comment',2),
+           (-50,'10/7/2014 6:21:42 PM','Comment',1),
+           (32,'10/7/2014 6:21:42 PM','Comment',3),
+           (68,'10/7/2014 6:21:42 PM','Comment',4),
+           (-100,'10/7/2014 6:21:42 PM','Comment',1),
+           (150,'10/7/2014 6:21:42 PM','Comment',8)
+GO
 -- --------------------------------------------------
 -- Script has ended
 -- --------------------------------------------------

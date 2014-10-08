@@ -8,28 +8,46 @@
 <div class="group-content-wraper">
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
+        @Html.DisplayNameFor(model => model.Name)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Name)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Email)
+        @Html.LabelFor(model => model.FirstName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+    <div class="display-label">
+        @Html.LabelFor(model => model.MiddleName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MiddleName)
+    </div>
+    <div class="display-label">
+        @Html.LabelFor(model => model.LastName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastName)
+    </div>
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Email)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Email)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Phone)
+        @Html.DisplayNameFor(model => model.Phone)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Phone)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Address)
+        @Html.DisplayNameFor(model => model.Address)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Address)
