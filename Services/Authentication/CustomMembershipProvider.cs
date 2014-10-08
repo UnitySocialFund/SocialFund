@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -10,6 +11,13 @@ namespace Services.Authentication
     //Implements custom membership provider
     public class CustomMembershipProvider : MembershipProvider, IProcessingUser
     {
+        private readonly Dictionary<MembershipCreateStatus, string> _membershipError;
+
+        public CustomMembershipProvider()
+        {
+            _membershipError = new Dictionary<MembershipCreateStatus, string>();
+            this.InitializeErrorMessages();
+        }
         public override bool ValidateUser(string username, string password)
         {
             bool isValid = false;
@@ -61,7 +69,7 @@ namespace Services.Authentication
             return null;
         }
 
-        public MembershipUser CreateUser(string userNick, 
+        public MembershipCreateStatus CreateUser(string userNick, 
                                          string fName, string mName, string lName,
                                          string password, 
                                          string email, 
@@ -69,6 +77,7 @@ namespace Services.Authentication
                                          string address, 
                                          bool isNotif)
         {
+
             MembershipUser membershipUser = GetUser(userNick, false);
 
             if (membershipUser == null)
@@ -93,13 +102,14 @@ namespace Services.Authentication
                         db.User.Add(user);
                         db.SaveChanges();
 
-                        membershipUser = GetUser(userNick, false);
-                        return membershipUser;
+                        //membershipUser = GetUser(userNick, false);
+                        return MembershipCreateStatus.Success;
                     }
                 }
-                catch { return null; }
+                catch { return MembershipCreateStatus.ProviderError; }
             }
-            return null;
+
+            return MembershipCreateStatus.DuplicateUserName;
         }
 
         public override void UpdateUser(MembershipUser user)
@@ -270,6 +280,44 @@ namespace Services.Authentication
             throw new NotImplementedException();
         }
 
+        private void InitializeErrorMessages()
+        {
+            _membershipError.Add(
+                          MembershipCreateStatus.DuplicateEmail,
+                          "Имя пользователя для данного адреса электронной почты уже существует. Введите другой адрес электронной почты.");
+            _membershipError.Add(
+                           MembershipCreateStatus.DuplicateUserName,
+                           "Username already exists. Please enter a different username.");
+            _membershipError.Add(
+                          MembershipCreateStatus.InvalidEmail,
+                          "Недопустимый адрес электронной почты. Проверьте значение поля и повторите попытку.");
+            _membershipError.Add(
+                          MembershipCreateStatus.InvalidUserName,
+                          "Предоставленное имя пользователя недействительно (имя не должно быть больше 10 символов). Проверьте значение поля и повторите попытку.");
+            _membershipError.Add(
+                          MembershipCreateStatus.InvalidPassword,
+                          "Предоставленный пароль недействителен. Введите действительный пароль.");
+            _membershipError.Add(
+                           MembershipCreateStatus.InvalidAnswer,
+                           "Номер телефона не действительный. Введите правельный номер телефона.");
+            _membershipError.Add(
+                           MembershipCreateStatus.ProviderError,
+                           "Unknown error. Check your entry and try again. If the problem persists, contact your system administrator.");
+        }
 
+
+        public string GetErrorMessage(MembershipCreateStatus status)
+        {
+            string result;
+            if (_membershipError.ContainsKey(status))
+            {
+                result = _membershipError[status];
+            }
+            else
+            {
+                result = "Unknown error. Check your entry and try again. If the problem persists, contact your system administrator.";
+            }
+            return result;
+        }
     }
 }

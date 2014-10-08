@@ -75,17 +75,17 @@ namespace SocialFund.Controllers
 
             if (ModelState.IsValid)
             {
-                MembershipUser membershipUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(model.UserNick, 
+                MembershipCreateStatus createStatus = ((CustomMembershipProvider)Membership.Provider).CreateUser(model.UserNick,
                                                                                                            model.FirstName,
                                                                                                            model.MiddleName,
                                                                                                            model.LastName,
-                                                                                                           model.Password, 
-                                                                                                           model.Email, 
-                                                                                                           model.Phone, 
-                                                                                                           model.Address, 
+                                                                                                           model.Password,
+                                                                                                           model.Email,
+                                                                                                           model.Phone,
+                                                                                                           model.Address,
                                                                                                            model.IsNotif);
 
-                if (membershipUser != null)
+                if (createStatus == MembershipCreateStatus.Success)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserNick, false);
                     new UserService().SandMail(model.Email, "Registration", "Congratulations! Your registration has been successfully submitted.");
@@ -93,7 +93,7 @@ namespace SocialFund.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Error during registration");
+                    ModelState.AddModelError(string.Empty, ((CustomMembershipProvider)Membership.Provider).GetErrorMessage(createStatus));
                 }
             }
             return View(model);
