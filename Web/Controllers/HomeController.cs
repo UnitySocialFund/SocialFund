@@ -26,41 +26,41 @@ namespace SocialFund.Controllers
                     {
                         new Post()
                         {
-                        Title = "I need a car!",
-                        Description = "I want to buy a car! And I need the money.",
-                        Author = User.Identity.Name,
-                        ApprovedList = new Collection<int>(),
-                        NotApprovedList = new Collection<int>(),
-                        NotTakeATest = new GroupService().GetUsersForGroup(group.Id).Count,
-                        CommentCount = 3,
-                        Comments = new List<Comment>()
-                        {
-                            new Comment()
+                            Title = "I need a car!",
+                            Description = "I want to buy a car! And I need the money.",
+                            Author = User.Identity.Name,
+                            ApprovedList = new Collection<int>(),
+                            NotApprovedList = new Collection<int>(),
+                            NotTakeATest = new GroupService().GetUsersForGroup(group.Id).Count,
+                            CommentCount = 3,
+                            Comments = new List<Comment>()
                             {
-                                Author = User.Identity.Name,
-                                Content = "No problem!"
-                            },
-
-                            new Comment()
-                            {
-                                Author = "User10",
-                                Content = "Are you crazy?",
-                                Comments = new List<Comment>()
+                                new Comment()
                                 {
-                                    new Comment()
+                                    Author = User.Identity.Name,
+                                    Content = "No problem!"
+                                },
+                                    
+                                new Comment()
+                                {
+                                    Author = "User10",
+                                    Content = "Are you crazy?",
+                                    Comments = new List<Comment>()
                                     {
-                                        Author = "User16",
-                                        Content = "No!",
+                                        new Comment()
+                                        {
+                                            Author = "User16",
+                                            Content = "No!",
+                                        }
                                     }
                                 }
                             }
-                        }
                         },
                         new Post()
                         {
                         Title = "A wont to know where is my money!",
                         Description = "Just text for test.",
-                        Author = "admin",
+                        Author = User.Identity.Name,
                         ApprovedList = new Collection<int>(),
                         NotApprovedList = new Collection<int>(),
                         NotTakeATest = new GroupService().GetUsersForGroup(group.Id).Count
@@ -69,12 +69,12 @@ namespace SocialFund.Controllers
                 };
 
 
-                new BlogService().CreateBlog(blog, group.Id);    
+                new BlogService().CreateBlog(blog, group.Id);
             }
 
 
 
-            ViewData["Message"] = "Welcome to Social Fund!";    
+            ViewData["Message"] = "Welcome to Social Fund!";
             if (!String.IsNullOrEmpty(message))
             {
                 ViewData["Message"] = message;
@@ -90,7 +90,7 @@ namespace SocialFund.Controllers
             var groups = _groupService.GetGroupForUser(User.Identity.Name);
             int curentUserId = _logService.GetUserId(User.Identity.Name);
             var vm = new GroupListViewModel();
-            
+
             foreach (var group in groups)
             {
                 if (group.OwnerId == curentUserId)

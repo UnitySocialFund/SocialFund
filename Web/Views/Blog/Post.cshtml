@@ -12,13 +12,20 @@
                 $("#replyForm").remove();
             }
             $(this).after("<form id='replyForm' method='post' action='/Blog/AddReplyComment'> <input type='hidden' id='blogId' name='blogId' value='' /><input type='hidden' id='postId' name='postId' value='' /><input type='hidden' id='commentId' name='commentId' value='' /><textarea style='width: 100%; height: 80px; resize: none;' rows='2' name='Content' cols='20'></textarea><input type='submit' value='Throw' /></form></div>");
+            $("#replyForm").hide();
             $("#blogId").attr("value", "@Model.BlogId");
             $("#postId").attr("value", "@Model.Post.Id");
             var idd = $(this).attr("data-parent");
             $("#commentId").attr("value", idd);
+            runEffect();
             return false;
         });
+        function runEffect() {
+            $("#replyForm").show("Blind", 2000);
+        };
     });
+    // run the currently selected effect
+
 </script>
 
 <svg style="display: none">
