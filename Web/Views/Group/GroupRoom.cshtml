@@ -108,7 +108,7 @@
 <div id="myPager" class="members-list">
     @if (Model.GroupUsers.Count > 0)
     {
-        <h2>Users in group "@Model.Group.Name" (Count of members - @Model.GroupUsers.Count )</h2>
+        <h2>Group "@Model.Group.Name"(@Model.GroupUsers.Count)</h2>
                 
         <table style="padding: 10px">
             <thead>
@@ -228,16 +228,16 @@
                         @if (!post.IsVoted)
                         {
 
-                            <span class="journal-entry-short-item-right">Don't take the part - @post.NotTakeATest</span>
+                            <span class="journal-entry-short-item-right">Didn't take the part - @post.NotTakeATest</span>
                             @Html.ActionLink("I don't support", "Approve", "Blog", new { isAprove = false, blogId = Model.Blog.Id, postId = post.Id }, new { @class = "journal-entry-short-item-right" })
-                            @Html.ActionLink("I endorse", "Approve", "Blog", new { isAprove = true, blogId = Model.Blog.Id, postId = post.Id }, new { @class = "journal-entry-short-item-right" })
+                            @Html.ActionLink("I agree", "Approve", "Blog", new { isAprove = true, blogId = Model.Blog.Id, postId = post.Id }, new { @class = "journal-entry-short-item-right" })
                         }
                         else
                         {
                             @Html.ActionLink("Change own decision", "ChangeMind", "Blog", new { blogId = Model.Blog.Id, postId = post.Id }, new { @class = "journal-entry-short-item-right" })
-                            <span class="journal-entry-short-item-right">Don't take the part "@post.NotTakeATest</span>
-                            <span class="journal-entry-short-item-right">Disapprove  "@post.NotApprovedList.Count  </span>
-                            <span class="journal-entry-short-item-right">Approve  "@post.ApprovedList.Count  </span>
+                            <span class="journal-entry-short-item-right">Didn't take the part "@post.NotTakeATest</span>
+                            <span class="journal-entry-short-item-right">Disapproved  "@post.NotApprovedList.Count  </span>
+                            <span class="journal-entry-short-item-right">Approved  "@post.ApprovedList.Count  </span>
                         }
 
                     </div>

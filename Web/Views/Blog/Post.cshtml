@@ -11,7 +11,7 @@
             if (document.getElementById("replyForm")) {
                 $("#replyForm").remove();
             }
-            $(this).after("<form id='replyForm' method='post' action='/Blog/AddReplyComment'> <input type='hidden' id='blogId' name='blogId' value='' /><input type='hidden' id='postId' name='postId' value='' /><input type='hidden' id='commentId' name='commentId' value='' /><textarea style='width: 100%; height: 80px; resize: none;' rows='2' name='Content' cols='20'></textarea><input type='submit' value='Throw' /></form></div>");
+            $(this).after("<form id='replyForm' method='post' action='/Blog/AddReplyComment'> <input type='hidden' id='blogId' name='blogId' value='' /><input type='hidden' id='postId' name='postId' value='' /><input type='hidden' id='commentId' name='commentId' value='' /><textarea style='width: 100%; height: 80px; resize: none;' rows='2' name='Content' cols='20'></textarea><input type='submit' value='Done' /></form></div>");
             $("#replyForm").hide();
             $("#blogId").attr("value", "@Model.BlogId");
             $("#postId").attr("value", "@Model.Post.Id");
@@ -81,9 +81,9 @@
                 <div class="journal-entry-short-item-right">
                     @if (!Model.Post.IsVoted && !Model.Post.IsDone)
                     {
-                        <span class="journal-entry-short-item-right">Don't take the part - @Model.Post.NotTakeATest</span>
+                        <span class="journal-entry-short-item-right">Didn't take the part - @Model.Post.NotTakeATest</span>
                         @Html.ActionLink("I don't support", "Approve", "Blog", new { isAprove = false, blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right" })
-                        @Html.ActionLink("I endorse", "Approve", "Blog", new { isAprove = true, blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right" })
+                        @Html.ActionLink("I agree", "Approve", "Blog", new { isAprove = true, blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right" })
 
                     }
                     else
@@ -92,9 +92,9 @@
                         {
                         @Html.ActionLink("Change own decision", "ChangeMind", "Blog", new { blogId = Model.BlogId, postId = Model.Post.Id }, new { @class = "journal-entry-short-item-right" })
                         }
-                        <span class="journal-entry-short-item-right">Don't take the part  "@Model.Post.NotTakeATest</span>
-                        <span class="journal-entry-short-item-right">Disapprove  "@Model.Post.NotApprovedList.Count  </span>
-                        <span class="journal-entry-short-item-right">Approve  "@Model.Post.ApprovedList.Count  </span>
+                        <span class="journal-entry-short-item-right">Didn't take the part  "@Model.Post.NotTakeATest</span>
+                        <span class="journal-entry-short-item-right">Disapproved  "@Model.Post.NotApprovedList.Count  </span>
+                        <span class="journal-entry-short-item-right">Approved  "@Model.Post.ApprovedList.Count  </span>
                     }
 
                 </div>
@@ -173,7 +173,7 @@
             <div>
                 <div>
                     <br />
-                    <input type="submit" value="Pour" class="g-button" />
+                    <input type="submit" value="Send" class="g-button" />
                 </div>
             </div>
         }
