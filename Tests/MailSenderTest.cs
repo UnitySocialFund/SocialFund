@@ -7,6 +7,7 @@ namespace Tests
     [TestClass]
     public class EmailSenderTest
     {
+		
         //[TestMethod]
         //public void SendEmailWithAuthentication()
         //{
